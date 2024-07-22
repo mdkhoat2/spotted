@@ -8,10 +8,12 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.spotted.databinding.ActivityMainBinding
+import com.example.spotted.backend.AuthDataService
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private var authDataService = AuthDataService();
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,5 +33,15 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        authDataService.login("caynhat05062004@gmail.com", "123456") { response ->
+            if (response != null) {
+                println("Token: ${response.token}")
+                println("User: ${response.user}")
+            } else {
+                println("Login failed")
+            }
+        }
+        println(BuildConfig.API_BASE_URL)
     }
 }
