@@ -12,6 +12,7 @@ class AuthDataService {
 
     fun login(email: String, password: String, onResult: (LoginResponse?) -> Unit) {
         val request = LoginRequest(email, password)
+
         apiService.login(request).enqueue(object : Callback<LoginResponse> {
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                 onResult(response.body())
