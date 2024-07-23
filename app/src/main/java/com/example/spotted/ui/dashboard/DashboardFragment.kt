@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.spotted.R
 import com.example.spotted.databinding.FragmentDashboardBinding
+import com.example.spotted.util.LayoutUtil
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -24,6 +25,7 @@ class DashboardFragment : Fragment(), OnMapReadyCallback {
     private val binding get() = _binding!!
     private lateinit var mMap: GoogleMap
 
+
     override fun onCreateView(
         inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?
     ): View {
@@ -36,6 +38,8 @@ class DashboardFragment : Fragment(), OnMapReadyCallback {
         // Initialize the map
         val mapFragment = childFragmentManager.findFragmentById(R.id.mapFragment) as SupportMapFragment
         mapFragment.getMapAsync(this)
+
+        LayoutUtil.setupUI(requireActivity(), root )
 
         return root
     }
