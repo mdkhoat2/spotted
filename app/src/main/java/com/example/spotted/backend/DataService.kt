@@ -6,7 +6,11 @@ import retrofit2.Callback
 import retrofit2.Response
 
 object DataService {
-    val apiService: ApiService = ApiClient.createService(ApiService::class.java)
-    var authToken: String = ""
-    var authProfile: User? = null
+    internal val apiService: ApiService = ApiClient.createService(ApiService::class.java)
+    internal var authToken: String = ""
+    internal var authProfile: User? = null
+
+    fun getLoggedUser(): User? {
+        return authProfile
+    }
 }

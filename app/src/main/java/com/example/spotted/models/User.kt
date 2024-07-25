@@ -10,7 +10,6 @@ data class User(
     val isVerified: Boolean
 )
 
-// LoginRequest.kt
 
 data class LoginRequest(
     val email: String,
@@ -24,22 +23,16 @@ data class LoginResponse(
     val user: User
 )
 
-// SignUpRequest.kt
 
 data class SignUpRequest(
-    val name: String,
     val email: String,
     val password: String
 )
-
-// SignUpResponse.kt
 
 data class SignUpResponse(
     val message: String,
     val user: User
 )
-
-// Profile.kt
 
 data class ProfileUpdateRequest(
     val name: String,

@@ -25,8 +25,8 @@ class AuthDataService {
         })
     }
 
-    fun signUp(name: String, email: String, password: String, onResult: (SignUpResponse?) -> Unit) {
-        val request = SignUpRequest(name, email, password)
+    fun signUp(email: String, password: String, onResult: (SignUpResponse?) -> Unit) {
+        val request = SignUpRequest(email, password)
         DataService.apiService.signUp(request).enqueue(object : Callback<SignUpResponse> {
             override fun onResponse(call: Call<SignUpResponse>, response: Response<SignUpResponse>) {
                 onResult(response.body())
