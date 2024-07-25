@@ -9,6 +9,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.spotted.databinding.ActivityMainBinding
 import com.example.spotted.backend.AuthDataService
 import com.example.spotted.util.LayoutUtil
+import com.example.spotted.models.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -42,6 +43,6 @@ class MainActivity : AppCompatActivity() {
                 println("Login failed")
             }
         }
-        println(BuildConfig.API_BASE_URL)
+
     }
 }

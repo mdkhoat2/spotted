@@ -4,6 +4,9 @@ data class User(
     val id: String,
     val name: String,
     val email: String,
+    val phone: String,
+    val description: String,
+    val interests: List<String>,
     val isVerified: Boolean
 )
 
@@ -34,4 +37,14 @@ data class SignUpRequest(
 data class SignUpResponse(
     val message: String,
     val user: User
+)
+
+// Profile.kt
+
+data class ProfileUpdateRequest(
+    val name: String,
+    val age: Int,
+    val phone: String,
+    val description: String,
+    val interests: List<String>
 )

@@ -5,6 +5,7 @@ import com.example.spotted.models.*
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Path
@@ -15,4 +16,8 @@ interface ApiService {
 
     @POST("auth/signup")
     fun signUp(@Body signUpRequest: SignUpRequest): Call<SignUpResponse>
+
+    // updateAuthProfile with Authorization header
+    @PUT("auth/profile")
+    fun updateAuthProfile(@Header("Authorization") token: String, @Body profile: ProfileUpdateRequest) : Call<User>
 }
