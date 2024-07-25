@@ -36,7 +36,7 @@
             android:src="@drawable/ic_back_black_24dp" />
 
         <!-- Search Bar -->
-        <EditText
+        <AutoCompleteTextView
             android:id="@+id/searchBar"
             android:layout_width="0dp"
             android:layout_height="@dimen/button_height"
@@ -48,6 +48,7 @@
             android:drawablePadding="10dp"
             android:inputType="text" />
 
+
         <!-- Add Button -->
         <ImageButton
             android:id="@+id/addButton"
@@ -57,6 +58,7 @@
             android:src="@drawable/ic_add_black_24dp"
             android:background="@drawable/rounded_white" />
     </LinearLayout>
+
 
     <!-- Filter Options -->
     <LinearLayout
@@ -71,6 +73,7 @@
         app:layout_constraintEnd_toEndOf="parent">
 
         <Spinner
+            android:id="@+id/spinnerSport"
             android:paddingHorizontal="@dimen/padding_medium"
             android:layout_width="0dp"
             android:layout_height="@dimen/button_height"
@@ -79,6 +82,7 @@
             android:background="@drawable/rounded_white" />
 
         <Spinner
+            android:id="@+id/spinnerTime"
             android:paddingHorizontal="@dimen/padding_medium"
             android:layout_width="0dp"
             android:layout_height="@dimen/button_height"
@@ -87,6 +91,7 @@
             android:background="@drawable/rounded_white" />
 
         <Spinner
+            android:id="@+id/spinnerStatus"
             android:paddingHorizontal="@dimen/padding_medium"
             android:layout_width="0dp"
             android:layout_height="@dimen/button_height"
@@ -94,5 +99,6 @@
             android:layout_marginStart="8dp"
             android:background="@drawable/rounded_white" />
     </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

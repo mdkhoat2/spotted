@@ -39,7 +39,7 @@ object LayoutUtil {
 
                 if (rootView is Button || rootView is ImageButton) {
                     if (event.action == MotionEvent.ACTION_DOWN || event.action == MotionEvent.ACTION_HOVER_ENTER) {
-                        v.alpha = 0.8f
+                        v.alpha = 0.7f
                     } else if (event.action == MotionEvent.ACTION_UP || event.action == MotionEvent.ACTION_HOVER_EXIT) {
                         v.alpha = 1.0f
                     }

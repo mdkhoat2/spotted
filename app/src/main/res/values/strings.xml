@@ -1,6 +1,17 @@
 <resources>
     <string name="app_name">Spotted</string>
     <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
+    <string name="title_map">Sport Map</string>
     <string name="title_notifications">Notifications</string>
+    <string name="title_account">Account</string>
+
+    <string-array name="sports">
+        <item>Badminton</item>
+        <item>Football</item>
+        <item>Basketball</item>
+        <item>Volleyball</item>
+        <item>Swimming</item>
+    </string-array>
+
+    <string name="google_map_key">AIzaSyAXwkTJJyUV8yux-6seduQQwCsM86dYwtY</string>
 </resources>
