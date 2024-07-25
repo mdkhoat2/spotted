@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.spotted.databinding.FragmentAccountBinding
 import com.example.spotted.ui.account.AccountViewModel
+import com.example.spotted.util.LayoutUtil
 
 class AccountFragment : Fragment() {
 
@@ -33,6 +34,8 @@ class AccountFragment : Fragment() {
         accountViewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
         }
+        LayoutUtil.setupUI(requireActivity(),root)
+
         return root
     }
 

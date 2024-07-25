@@ -1,19 +1,15 @@
-package com.example.spotted.ui.sport_map
+package com.example.spotted.ui.event
 
-import android.content.res.Resources
+
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.ImageButton
 import android.widget.Spinner
-import android.widget.Toast
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.appcompat.app.AppCompatActivity
 import com.example.spotted.R
-import com.example.spotted.databinding.FragmentSportMapBinding
+import com.example.spotted.backend.AuthDataService
+import com.example.spotted.databinding.ActivityMapBinding
 import com.example.spotted.util.LayoutUtil
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -27,55 +23,48 @@ import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
-class SportMapFragment : Fragment(), OnMapReadyCallback {
+class MapActivity: AppCompatActivity(), OnMapReadyCallback {
 
-    private var _binding: FragmentSportMapBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
-    private val binding get() = _binding!!
+    private lateinit var binding: ActivityMapBinding
+    private var authDataService = AuthDataService()
     private lateinit var mMap: GoogleMap
     private val AUTOCOMPLETE_REQUEST_CODE = 1
     private lateinit var searchBar: AutoCompleteTextView
 
-    override fun onCreateView(
-        inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?
-    ): View {
-        val sportMapViewModel = ViewModelProvider(this).get(SportMapViewModel::class.java)
-
-        _binding = FragmentSportMapBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityMapBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
 
-        // Initialize the map
-        val mapFragment = childFragmentManager.findFragmentById(R.id.mapFragment) as SupportMapFragment
+        val mapFragment = supportFragmentManager.findFragmentById(R.id.mapFragment) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
-        LayoutUtil.setupUI(requireActivity(), root )
+
+        LayoutUtil.setupUI(this, binding.root )
 
         setUpPlaces()
 
-        val backBtn: ImageButton = root.findViewById(R.id.backButton)
-        backBtn.setOnClickListener{
-            requireActivity().supportFragmentManager.popBackStack()
+        val backBtn: ImageButton = findViewById(R.id.backButton)
+        backBtn.setOnClickListener {
+            finish()
         }
 
-        val SportSpinner: Spinner = root.findViewById(R.id.spinnerSport)
+        val SportSpinner: Spinner = findViewById(R.id.spinnerSport)
 
         val sports = resources.getStringArray(R.array.sports)
 
-        val sportAdapter = ArrayAdapter(requireActivity(),android.R.layout.simple_spinner_item,sports)
+        val sportAdapter = ArrayAdapter(this,android.R.layout.simple_spinner_item,sports)
         sportAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
         SportSpinner.adapter=sportAdapter
-
-        return root
     }
 
     private fun setUpPlaces() {
         if (!Places.isInitialized()) {
-            Places.initialize(requireContext(), getString(R.string.google_map_key))
+            Places.initialize(this, getString(R.string.google_map_key))
         }
 
 //        val autocompleteFragment = childFragmentManager
@@ -98,11 +87,6 @@ class SportMapFragment : Fragment(), OnMapReadyCallback {
 //            override fun onError(status: com.google.android.gms.common.api.Status) {
 //            }
 //        })
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     override fun onMapReady(googleMap: GoogleMap) {

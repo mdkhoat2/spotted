@@ -12,10 +12,10 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/navigation_map"
-        android:name="com.example.spotted.ui.sport_map.SportMapFragment"
+        android:id="@+id/navigation_create"
+        android:name="com.example.spotted.ui.create.CreateEventFragment"
         android:label="@string/title_map"
-        tools:layout="@layout/fragment_sport_map" />
+        tools:layout="@layout/fragment_create_event" />
 
     <fragment
         android:id="@+id/navigation_notifications"

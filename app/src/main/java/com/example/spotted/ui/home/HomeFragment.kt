@@ -1,13 +1,18 @@
 package com.example.spotted.ui.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.spotted.R
 import com.example.spotted.databinding.FragmentHomeBinding
+import com.example.spotted.ui.event.MapActivity
+import com.example.spotted.util.LayoutUtil
 
 class HomeFragment : Fragment() {
 
@@ -32,6 +37,14 @@ class HomeFragment : Fragment() {
         homeViewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
         }
+        LayoutUtil.setupUI(requireActivity(),root)
+
+        val MapBtn: Button = root.findViewById(R.id.openMap)
+        MapBtn.setOnClickListener{
+            val intent = Intent(activity,MapActivity::class.java)
+            startActivity(intent)
+        }
+
         return root
     }
 
