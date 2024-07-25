@@ -8,13 +8,13 @@ import retrofit2.Response
 
 class AuthDataService {
 
-    private val apiService: ApiService = ApiClient.createService(ApiService::class.java)
-
     fun login(email: String, password: String, onResult: (LoginResponse?) -> Unit) {
         val request = LoginRequest(email, password)
 
-        apiService.login(request).enqueue(object : Callback<LoginResponse> {
+        DataService.apiService.login(request).enqueue(object : Callback<LoginResponse> {
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
+                DataService.authToken = (response.body()?.token ?: "");
+                DataService.authProfile = (response.body()?.user ?: User("", "", "", "", "", listOf(), false));
                 onResult(response.body())
             }
 
@@ -27,7 +27,7 @@ class AuthDataService {
 
     fun signUp(name: String, email: String, password: String, onResult: (SignUpResponse?) -> Unit) {
         val request = SignUpRequest(name, email, password)
-        apiService.signUp(request).enqueue(object : Callback<SignUpResponse> {
+        DataService.apiService.signUp(request).enqueue(object : Callback<SignUpResponse> {
             override fun onResponse(call: Call<SignUpResponse>, response: Response<SignUpResponse>) {
                 onResult(response.body())
             }
@@ -36,5 +36,22 @@ class AuthDataService {
                 onResult(null)
             }
         })
+    }
+
+    fun updateProfile(profile: ProfileUpdateRequest, onResult: (User?) -> Unit) {
+        DataService.apiService.updateAuthProfile("Bearer ${DataService.authToken}", profile).enqueue(object : Callback<User> {
+            override fun onResponse(call: Call<User>, response: Response<User>) {
+                DataService.authProfile = response.body()
+                onResult(response.body())
+            }
+
+            override fun onFailure(call: Call<User>, t: Throwable) {
+                onResult(null)
+            }
+        })
+    }
+    fun updateProfile(name: String, age: Int, phone: String, description: String, interests: List<String>, onResult: (User?) -> Unit) {
+        val profile = ProfileUpdateRequest(name, age, phone, description, interests)
+        updateProfile(profile, onResult)
     }
 }
