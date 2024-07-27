@@ -10,13 +10,11 @@ data class User(
     val isVerified: Boolean
 )
 
-
 data class LoginRequest(
     val email: String,
     val password: String
 )
 
-// LoginResponse.kt
 
 data class LoginResponse(
     val token: String,
@@ -40,4 +38,13 @@ data class ProfileUpdateRequest(
     val phone: String,
     val description: String,
     val interests: List<String>
+)
+
+data class ResetPasswordRequest(
+    val oldPassword: String,
+    val newPassword: String
+)
+
+data class ErrorResponse(
+    val msg: String
 )
