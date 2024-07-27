@@ -8,7 +8,7 @@ import android.widget.ImageButton
 import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
 import com.example.spotted.R
-import com.example.spotted.backend.AuthDataService
+import com.example.spotted.backend.dataServices.AuthDataService
 import com.example.spotted.databinding.ActivityMapBinding
 import com.example.spotted.util.LayoutUtil
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -18,12 +18,6 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.libraries.places.api.Places
-import com.google.android.libraries.places.api.model.Place
-import com.google.android.libraries.places.widget.Autocomplete
-import com.google.android.libraries.places.widget.AutocompleteSupportFragment
-import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
-import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
-import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MapActivity: AppCompatActivity(), OnMapReadyCallback {
 

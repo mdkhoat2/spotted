@@ -1,14 +1,15 @@
-package com.example.spotted.backend
+package com.example.spotted.backend.dataServices
 
 
-import com.example.spotted.models.*
-import com.google.gson.Gson
-import okhttp3.ResponseBody
+import com.example.spotted.backend.dataModels.LoginRequest
+import com.example.spotted.backend.dataModels.LoginResponse
+import com.example.spotted.backend.dataModels.ProfileUpdateRequest
+import com.example.spotted.backend.dataModels.SignUpRequest
+import com.example.spotted.backend.dataModels.SignUpResponse
+import com.example.spotted.backend.dataModels.User
 import retrofit2.Call
 import retrofit2.Callback
-import retrofit2.Converter
 import retrofit2.Response
-import retrofit2.Retrofit
 
 class AuthDataService {
 
@@ -21,8 +22,10 @@ class AuthDataService {
                 DataService.authProfile =
                     (response.body()?.user ?: User("", "", "", "", "", listOf(), false));
                 DataService.extractMsg(response.errorBody())
+                if (response.isSuccessful) {
+                    DataService.connect()
+                }
                 onResult(response.body())
-
             }
 
             override fun onFailure(call: Call<LoginResponse>, t: Throwable) {

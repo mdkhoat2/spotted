@@ -1,6 +1,11 @@
-package com.example.spotted.backend
+package com.example.spotted.backend.api
 
-import com.example.spotted.models.*
+import com.example.spotted.backend.dataModels.LoginRequest
+import com.example.spotted.backend.dataModels.LoginResponse
+import com.example.spotted.backend.dataModels.ProfileUpdateRequest
+import com.example.spotted.backend.dataModels.SignUpRequest
+import com.example.spotted.backend.dataModels.SignUpResponse
+import com.example.spotted.backend.dataModels.User
 
 import retrofit2.Call
 import retrofit2.http.Body
@@ -8,7 +13,6 @@ import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.PUT
-import retrofit2.http.Path
 
 interface ApiService {
     @POST("auth/login")
