@@ -8,6 +8,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.example.spotted.databinding.ActivityMainBinding
 import com.example.spotted.backend.AuthDataService
+import com.example.spotted.backend.DataService
 import com.example.spotted.util.LayoutUtil
 import com.example.spotted.models.*
 
@@ -40,7 +41,7 @@ class MainActivity : AppCompatActivity() {
                 println("Token: ${response.token}")
                 println("User: ${response.user}")
             } else {
-                println("Login failed")
+                println(DataService.getMsg())
             }
         }
 
