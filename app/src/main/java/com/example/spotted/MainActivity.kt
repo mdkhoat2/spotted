@@ -7,10 +7,8 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.example.spotted.databinding.ActivityMainBinding
-import com.example.spotted.backend.AuthDataService
-import com.example.spotted.backend.DataService
-import com.example.spotted.util.LayoutUtil
-import com.example.spotted.models.*
+import com.example.spotted.backend.dataServices.AuthDataService
+import com.example.spotted.backend.dataServices.DataService
 
 class MainActivity : AppCompatActivity() {
 
@@ -44,6 +42,5 @@ class MainActivity : AppCompatActivity() {
                 println(DataService.getMsg())
             }
         }
-
     }
 }
