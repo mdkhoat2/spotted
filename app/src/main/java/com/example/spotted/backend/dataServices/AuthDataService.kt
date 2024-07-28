@@ -1,17 +1,12 @@
 package com.example.spotted.backend.dataServices
 
 
-import com.example.spotted.backend.dataModels.LoginRequest
-import com.example.spotted.backend.dataModels.LoginResponse
-import com.example.spotted.backend.dataModels.ProfileUpdateRequest
-import com.example.spotted.backend.dataModels.SignUpRequest
-import com.example.spotted.backend.dataModels.SignUpResponse
-import com.example.spotted.backend.dataModels.User
+import com.example.spotted.backend.dataModels.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class AuthDataService {
+object AuthDataService {
 
     fun login(email: String, password: String, onResult: (LoginResponse?) -> Unit) {
         val request = LoginRequest(email, password)

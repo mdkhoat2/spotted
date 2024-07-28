@@ -1,11 +1,6 @@
 package com.example.spotted.backend.api
 
-import com.example.spotted.backend.dataModels.LoginRequest
-import com.example.spotted.backend.dataModels.LoginResponse
-import com.example.spotted.backend.dataModels.ProfileUpdateRequest
-import com.example.spotted.backend.dataModels.SignUpRequest
-import com.example.spotted.backend.dataModels.SignUpResponse
-import com.example.spotted.backend.dataModels.User
+import com.example.spotted.backend.dataModels.*
 
 import retrofit2.Call
 import retrofit2.http.Body
@@ -30,4 +25,10 @@ interface ApiService {
 
     @GET("auth/profile")
     fun getAuthProfile(@Header("Authorization") token: String) : Call<User>
+
+
+
+    @POST("messages/send")
+    fun sendMessage(@Header("Authorization") token: String, @Body message: SendMessageRequest) : Call<Message>
+
 }
