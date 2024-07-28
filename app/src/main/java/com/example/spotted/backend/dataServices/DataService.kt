@@ -42,15 +42,12 @@ object DataService {
 
 
 
-    fun connect() {
+    internal fun connect() {
         try {
             mSocket = IO.socket(BuildConfig.API_BASE_URL)
             mSocket.connect()
-
             mSocket.on(Socket.EVENT_CONNECT, onConnect)
             mSocket.on("receiveMessage", onReceiveMessage)
-
-            mSocket.emit("register", authProfile?.id)
         } catch (e: URISyntaxException) {
             e.printStackTrace()
         }
@@ -58,6 +55,7 @@ object DataService {
 
     private val onConnect = Emitter.Listener {
         println("Connected")
+        mSocket.emit("register", authProfile?.id)
     }
 
     private val onReceiveMessage = Emitter.Listener { args ->
@@ -66,15 +64,7 @@ object DataService {
         println("Received message: $message")
     }
 
-    private fun sendMessage(sender: String, receiver: String, content: String) {
-        val messageData = JSONObject()
-        messageData.put("sender", sender)
-        messageData.put("receiver", receiver)
-        messageData.put("content", content)
-        mSocket.emit("sendMessage", messageData)
-    }
-
-    fun disconnect() {
+    internal fun disconnect() {
         mSocket.disconnect()
         mSocket.off(Socket.EVENT_CONNECT, onConnect)
         mSocket.off("receiveMessage", onReceiveMessage)

@@ -9,11 +9,11 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.spotted.databinding.ActivityMainBinding
 import com.example.spotted.backend.dataServices.AuthDataService
 import com.example.spotted.backend.dataServices.DataService
+import com.example.spotted.backend.dataServices.MessageDataService
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private var authDataService = AuthDataService()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,10 +34,21 @@ class MainActivity : AppCompatActivity() {
         //setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
-        authDataService.login("caynhat05062004@gmail.com", "123456") { response ->
+        AuthDataService.login("caynhat05062004@gmail.com", "123456") { response ->
             if (response != null) {
                 println("Token: ${response.token}")
                 println("User: ${response.user}")
+
+//                Uncomment to test sending message.
+//                This action will add data to database, check database to verify
+//                and do not spam
+//                MessageDataService.sendMessage("66a39662a7e21e8958e46f3e", "Hello") { message ->
+//                    if (message != null) {
+//                        println("Message: ${message}")
+//                    } else {
+//                        println(DataService.getMsg())
+//                    }
+//                }
             } else {
                 println(DataService.getMsg())
             }

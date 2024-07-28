@@ -22,7 +22,6 @@ import com.google.android.libraries.places.api.Places
 class MapActivity: AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var binding: ActivityMapBinding
-    private var authDataService = AuthDataService()
     private lateinit var mMap: GoogleMap
     private val AUTOCOMPLETE_REQUEST_CODE = 1
     private lateinit var searchBar: AutoCompleteTextView
