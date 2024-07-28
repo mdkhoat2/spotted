@@ -1,13 +1,13 @@
-package com.example.spotted.ui.notifications
+package com.example.spotted.ui.events
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class NotificationsViewModel : ViewModel() {
+class EventsViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
-        value = "This is notifications Fragment"
+        value = "This is Events Fragment"
     }
     val text: LiveData<String> = _text
 }

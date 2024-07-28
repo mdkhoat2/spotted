@@ -18,10 +18,10 @@
         tools:layout="@layout/fragment_create_event" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.example.spotted.ui.notifications.NotificationsFragment"
+        android:id="@+id/navigation_event"
+        android:name="com.example.spotted.ui.events.EventsFragment"
         android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        tools:layout="@layout/fragment_events" />
 
     <fragment
         android:id="@+id/navigation_account"
