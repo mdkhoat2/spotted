@@ -29,7 +29,11 @@
         <activity android:name=".ui.event.MapActivity" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyAXwkTJJyUV8yux-6seduQQwCsM86dYwtY" />
+            android:value="AIzaSyAN5IUqcZbfL66xvabQiySJGlx2ol-6QSE" />
+        <meta-data
+            android:name="com.google.android.places.API_KEY"
+            android:value="AIzaSyAlMRTqMbUpAtYO4yrox5z22x6RdXPHXUE" />
+
     </application>
 
 </manifest>

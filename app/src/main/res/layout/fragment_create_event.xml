@@ -69,26 +69,54 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <EditText
-            android:id="@+id/dateEditText"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_weight="3"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:padding="@dimen/padding_medium"
-            android:background="@drawable/rounded_white"
-            android:hint="Date"
             android:layout_margin="8dp"
-             />
+            app:boxBackgroundMode="none"
+            android:background="@drawable/rounded_white"
+            android:paddingVertical="@dimen/padding_small"
+            app:hintTextColor="@color/blue_500">
 
-        <EditText
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/DatePicker"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Date"
+                android:background="@android:color/transparent"
+                android:drawableEnd="@drawable/ic_create_black_24dp"
+                android:inputType="date"
+                android:imeOptions="actionDone"
+                android:paddingVertical="6dp"
+                android:textSize="18dp"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_weight="2"
-            android:id="@+id/timeEditText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:padding="@dimen/padding_medium"
+            android:layout_marginVertical="8dp"
+            android:layout_marginRight="8dp"
+            app:boxBackgroundMode="none"
             android:background="@drawable/rounded_white"
-            android:hint="Time"
-            android:layout_margin="8dp" />
+            android:paddingVertical="@dimen/padding_small"
+            app:hintTextColor="@color/blue_500">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/TimePicker"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Time"
+                android:background="@android:color/transparent"
+                android:drawableEnd="@drawable/ic_clock_black_24dp"
+                android:inputType="time"
+                android:imeOptions="actionDone"
+                android:paddingVertical="6dp"
+                android:textSize="18dp"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
 
     <!--
