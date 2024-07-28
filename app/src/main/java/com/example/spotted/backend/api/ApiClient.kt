@@ -1,5 +1,5 @@
 // ApiClient.kt
-package com.example.spotted.backend
+package com.example.spotted.backend.api
 
 import com.example.spotted.BuildConfig
 

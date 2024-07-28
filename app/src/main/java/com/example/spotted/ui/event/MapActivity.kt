@@ -10,7 +10,7 @@ import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.VolleyLog.TAG
 import com.example.spotted.R
-import com.example.spotted.backend.AuthDataService
+import com.example.spotted.backend.dataServices.AuthDataService
 import com.example.spotted.databinding.ActivityMapBinding
 import com.example.spotted.util.LayoutUtil
 import com.google.android.gms.common.api.Status
@@ -24,6 +24,7 @@ import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
+
 
 class MapActivity: AppCompatActivity(), OnMapReadyCallback {
 
