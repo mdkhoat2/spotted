@@ -9,6 +9,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
+import androidx.core.view.size
 
 object LayoutUtil {
     private fun hideKeyboard(view: View) {
@@ -19,10 +20,10 @@ object LayoutUtil {
     @SuppressLint("ClickableViewAccessibility")
     public fun setupUI(activity: Activity, rootView: View) {
         if (rootView !is EditText) {
+            println(rootView)
             rootView.setOnTouchListener { v, event ->
                 if (event.action == MotionEvent.ACTION_UP || event.action == MotionEvent.ACTION_MOVE) {
                     val view = activity.currentFocus
-
                     if (view is EditText) {
                         val scrcoords = IntArray(2)
                         view.getLocationOnScreen(scrcoords)
@@ -33,18 +34,14 @@ object LayoutUtil {
                             view.clearFocus()
                         }
                     }
-
-
                 }
-
-                if (rootView is Button || rootView is ImageButton) {
+                if (v is Button || v is ImageButton) {
                     if (event.action == MotionEvent.ACTION_DOWN || event.action == MotionEvent.ACTION_HOVER_ENTER) {
                         v.alpha = 0.7f
                     } else if (event.action == MotionEvent.ACTION_UP || event.action == MotionEvent.ACTION_HOVER_EXIT) {
                         v.alpha = 1.0f
                     }
                 }
-
                 false
             }
         }

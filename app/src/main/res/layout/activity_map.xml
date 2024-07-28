@@ -4,7 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.event.MapActivity">
+    tools:context=".ui.event.MapActivity"
+    android:clickable="true"
+    >
 
     <!-- Map Background Image -->
     <fragment
@@ -59,6 +61,13 @@
             android:background="@drawable/rounded_white" />
     </LinearLayout>
 
+    <fragment android:id="@+id/autocomplete_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
+        app:layout_constraintTop_toBottomOf="@id/filterOptionsContainer"
+
+        />
 
     <!-- Filter Options -->
     <LinearLayout
