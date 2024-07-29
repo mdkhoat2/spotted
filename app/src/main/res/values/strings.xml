@@ -4,6 +4,13 @@
     <string name="title_map">Sport Map</string>
     <string name="title_notifications">Events</string>
     <string name="title_account">Account</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="forgot">Forgot password</string>
+    <string name="sign_in">Sign in</string>
+    <string name="require">Required</string>
+    <string name="haveAccount">Don\'t have an account\?</string>
+    <string name="signUp">Sign up</string>
 
     <string-array name="sports">
         <item>Badminton</item>
