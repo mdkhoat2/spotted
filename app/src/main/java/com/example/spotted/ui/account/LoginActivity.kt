@@ -12,7 +12,6 @@ import com.example.spotted.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
-    private var authDataService = AuthDataService()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
@@ -43,7 +42,7 @@ class LoginActivity : AppCompatActivity() {
     {
         val email = binding.emailEditText.text.toString()
         val password = binding.passwordEditText.text.toString()
-        authDataService.login(email, password) { response ->
+        AuthDataService.login(email, password) { response ->
             if (response != null) {
                 Intent(this, MainActivity::class.java).also{
                     startActivity(it)
