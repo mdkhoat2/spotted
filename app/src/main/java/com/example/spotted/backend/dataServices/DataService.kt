@@ -4,7 +4,8 @@ import com.example.spotted.BuildConfig
 import com.example.spotted.backend.api.ApiClient
 import com.example.spotted.backend.api.ApiService
 import com.example.spotted.backend.dataModels.ErrorResponse
-import com.example.spotted.backend.dataModels.User
+import com.example.spotted.backend.dataModels.*
+import com.example.spotted.communication.live.MessageLive
 import com.google.gson.Gson
 import io.socket.client.Socket
 import okhttp3.ResponseBody
@@ -60,8 +61,10 @@ object DataService {
 
     private val onReceiveMessage = Emitter.Listener { args ->
         val data = args[0] as JSONObject
-        val message = data.getString("content")
-        println("Received message: $message")
+
+        // extract to Message
+        val messageData = Gson().fromJson(data.toString(), Message::class.java)
+        MessageLive.onReceiveMessage(messageData);
     }
 
     internal fun disconnect() {
