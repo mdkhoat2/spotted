@@ -54,7 +54,7 @@ object DataService {
     }
 
     private val onConnect = Emitter.Listener {
-        println("Connected")
+        println("Server connected")
         mSocket.emit("register", authProfile?.id)
     }
 

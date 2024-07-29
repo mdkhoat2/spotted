@@ -34,10 +34,18 @@ class MainActivity : AppCompatActivity() {
         //setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
+//        AuthDataService.forgotPassword("caynhat05062004@gmail.com") {
+//            println(DataService.getMsg())
+//        };
+
         AuthDataService.login("caynhat05062004@gmail.com", "123456") { response ->
             if (response != null) {
                 println("Token: ${response.token}")
                 println("User: ${response.user}")
+
+//                AuthDataService.resetPassword("g03hjlw9", "123456") {
+//                    response -> println(DataService.getMsg())
+//                }
 
 //                Uncomment to test sending message.
 //                This action will add data to database, check database to verify
