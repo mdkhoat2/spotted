@@ -16,8 +16,11 @@ interface ApiService {
     @POST("auth/signup")
     fun signUp(@Body signUpRequest: SignUpRequest): Call<SignUpResponse>
 
-//    @POST("auth/reset-password")
-//    fun resetPassword(@Body body: ResetPasswordRequest): Call<ResetPasswordResponse>
+    @POST("auth/reset-password")
+    fun resetPassword(@Header("Authorization") token: String, @Body body: ResetPasswordRequest): Call<ResetPasswordResponse>
+
+    @POST("auth/forgot-password")
+    fun forgotPassword(@Body body: ForgotPasswordRequest): Call<ForgotPasswordResponse>
 
     // updateAuthProfile with Authorization header
     @PUT("auth/profile")

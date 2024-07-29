@@ -8,7 +8,3 @@ data class ProfileUpdateRequest(
     val interests: List<String>
 )
 
-data class ResetPasswordRequest(
-    val oldPassword: String,
-    val newPassword: String
-)
