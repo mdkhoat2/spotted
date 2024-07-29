@@ -11,6 +11,8 @@
     <string name="require">Required</string>
     <string name="haveAccount">Don\'t have an account\?</string>
     <string name="signUp">Sign up</string>
+    <string name="description_forgot">Please enter your email to reset the password</string>
+    <string name="reset_pass">Reset Password</string>
 
     <string-array name="sports">
         <item>Badminton</item>
