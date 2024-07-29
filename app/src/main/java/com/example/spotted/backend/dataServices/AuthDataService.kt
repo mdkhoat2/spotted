@@ -15,7 +15,7 @@ object AuthDataService {
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                 DataService.authToken = (response.body()?.token ?: "");
                 DataService.authProfile =
-                    (response.body()?.user ?: User("", "", "", "", "", listOf(), false));
+                    (response.body()?.user ?: null)
                 DataService.extractMsg(response.errorBody())
                 if (response.isSuccessful) {
                     DataService.connect()

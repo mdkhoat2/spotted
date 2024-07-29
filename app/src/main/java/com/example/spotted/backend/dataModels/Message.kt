@@ -1,6 +1,7 @@
 package com.example.spotted.backend.dataModels
 
 import java.sql.Timestamp
+import java.util.Date
 
 data class SendMessageRequest(
     val receiverId: String,
@@ -11,6 +12,6 @@ data class Message(
     val sender: String,
     val receiver: String,
     val content: String,
-    val isRead: Boolean,
-    val timestamp: Timestamp
+    val sentAt: Timestamp,
+    val readAt: Timestamp
 )
