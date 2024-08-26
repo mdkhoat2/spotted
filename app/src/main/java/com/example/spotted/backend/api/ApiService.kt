@@ -34,4 +34,7 @@ interface ApiService {
     @POST("messages/send")
     fun sendMessage(@Header("Authorization") token: String, @Body message: SendMessageRequest) : Call<Message>
 
+    @GET("messages/last-messages")
+    fun getLastMessages(@Header("Authorization") token: String) : Call<List<Message>>
+
 }
