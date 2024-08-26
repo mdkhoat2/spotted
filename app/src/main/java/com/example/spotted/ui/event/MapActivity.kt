@@ -2,16 +2,18 @@ package com.example.spotted.ui.event
 
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
+import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.ImageButton
 import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
+import com.android.volley.VolleyLog.TAG
 import com.example.spotted.R
+import com.example.spotted.backend.dataServices.AuthDataService
 import com.example.spotted.databinding.ActivityMapBinding
 import com.example.spotted.util.LayoutUtil
+import com.google.android.gms.common.api.Status
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -19,14 +21,9 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.libraries.places.api.Places
-
-import com.google.android.libraries.places.api.model.AutocompletePrediction
-import com.google.android.libraries.places.api.model.AutocompleteSessionToken
 import com.google.android.libraries.places.api.model.Place
-import com.google.android.libraries.places.api.model.RectangularBounds
-import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest
-import com.google.android.libraries.places.api.net.FindAutocompletePredictionsResponse
-import com.google.android.libraries.places.api.net.PlacesClient
+import com.google.android.libraries.places.widget.AutocompleteSupportFragment
+import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
 
 
 class MapActivity: AppCompatActivity(), OnMapReadyCallback {
@@ -36,16 +33,11 @@ class MapActivity: AppCompatActivity(), OnMapReadyCallback {
     private val AUTOCOMPLETE_REQUEST_CODE = 1
     private lateinit var searchBar: AutoCompleteTextView
     private lateinit var places : Places
-    private lateinit var adapter: ArrayAdapter<String>
-    private val suggestions = mutableListOf<String>()
-    private lateinit var placesClient: PlacesClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMapBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        //val token = AutocompleteSessionToken.newInstance()
 
 
         val mapFragment = supportFragmentManager.findFragmentById(R.id.mapFragment) as SupportMapFragment
@@ -79,79 +71,25 @@ class MapActivity: AppCompatActivity(), OnMapReadyCallback {
             Places.initialize(applicationContext, apiKey)
         }
 
-        placesClient = Places.createClient(this)
+        val autocompleteFragment = supportFragmentManager.findFragmentById(R.id.autocomplete_fragment)
+                as AutocompleteSupportFragment
 
+        // Specify the types of place data to return.
+        autocompleteFragment.setPlaceFields(listOf(Place.Field.ID, Place.Field.NAME))
 
-        setupAutoCompleteTextView()
-    }
-
-    private fun setupAutoCompleteTextView() {
-        searchBar = findViewById(R.id.searchBar)
-
-        // Set up the adapter with the initial custom suggestions
-        adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, suggestions)
-        searchBar.setAdapter(adapter)
-
-        searchBar.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
-                if (!s.isNullOrEmpty()) {
-                    performTextSearch(s.toString())
-                }
-
+        // Set up a PlaceSelectionListener to handle the response.
+        autocompleteFragment.setOnPlaceSelectedListener(object : PlaceSelectionListener {
+            override fun onPlaceSelected(place: Place) {
+                // Get info about the selected place.
+                Log.i(TAG, "Place: ${place.name}, ${place.id}")
             }
 
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            override fun onError(status: Status) {
+                // Handle the error.
+                Log.i(TAG, "An error occurred: $status")
+            }
         })
-
-        searchBar.setOnItemClickListener { parent, view, position, id ->
-            val selectedItem = parent.getItemAtPosition(position) as String
-            searchBar.setText(selectedItem)
-        }
     }
-
-    private fun performTextSearch(query: String) {
-
-        val locationBias = RectangularBounds.newInstance(
-            LatLng(8.1790665, 102.14441),  // Southwest corner of Vietnam
-            LatLng(23.393395, 109.4696483)  // Northeast corner of Vietnam
-        )
-
-        val filteredEvents = listOf(
-            "Phu Tho Stadium Thanh Hau",
-            "Duy Lam Ben Thanh Market",
-            "Con Cac Saigon Opera House"
-        ).filter { it.contains(query, ignoreCase = true) }
-
-        val request = FindAutocompletePredictionsRequest.builder().setQuery(query)
-            .setCountries("VN")
-            .setLocationBias(locationBias) // Set the location bias
-            .build()
-
-        placesClient.findAutocompletePredictions(request)
-            .addOnSuccessListener { response ->
-                suggestions.clear() // Clear previous suggestions
-
-                for (S in filteredEvents)
-                    suggestions.add(S)
-
-                val predictions = response.autocompletePredictions
-                for (prediction in predictions) {
-                    if (suggestions.size>5) break
-                    suggestions.add(prediction.getPrimaryText(null).toString())
-                }
-
-
-
-                val newAdapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, suggestions)
-                searchBar.setAdapter(newAdapter)
-            }
-            .addOnFailureListener { exception ->
-                exception.printStackTrace()
-            }
-    }
-
-
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 

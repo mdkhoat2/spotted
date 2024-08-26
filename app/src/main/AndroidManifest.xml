@@ -17,7 +17,7 @@
         android:theme="@style/Theme.Spotted"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.account.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,11 +26,17 @@
             </intent-filter>
 
         </activity>
-
+        <activity
+            android:name=".MainActivity"
+            android:exported="false">
+        </activity>
         <activity android:name=".ui.event.MapActivity" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAN5IUqcZbfL66xvabQiySJGlx2ol-6QSE" />
+        <meta-data
+            android:name="com.google.android.places.API_KEY"
+            android:value="AIzaSyAlMRTqMbUpAtYO4yrox5z22x6RdXPHXUE" />
 
     </application>
 
