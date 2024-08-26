@@ -7,12 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".ui.account.AccountFragment">
 
-    <ImageView
-        android:src="@drawable/ic_launcher_background"
-        android:scaleType="fitXY"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-
     <TextView
         android:id="@+id/text_account"
         android:layout_width="match_parent"

@@ -1,12 +1,15 @@
 package com.example.spotted.ui.home
 
 import android.content.Intent
+import android.graphics.Typeface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.appcompat.widget.AppCompatButton
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.spotted.R
@@ -33,20 +36,25 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textHome
-        homeViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-        }
         LayoutUtil.setupUI(requireActivity(),root)
 
-        val MapBtn: Button = root.findViewById(R.id.openMap)
+        val MapBtn: AppCompatButton = root.findViewById(R.id.fragmentHome_button_openMap)
         MapBtn.setOnClickListener{
             val intent = Intent(activity,MapActivity::class.java)
             startActivity(intent)
         }
 
+        val header: TextView = binding.fragmentHomeHeader
+
+        val createEventBtn: AppCompatButton = root.findViewById(R.id.fragmentHome_button_createEvent)
+
+        LayoutUtil.applyVariableFont(this,header,"'wght' 500, 'wdth' 150")
+        LayoutUtil.applyVariableFont(this,createEventBtn,"'wght' 500, 'wdth' 150")
+        LayoutUtil.applyVariableFont(this,MapBtn,"'wght' 500, 'wdth' 150")
+
         return root
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

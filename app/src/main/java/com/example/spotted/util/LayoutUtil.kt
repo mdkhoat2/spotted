@@ -2,6 +2,7 @@ package com.example.spotted.util
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
+import android.graphics.Typeface
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
@@ -9,13 +10,20 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.TextView
+import androidx.appcompat.widget.AppCompatButton
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.size
+import androidx.fragment.app.Fragment
+import com.example.spotted.R
 
 object LayoutUtil {
     private fun hideKeyboard(view: View) {
         val imm = view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
+
+
 
     @SuppressLint("ClickableViewAccessibility")
     public fun setupUI(activity: Activity, rootView: View) {
@@ -56,4 +64,25 @@ object LayoutUtil {
             }
         }
     }
+
+
+    public fun applyVariableFont(fragment: Fragment, view: View, variationSettings: String) {
+        val typeface: Typeface? = ResourcesCompat.getFont(fragment.requireContext(), R.font.flex)
+
+        when (view) {
+            is TextView -> {
+                view.typeface = typeface
+                view.setFontVariationSettings(variationSettings)
+            }
+            is EditText -> {
+                view.typeface = typeface
+                view.setFontVariationSettings(variationSettings)
+            }
+            is AppCompatButton -> {
+                view.typeface = typeface
+                view.setFontVariationSettings(variationSettings)
+            }
+        }
+    }
+
 }
