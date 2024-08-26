@@ -13,5 +13,5 @@ data class Message(
     val receiver: String,
     val content: String,
     val sentAt: Timestamp,
-    val readAt: Timestamp
+    val readAt: Timestamp?
 )
