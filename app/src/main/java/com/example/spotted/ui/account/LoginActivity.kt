@@ -3,8 +3,6 @@ package com.example.spotted.ui.account
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Patterns
-import android.widget.Toast
 import com.example.spotted.MainActivity
 import com.example.spotted.backend.dataServices.AuthDataService
 import com.example.spotted.backend.dataServices.DataService
@@ -18,28 +16,24 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
         emailFocusListener()
         binding.btnSignIn.setOnClickListener{setupSignIn()}
+        binding.tvForgotPassword.setOnClickListener{setupForgotPassword()}
+        binding.signUp.setOnClickListener{setupSignUp()}
     }
 
     private fun emailFocusListener()
     {
         binding.emailEditText.setOnFocusChangeListener { _, focused ->
             if(!focused){
-                binding.emailContainer.helperText = validEmail()
+                binding.emailContainer.error = Helper.validEmail(binding.emailEditText.text.toString())
             }
         }
     }
 
-    private fun validEmail(): String?
-    {
-        val emailText = binding.emailEditText.text.toString()
-        if(!Patterns.EMAIL_ADDRESS.matcher(emailText).matches()){
-            return "Invalid Email Address"
-        }
-        return null
-    }
-
     private fun setupSignIn()
     {
+        Helper.hideKeyboard(this, binding.emailEditText)
+        Helper.hideKeyboard(this, binding.passwordEditText)
+
         val email = binding.emailEditText.text.toString()
         val password = binding.passwordEditText.text.toString()
         AuthDataService.login(email, password) { response ->
@@ -48,9 +42,20 @@ class LoginActivity : AppCompatActivity() {
                     startActivity(it)
                 }
             } else {
-                Toast.makeText(this, "Invalid email or password", Toast.LENGTH_SHORT).show()
-                println("Hello" + DataService.getMsg())
+                Helper.createDialog(this, "Failed", DataService.getMsg()){}
             }
+        }
+    }
+
+    private fun setupForgotPassword(){
+        Intent(this, ForgotPasswordActivity::class.java).also {
+            startActivity(it)
+        }
+    }
+
+    private fun setupSignUp(){
+        Intent(this, SignUpActivity::class.java).also {
+            startActivity(it)
         }
     }
 }
