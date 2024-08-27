@@ -52,7 +52,11 @@
 
 
 
+<<<<<<< Updated upstream
    <!-- Add Button -->
+=======
+        <!-- Add Button -->
+>>>>>>> Stashed changes
         <ImageButton
             android:id="@+id/addButton"
             android:layout_width="@dimen/button_height"

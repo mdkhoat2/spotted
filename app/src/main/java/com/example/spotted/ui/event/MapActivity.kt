@@ -19,6 +19,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.libraries.places.api.Places
+<<<<<<< Updated upstream
 
 import com.google.android.libraries.places.api.model.AutocompletePrediction
 import com.google.android.libraries.places.api.model.AutocompleteSessionToken
@@ -26,6 +27,10 @@ import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.api.model.RectangularBounds
 import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest
 import com.google.android.libraries.places.api.net.FindAutocompletePredictionsResponse
+=======
+import com.google.android.libraries.places.api.model.RectangularBounds
+import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest
+>>>>>>> Stashed changes
 import com.google.android.libraries.places.api.net.PlacesClient
 
 
@@ -33,9 +38,11 @@ class MapActivity: AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var binding: ActivityMapBinding
     private lateinit var mMap: GoogleMap
-    private val AUTOCOMPLETE_REQUEST_CODE = 1
     private lateinit var searchBar: AutoCompleteTextView
+<<<<<<< Updated upstream
     private lateinit var places : Places
+=======
+>>>>>>> Stashed changes
     private lateinit var adapter: ArrayAdapter<String>
     private val suggestions = mutableListOf<String>()
     private lateinit var placesClient: PlacesClient
@@ -132,6 +139,7 @@ class MapActivity: AppCompatActivity(), OnMapReadyCallback {
             .addOnSuccessListener { response ->
                 suggestions.clear() // Clear previous suggestions
 
+<<<<<<< Updated upstream
                 for (S in filteredEvents)
                     suggestions.add(S)
 
@@ -145,6 +153,22 @@ class MapActivity: AppCompatActivity(), OnMapReadyCallback {
 
                 val newAdapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, suggestions)
                 searchBar.setAdapter(newAdapter)
+=======
+                for (S in filteredEvents) suggestions.add(S)
+
+                val predictions = response.autocompletePredictions
+                for (prediction in predictions) {
+                    println(prediction)
+                    println(suggestions.size)
+                    if (suggestions.size>5) break
+                    suggestions.add(prediction.getFullText(null).toString())
+                }
+
+                adapter.clear()
+                adapter.addAll(suggestions)
+                adapter.notifyDataSetChanged()
+
+>>>>>>> Stashed changes
             }
             .addOnFailureListener { exception ->
                 exception.printStackTrace()
