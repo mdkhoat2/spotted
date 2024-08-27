@@ -29,13 +29,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".MainActivity"
-            android:exported="false"/>
+            android:exported="false">
+        </activity>
+
         <activity
             android:name=".ui.account.ForgotPasswordActivity"
             android:exported="false" />
+
+
         <activity android:name=".ui.event.MapActivity" />
+
+        <activity android:name=".ui.create.CreateEventActivity" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
