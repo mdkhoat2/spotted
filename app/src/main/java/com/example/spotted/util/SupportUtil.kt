@@ -39,4 +39,15 @@ object SupportUtil {
 
         timePickerDialog.show()
     }
+
+    fun getTimeSince(time: Long): String {
+        val timeSince = System.currentTimeMillis() - time
+
+        return when {
+            timeSince < 60000 -> "less than a minute ago"
+            timeSince < 3600000 -> "${timeSince / 60000} minutes ago"
+            timeSince < 86400000 -> "${timeSince / 3600000} hours ago"
+            else -> "${timeSince / 86400000} days ago"
+        }
+    }
 }

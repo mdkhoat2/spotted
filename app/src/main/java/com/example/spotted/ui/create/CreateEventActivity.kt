@@ -1,12 +1,16 @@
 package com.example.spotted.ui.create
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.view.MotionEvent
 import android.view.View
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
+import androidx.navigation.fragment.findNavController
+import com.example.spotted.MainActivity
 import com.example.spotted.R
 import com.example.spotted.databinding.ActivityCreateEventBinding
 import com.example.spotted.util.LayoutUtil
@@ -28,6 +32,13 @@ class CreateEventActivity : AppCompatActivity() {
         LayoutUtil.setupUI(this, root)
 
         setupInput(root)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        val intent = Intent(this, MainActivity::class.java)
+        intent.putExtra("navigateTo", "home")
+        startActivity(intent)
     }
 
     @SuppressLint("ClickableViewAccessibility")

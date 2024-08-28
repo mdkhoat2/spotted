@@ -1,0 +1,43 @@
+<!-- res/layout/item_contact.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:padding="16dp">
+
+    <ImageView
+        android:id="@+id/contact_profile_image"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="8dp"
+        android:src="@drawable/ic_person_black_24dp" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/contact_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Contact Name"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/contact_last_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Last message" />
+    </LinearLayout>
+    <ImageView
+        android:id="@+id/contact_read"
+        android:src="@drawable/ic_circle_black_24dp"
+        app:tint="@color/blue_500"
+        android:layout_width="14dp"
+        android:visibility="invisible"
+        android:layout_height="match_parent"/>
+
+</LinearLayout>

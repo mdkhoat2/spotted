@@ -27,6 +27,7 @@
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress"
             android:fontFamily="@font/flex"
+            android:text="caynhat05062004@gmail.com"
             android:hint="@string/email" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -49,6 +50,7 @@
             android:layout_height="wrap_content"
             android:inputType="textPassword"
             android:fontFamily="@font/flex"
+            android:text="123456"
             android:hint="@string/password"/>
     </com.google.android.material.textfield.TextInputLayout>
 
