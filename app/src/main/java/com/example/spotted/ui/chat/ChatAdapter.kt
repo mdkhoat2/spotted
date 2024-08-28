@@ -6,7 +6,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.spotted.R
 import com.example.spotted.backend.dataModels.Message
-import com.example.spotted.communication.adapters.MessageAdapter
+import com.example.spotted.communication.adapter.MessageAdapter
 import java.time.Instant
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
@@ -21,17 +21,15 @@ class ChatAdapter(private val messageList: List<Message>,private val currentUser
 
     override fun getItemViewType(position: Int): Int {
         val messageAdapter = MessageAdapter(messageList[position])
-        return if (messageAdapter.isReceived()) VIEW_TYPE_RECEIVED else VIEW_TYPE_SENT
+        return if (messageList[position].sender!=currentUserId) VIEW_TYPE_RECEIVED else VIEW_TYPE_SENT
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == VIEW_TYPE_SENT) {
-            val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_sent_message, parent, false)
+            val view = LayoutInflater.from(parent.context).inflate(R.layout.item_sent_message, parent, false)
             SentMessageHolder(view)
         } else {
-            val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_received_message, parent, false)
+            val view = LayoutInflater.from(parent.context).inflate(R.layout.item_received_message, parent, false)
             ReceivedMessageHolder(view)
         }
     }
@@ -48,6 +46,23 @@ class ChatAdapter(private val messageList: List<Message>,private val currentUser
     override fun getItemCount(): Int {
         return messageList.size
     }
+
+//    private fun getMessageBackground(position: Int, viewType: Int): Int {
+//        return when {
+//            // First message in a group (top)
+//            position == 0 || messageList[position - 1].sender != messageList[position].sender -> {
+//                if (viewType == VIEW_TYPE_SENT) R.drawable.message_top else R.drawable.message_top
+//            }
+//            // Last message in a group (bottom)
+//            position == messageList.size - 1 || messageList[position + 1].sender != messageList[position].sender -> {
+//                if (viewType == VIEW_TYPE_SENT) R.drawable.message_bottom else R.drawable.message_bottom
+//            }
+//            // Middle message in a group
+//            else -> {
+//                if (viewType == VIEW_TYPE_SENT) R.drawable.message_middle else R.drawable.message_middle
+//            }
+//        }
+//    }
 
     // ViewHolder for sent messages
     inner class SentMessageHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -73,8 +88,7 @@ class ChatAdapter(private val messageList: List<Message>,private val currentUser
 
     // Utility function to format timestamp
     private fun formatTimestamp(instant: Instant): String {
-        val formatter = DateTimeFormatter.ofPattern("HH:mm")
-            .withZone(ZoneId.systemDefault())
+        val formatter = DateTimeFormatter.ofPattern("HH:mm").withZone(ZoneId.systemDefault())
         return formatter.format(instant)
     }
 }

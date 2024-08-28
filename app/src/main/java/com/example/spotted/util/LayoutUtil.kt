@@ -20,7 +20,6 @@ object LayoutUtil {
     @SuppressLint("ClickableViewAccessibility")
     public fun setupUI(activity: Activity, rootView: View) {
         if (rootView !is EditText) {
-            println(rootView)
             rootView.setOnTouchListener { v, event ->
                 if (event.action == MotionEvent.ACTION_UP || event.action == MotionEvent.ACTION_MOVE) {
                     val view = activity.currentFocus

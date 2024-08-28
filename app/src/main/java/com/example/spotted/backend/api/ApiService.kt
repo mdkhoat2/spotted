@@ -8,6 +8,7 @@ import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.PUT
+import retrofit2.http.Path
 
 interface ApiService {
     @POST("auth/login")
@@ -29,9 +30,12 @@ interface ApiService {
     @GET("auth/profile")
     fun getAuthProfile(@Header("Authorization") token: String) : Call<User>
 
-
-
     @POST("messages/send")
     fun sendMessage(@Header("Authorization") token: String, @Body message: SendMessageRequest) : Call<Message>
 
+    @GET("messages/last-messages")
+    fun getLastMessages(@Header("Authorization") token: String) : Call<List<Message>>
+
+    @GET("messages/inbox/{id}")
+    fun getMessages(@Path("id") id: String,@Header("Authorization") token: String) : Call<List<Message>>
 }

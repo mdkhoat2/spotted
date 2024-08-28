@@ -12,11 +12,6 @@ data class Message(
     val sender: String,
     val receiver: String,
     val content: String,
-<<<<<<< Updated upstream
-    val sentAt: Timestamp,
-    val readAt: Timestamp
-=======
     val sentAt: Timestamp?,
     val readAt: Timestamp?
->>>>>>> Stashed changes
 )

@@ -37,11 +37,21 @@ class MainActivity : AppCompatActivity() {
 //        AuthDataService.forgotPassword("caynhat05062004@gmail.com") {
 //            println(DataService.getMsg())
 //        };
-
+        println("con cs")
         AuthDataService.login("caynhat05062004@gmail.com", "123456") { response ->
             if (response != null) {
                 println("Token: ${response.token}")
                 println("User: ${response.user}")
+//                MessageDataService.getLastMessages { response ->
+//                    if (response!=null){
+//                    }
+//                }
+//                MessageDataService.getMessages("66a39662a7e21e8958e46f3e"){
+//                    if (response!=null){
+//                        println("halaluyah")
+//                    }
+////                    }
+//                }
 
 //                AuthDataService.resetPassword("g03hjlw9", "123456") {
 //                    response -> println(DataService.getMsg())
@@ -58,6 +68,7 @@ class MainActivity : AppCompatActivity() {
 //                    }
 //                }
             } else {
+                println("scscs ")
                 println(DataService.getMsg())
             }
         }

@@ -26,4 +26,38 @@ object MessageDataService {
         val message = SendMessageRequest(id, content)
         sendMessage(message, onResult)
     }
+
+    fun getLastMessages(onResult: (List<Message>?) -> Unit){
+        DataService.apiService.getLastMessages("Bearer ${DataService.authToken}").enqueue(object : Callback<List<Message>> {
+            override fun onResponse(call: Call<List<Message>>, response: Response<List<Message>>) {
+                if (response.isSuccessful) {
+                    onResult(response.body())
+                } else {
+                    DataService.extractMsg(response.errorBody())
+                    onResult(null)
+                }
+            }
+
+            override fun onFailure(call: Call<List<Message>>, t: Throwable) {
+                onResult(null)
+            }
+        })
+    }
+
+    fun getMessages(id: String,onResult: (List<Message>?) -> Unit){
+        DataService.apiService.getMessages( id,"Bearer ${DataService.authToken}").enqueue(object : Callback<List<Message>> {
+            override fun onResponse(call: Call<List<Message>>, response: Response<List<Message>>) {
+                if (response.isSuccessful) {
+                    onResult(response.body())
+                } else {
+                    DataService.extractMsg(response.errorBody())
+                    onResult(null)
+                }
+            }
+
+            override fun onFailure(call: Call<List<Message>>, t: Throwable) {
+                onResult(null)
+            }
+        })
+    }
 }
