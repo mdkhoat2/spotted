@@ -108,4 +108,22 @@ object AuthDataService {
             }
         })
     }
+
+    fun getUser(id: String, onResult: (User?) -> Unit) {
+        DataService.apiService.getUser(id).enqueue(object : Callback<User> {
+            override fun onResponse(call: Call<User>, response: Response<User>) {
+                if (response.isSuccessful) {
+                    onResult(response.body())
+                } else {
+                    DataService.extractMsg(response.errorBody())
+                    onResult(null)
+                }
+            }
+
+            override fun onFailure(call: Call<User>, t: Throwable) {
+                DataService.msg = "Unknown error"
+                onResult(null)
+            }
+        })
+    }
 }
