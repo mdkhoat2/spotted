@@ -18,6 +18,12 @@
     <string name="sign_up">Sign up</string>
     <string name="require">Required</string>
     <string name="proceed">Proceed</string>
+    <string name="name">Name</string>
+    <string name="interest">Interests</string>
+    <string name="age">Age</string>
+    <string name="contact">Contact</string>
+    <string name="bio">Biography</string>
+    <string name="save_changes">Save changes</string>
     <string name="haveAccount">Don\'t have an account\?</string>
     <string name="signUp">Sign up</string>
     <string name="description_forgot">Please enter your email to reset the password</string>
