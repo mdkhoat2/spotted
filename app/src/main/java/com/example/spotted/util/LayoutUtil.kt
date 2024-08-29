@@ -23,8 +23,6 @@ object LayoutUtil {
         imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
-
-
     @SuppressLint("ClickableViewAccessibility")
     public fun setupUI(activity: Activity, rootView: View) {
         if (rootView !is EditText) {

@@ -50,7 +50,7 @@
             android:layout_height="wrap_content"
             android:inputType="textPassword"
             android:fontFamily="@font/flex"
-            android:text="123456"
+            android:text="thanhduy"
             android:hint="@string/password"/>
     </com.google.android.material.textfield.TextInputLayout>
 

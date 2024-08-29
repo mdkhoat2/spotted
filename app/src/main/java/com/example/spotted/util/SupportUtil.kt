@@ -4,7 +4,12 @@ import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Context
 import android.widget.EditText
+import java.sql.Timestamp
+import java.time.Instant
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 import java.util.Calendar
+import kotlin.math.abs
 
 object SupportUtil {
     fun showDatePicker(editText: EditText,context: Context) {
@@ -40,6 +45,11 @@ object SupportUtil {
         timePickerDialog.show()
     }
 
+    fun getTimeBetween(time1: Timestamp, time2: Timestamp): Long {
+        val timeBetween = abs(time2.time - time1.time)
+        return timeBetween
+    }
+
     fun getTimeSince(time: Long): String {
         val timeSince = System.currentTimeMillis() - time
 
@@ -49,5 +59,24 @@ object SupportUtil {
             timeSince < 86400000 -> "${timeSince / 3600000} hours ago"
             else -> "${timeSince / 86400000} days ago"
         }
+    }
+
+    fun translateTime(time: Timestamp): String {
+        // if same day, show time, else show date and time
+        val timeNow = System.currentTimeMillis()
+        val timeNowCal = Calendar.getInstance()
+        timeNowCal.timeInMillis = timeNow
+        val timeCal = Calendar.getInstance()
+        timeCal.timeInMillis = time.time
+        return if (timeNowCal.get(Calendar.DAY_OF_YEAR) == timeCal.get(Calendar.DAY_OF_YEAR) && timeNowCal.get(Calendar.YEAR) == timeCal.get(Calendar.YEAR)) {
+            val timeFormatter = DateTimeFormatter.ofPattern("HH:mm")
+            val time = Instant.ofEpochMilli(time.time).atZone(ZoneId.systemDefault()).toLocalDateTime().format(timeFormatter)
+            time
+        } else {
+            val dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")
+            val time = Instant.ofEpochMilli(time.time).atZone(ZoneId.systemDefault()).toLocalDateTime().format(dateFormatter)
+            time
+        }
+
     }
 }
