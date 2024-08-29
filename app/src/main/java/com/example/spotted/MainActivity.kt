@@ -3,15 +3,10 @@ package com.example.spotted
 import android.os.Bundle
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.activity.enableEdgeToEdge
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.example.spotted.databinding.ActivityMainBinding
-import com.example.spotted.backend.dataServices.AuthDataService
-import com.example.spotted.backend.dataServices.DataService
-import com.example.spotted.backend.dataServices.MessageDataService
-import com.example.spotted.testing.Testing
 
 class MainActivity : AppCompatActivity() {
 
@@ -36,7 +31,5 @@ class MainActivity : AppCompatActivity() {
         )
         //setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-
-        Testing.test()
     }
 }
