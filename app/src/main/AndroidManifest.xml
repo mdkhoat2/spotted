@@ -50,6 +50,8 @@
 
         <activity android:name=".ui.chat.ContactListActivity" />
 
+        <activity android:name=".ui.chat.MessagingActivity" />
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAN5IUqcZbfL66xvabQiySJGlx2ol-6QSE" />

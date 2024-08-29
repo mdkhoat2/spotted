@@ -22,11 +22,11 @@ object MessageDataService {
         })
     }
 
+
     fun sendMessage(id: String, content: String, onResult: (Message?) -> Unit) {
         val message = SendMessageRequest(id, content)
         sendMessage(message, onResult)
     }
-
     fun getLastMessages(onResult: (List<Message>?) -> Unit){
         DataService.apiService.getLastMessages("Bearer ${DataService.authToken}").enqueue(object : Callback<List<Message>> {
             override fun onResponse(call: Call<List<Message>>, response: Response<List<Message>>) {

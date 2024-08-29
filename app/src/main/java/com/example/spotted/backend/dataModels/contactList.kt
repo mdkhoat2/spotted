@@ -1,4 +1,4 @@
-package com.example.spotted.ui.chat
+package com.example.spotted.backend.dataModels
 // an recycler view adapter for the contact list
 
 
@@ -10,16 +10,17 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.spotted.R
+import com.example.spotted.backend.dataServices.DataService
 import com.example.spotted.util.SupportUtil
 import java.sql.Timestamp
 
 data class Contact(
     val id: String,
     val name: String,
-    val lastMessage: String,
-    val sentAt: Timestamp,
-    val profileImageUrl: String?,
-    val isRead: Boolean
+    var lastMessage: String,
+    var sentAt: Timestamp,
+    var profileImageUrl: String?,
+    var isRead: Boolean
 )
 
 class ContactListWithChatAdapter(
@@ -37,8 +38,11 @@ class ContactListWithChatAdapter(
             nameTextView.text = contact.name
 
             lastMessageTextView.text = contact.lastMessage+" . "+SupportUtil.getTimeSince(contact.sentAt.time)
+            if (DataService.getAuthProfile()?._id ?: ""==contact.id){
+                lastMessageTextView.text = "You: "+contact.lastMessage+" . "+SupportUtil.getTimeSince(contact.sentAt.time)
+            }
 
-            // Set click listener for the contact item
+
             itemView.setOnClickListener { onItemClick(contact) }
 
             if (!contact.isRead) {

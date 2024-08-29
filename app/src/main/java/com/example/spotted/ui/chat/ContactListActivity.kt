@@ -1,14 +1,18 @@
 package com.example.spotted.ui.chat
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.spotted.R
+import com.example.spotted.backend.dataModels.Contact
+import com.example.spotted.backend.dataModels.ContactListWithChatAdapter
 import com.example.spotted.backend.dataServices.AuthDataService
 import com.example.spotted.backend.dataServices.MessageDataService
 import com.example.spotted.communication.adapters.MessageAdapter
+import com.example.spotted.communication.live.MessageLive
 
 class ContactListActivity : AppCompatActivity() {
 
@@ -23,32 +27,27 @@ class ContactListActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
 
         contactAdapter = ContactListWithChatAdapter(contacts) { contact ->
-            Toast.makeText(this, "Clicked on ${contact.name}", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, MessagingActivity::class.java)
+            intent.putExtra("otherId", contact.id)
+            startActivity(intent)
         }
 
         recyclerView.adapter = contactAdapter
 
-        println("Contact List Activity")
-        println("size before notify: "+contacts.size)
-
         MessageDataService.getLastMessages { response ->
                     if (response!=null){
                         for (message in response){
-                            println("Message: ")
-                            println("Tin: "+ message.content )
 
                             val messageAdapter = MessageAdapter(message)
                             println("Status: "+ messageAdapter.isReceived() + " " + messageAdapter.getOtherUserId() + " " + messageAdapter.isRead())
 
                             AuthDataService.getUser(messageAdapter.getOtherUserId()) { user ->
                                 if (user != null) {
-                                    println(user.name)
                                     contacts+=(Contact(user._id, user.name, message.content,
                                         message.sentAt, null,messageAdapter.isRead()))
 
                                     runOnUiThread {
-                                        contactAdapter.notifyDataSetChanged()
-                                        println("size after notify: "+contacts.size)
+                                        contactAdapter.notifyItemInserted(contacts.size - 1)
                                     }
                                 }
                             }
@@ -58,6 +57,26 @@ class ContactListActivity : AppCompatActivity() {
                     }
                 }
 
+        MessageLive.setOnMessageReceivedCallback { message ->
+            runOnUiThread {
+                // Check if the contact is already in the list find position and update
 
+                var contact = contacts.find { it.id == message.sender || it.id == message.receiver }
+                val position = contacts.indexOf(contact)
+
+                if (contact != null) {
+                    contact.lastMessage = message.content
+                    contact.sentAt = message.sentAt
+                    contactAdapter.notifyItemChanged(position)
+                } else {
+                    AuthDataService.getUser(message.sender) { user ->
+                        if (user != null) {
+                            contacts.add(Contact(user._id, user.name, message.content, message.sentAt, null, false))
+                            contactAdapter.notifyItemInserted(contacts.size - 1)
+                        }
+                    }
+                }
+            }
+        }
     }
 }
