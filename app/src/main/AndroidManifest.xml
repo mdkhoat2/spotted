@@ -18,6 +18,12 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".ui.account.EditProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.account.ChangePasswordActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.account.SignUpActivity"
             android:exported="false" />
         <activity
@@ -29,13 +35,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".MainActivity"
             android:exported="false"/>
         <activity
             android:name=".ui.account.ForgotPasswordActivity"
             android:exported="false" />
+
+
         <activity android:name=".ui.event.MapActivity" />
+
+        <activity android:name=".ui.create.CreateEventActivity" />
+
+        <activity android:name=".ui.chat.ContactListActivity" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

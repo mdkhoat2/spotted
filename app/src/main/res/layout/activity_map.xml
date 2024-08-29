@@ -49,9 +49,6 @@
             android:paddingHorizontal="@dimen/padding_medium"
             android:drawablePadding="10dp"
             android:inputType="text" />
-
-
-        <!-- Add Button -->
         <ImageButton
             android:id="@+id/addButton"
             android:layout_width="@dimen/button_height"
@@ -61,13 +58,6 @@
             android:background="@drawable/rounded_white" />
     </LinearLayout>
 
-    <fragment android:id="@+id/autocomplete_fragment"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
-        app:layout_constraintTop_toBottomOf="@id/filterOptionsContainer"
-
-        />
 
     <!-- Filter Options -->
     <LinearLayout

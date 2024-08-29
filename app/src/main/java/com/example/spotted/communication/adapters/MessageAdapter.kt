@@ -8,7 +8,7 @@ class MessageAdapter(message: Message) {
     fun isReceived(): Boolean {
         if (DataService.getAuthProfile() == null)
             return false
-        return message.receiver == DataService.getAuthProfile()?.id
+        return message.receiver == DataService.getAuthProfile()?._id
     }
     fun getOtherUserId(): String {
         if (DataService.getAuthProfile() == null)

@@ -1,9 +1,11 @@
 package com.example.spotted.ui.events
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -12,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.spotted.R
 import com.example.spotted.classes.SportEvent
 import com.example.spotted.databinding.FragmentEventsBinding
+import com.example.spotted.ui.chat.ContactListActivity
 import com.example.spotted.util.LayoutUtil
 
 class EventsFragment : Fragment() {
@@ -42,6 +45,13 @@ class EventsFragment : Fragment() {
         LayoutUtil.setupUI(requireActivity(),root)
 
         setUpEvents(root)
+
+        //button go to contact list activity
+        val chatBtn = root.findViewById(R.id.btn_Chat) as Button
+        chatBtn.setOnClickListener {
+            val intent = Intent(requireActivity(), ContactListActivity::class.java)
+            startActivity(intent)
+        }
 
         return root
     }
