@@ -18,6 +18,12 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".ui.account.EditProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.account.ChangePasswordActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.account.SignUpActivity"
             android:exported="false" />
         <activity
@@ -32,10 +38,7 @@
 
         <activity
             android:name=".MainActivity"
-            android:exported="false">
-
-        </activity>
-
+            android:exported="false"/>
         <activity
             android:name=".ui.account.ForgotPasswordActivity"
             android:exported="false" />
