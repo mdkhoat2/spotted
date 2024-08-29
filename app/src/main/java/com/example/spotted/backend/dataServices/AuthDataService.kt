@@ -81,7 +81,7 @@ object AuthDataService {
 
     fun resetPassword(oldPassword: String, newPassword: String, onResult: (ResetPasswordResponse?) -> Unit) {
         val request = ResetPasswordRequest(oldPassword, newPassword)
-        DataService.apiService.resetPassword(DataService.authToken, request).enqueue(object : Callback<ResetPasswordResponse> {
+        DataService.apiService.resetPassword("Bearer ${DataService.authToken}", request).enqueue(object : Callback<ResetPasswordResponse> {
             override fun onResponse(call: Call<ResetPasswordResponse>, response: Response<ResetPasswordResponse>) {
                 DataService.extractMsg(response.errorBody())
                 onResult(response.body())

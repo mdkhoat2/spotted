@@ -5,81 +5,133 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.account.ChangePasswordActivity">
+    tools:context=".ui.account.EditProfileActivity">
 
     <TextView
         android:id="@+id/action_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:elevation="16dp"
         android:gravity="center_horizontal"
         android:outlineAmbientShadowColor="@color/black"
         android:outlineSpotShadowColor="@color/black"
         android:shadowColor="#000000"
-        android:text="@string/change_pass"
+        android:text="@string/edit_profile"
         android:textColor="@color/blue_700"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/guideline3" />
+        app:layout_constraintTop_toBottomOf="@id/guideline3"
+        app:layout_constraintBottom_toBottomOf="@id/guideline4"/>
 
+    <ImageView
+        android:id="@+id/btn_back"
+        android:layout_width="@dimen/icon_size_medium"
+        android:layout_height="0dp"
+        android:src="@drawable/ic_back_black_24dp"
+        app:tint="@color/blue_700"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintStart_toStartOf="@id/guideline"
+        app:layout_constraintTop_toBottomOf="@id/guideline3"
+        app:layout_constraintBottom_toBottomOf="@id/guideline4"/>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/oldPasswordContainer"
+        android:id="@+id/containerName"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:hint="@string/oldPass"
-        app:passwordToggleEnabled="true"
+        android:hint="@string/name"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:background="@drawable/rounded_blue_white"
         app:layout_constraintDimensionRatio="5:0.8"
         app:layout_constraintEnd_toEndOf="@id/guideline2"
         app:layout_constraintStart_toStartOf="@id/guideline"
         app:layout_constraintTop_toBottomOf="@id/guideline4">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/oldPasswordEditText"
+            android:id="@+id/editTextName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPassword"
+            android:inputType="textPersonName"
             android:fontFamily="@font/flex"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/newPasswordContainer"
+        android:id="@+id/containerInterest"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:hint="@string/newPass"
-        app:passwordToggleEnabled="true"
+        android:hint="@string/interest"
         android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:background="@drawable/rounded_blue_white"
         app:layout_constraintDimensionRatio="5:0.8"
         app:layout_constraintEnd_toEndOf="@id/guideline2"
         app:layout_constraintStart_toStartOf="@id/guideline"
-        app:layout_constraintTop_toBottomOf="@id/oldPasswordContainer">
+        app:layout_constraintTop_toBottomOf="@id/containerName">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/newPasswordEditText"
+            android:id="@+id/editTextInterest"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPassword"
+            android:inputType="textPersonName"
             android:fontFamily="@font/flex"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/confirmPasswordContainer"
+        android:id="@+id/containerAge"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:hint="@string/confirmPass"
-        app:passwordToggleEnabled="true"
+        android:hint="@string/age"
         android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:background="@drawable/rounded_blue_white"
         app:layout_constraintDimensionRatio="5:0.8"
         app:layout_constraintEnd_toEndOf="@id/guideline2"
         app:layout_constraintStart_toStartOf="@id/guideline"
-        app:layout_constraintTop_toBottomOf="@id/newPasswordContainer">
+        app:layout_constraintTop_toBottomOf="@id/containerInterest">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/confirmNewPassword"
+            android:id="@+id/editTextAge"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPassword"
+            android:inputType="numberDecimal"
+            android:fontFamily="@font/flex"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/containerContact"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:hint="@string/contact"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:background="@drawable/rounded_blue_white"
+        app:layout_constraintDimensionRatio="5:0.8"
+        app:layout_constraintEnd_toEndOf="@id/guideline2"
+        app:layout_constraintStart_toStartOf="@id/guideline"
+        app:layout_constraintTop_toBottomOf="@id/containerAge">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextContact"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="phone"
+            android:fontFamily="@font/flex"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/containerBio"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:hint="@string/bio"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:background="@drawable/rounded_blue_white"
+        app:layout_constraintDimensionRatio="5:0.8"
+        app:layout_constraintEnd_toEndOf="@id/guideline2"
+        app:layout_constraintStart_toStartOf="@id/guideline"
+        app:layout_constraintTop_toBottomOf="@id/containerContact">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextBio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
             android:fontFamily="@font/flex"/>
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -90,12 +142,11 @@
         android:background="@drawable/rounded_blue_white"
         android:fontFamily="@font/flex"
         android:textAllCaps="false"
-        android:text="@string/proceed"
+        android:text="@string/save_changes"
         android:layout_marginTop="@dimen/activity_vertical_margin"
-        app:layout_constraintTop_toBottomOf="@id/confirmPasswordContainer"
+        app:layout_constraintTop_toBottomOf="@id/containerBio"
         app:layout_constraintStart_toStartOf="@id/guideline"
         app:layout_constraintEnd_toEndOf="@id/guideline2"/>
-
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
