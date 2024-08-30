@@ -3,7 +3,7 @@ package com.example.spotted.backend.dataModels
 import java.sql.Timestamp
 
 data class Event(
-    val id: String,
+    val _id: String,
     val title: String,
     val description: String,
     val start: Timestamp,
