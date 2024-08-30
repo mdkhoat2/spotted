@@ -41,5 +41,12 @@ object Helper {
     fun hideKeyboard(context: Context, view: View){
         val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(view.windowToken, 0)
+        view.clearFocus()
+    }
+    fun extractString(string: String): List<String>{
+        return string.split("\n").map { it.trim() }
+    }
+    fun concatString(s1: String, s2: String): String{
+        return s1 + "\n" + s2
     }
 }
