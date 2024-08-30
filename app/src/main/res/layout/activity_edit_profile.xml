@@ -8,7 +8,7 @@
     tools:context=".ui.account.EditProfileActivity">
 
     <TextView
-        android:id="@+id/action_bar"
+        android:id="@+id/activityChangePassword_textView_header"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:elevation="16dp"
@@ -136,7 +136,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnProceed"
+        android:id="@+id/activityChangePassword_appCompatButton_proceed"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/rounded_blue_white"
