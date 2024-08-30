@@ -44,17 +44,33 @@ class HomeFragment : Fragment() {
             startActivity(intent)
         }
 
+
+
         val header: TextView = binding.fragmentHomeHeader
 
-        val createEventBtn: AppCompatButton = root.findViewById(R.id.fragmentHome_button_createEvent)
+        val createEventBtn: AppCompatButton = root.findViewById(R.id.fragmentHome_button_messages)
+
+        val upcoming: TextView = binding.fragmentHomeTextViewUpcoming
+
+        val title: TextView = binding.fragmentHomeTextViewUpcomingEventTitle
+
+        val category: TextView = binding.fragmentHomeTextViewUpcomingEventCategory
+
+        val location: TextView = binding.fragmentHomeTextViewUpcomingEventLocation
+
+        val time: TextView = binding.fragmentHomeTextViewUpcomingEventTime
 
         LayoutUtil.applyVariableFont(this,header,"'wght' 500, 'wdth' 150")
         LayoutUtil.applyVariableFont(this,createEventBtn,"'wght' 500, 'wdth' 150")
         LayoutUtil.applyVariableFont(this,MapBtn,"'wght' 500, 'wdth' 150")
+        LayoutUtil.applyVariableFont(this,upcoming,"'wght' 500, 'wdth' 150")
+        LayoutUtil.applyVariableFont(this,title,"'wght' 500, 'wdth' 150")
+        LayoutUtil.applyVariableFont(this,category,"'wght' 500, 'wdth' 150")
+        LayoutUtil.applyVariableFont(this,location,"'wght' 500, 'wdth' 150")
+        LayoutUtil.applyVariableFont(this,time,"'wght' 500, 'wdth' 150")
 
         return root
     }
-
 
     override fun onDestroyView() {
         super.onDestroyView()
