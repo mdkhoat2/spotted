@@ -3,6 +3,10 @@ package com.example.spotted.ui.chat
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
+import android.widget.ImageView
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -71,6 +75,27 @@ class MessagingActivity() : AppCompatActivity(){
                     chatBox.text.clear()
                 }
             }
+        }
+
+        //when click on the edit text, the keyboard will show up and Push the chat box up
+
+
+        //
+        val userName:TextView = findViewById(R.id.userName)
+        AuthDataService.getUser(otherId) { user ->
+            if (user != null) {
+                userName.text = user.name
+            }
+        }
+
+        val backButton: ImageView = findViewById(R.id.btn_back)
+        backButton.setOnClickListener {
+            finish()
+        }
+
+        val InfoButton:ImageView = findViewById(R.id.btn_info)
+        InfoButton.setOnClickListener {
+            Toast.makeText(this, "Info", Toast.LENGTH_SHORT).show()
         }
 
         MessageLive.setOnMessageReceivedCallback { message ->

@@ -27,6 +27,7 @@ class ContactListActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
 
         contactAdapter = ContactListWithChatAdapter(contacts) { contact ->
+            contact.isRead = true
             val intent = Intent(this, MessagingActivity::class.java)
             intent.putExtra("otherId", contact.id)
             startActivity(intent)
@@ -59,23 +60,28 @@ class ContactListActivity : AppCompatActivity() {
 
         MessageLive.setOnMessageReceivedCallback { message ->
             runOnUiThread {
-                // Check if the contact is already in the list find position and update
+                // Check if the contact is already in the list find position and move it to the top
 
                 var contact = contacts.find { it.id == message.sender || it.id == message.receiver }
                 val position = contacts.indexOf(contact)
 
                 if (contact != null) {
                     contact.lastMessage = message.content
-                    contact.sentAt = message.sentAt
-                    contactAdapter.notifyItemChanged(position)
+                    contact.sentAt= message.sentAt
+                    contact.isRead = false
+                    contacts.removeAt(position)
+                    contacts.add(0, contact)
+                    contactAdapter.notifyItemMoved(position, 0)
                 } else {
                     AuthDataService.getUser(message.sender) { user ->
                         if (user != null) {
-                            contacts.add(Contact(user._id, user.name, message.content, message.sentAt, null, false))
-                            contactAdapter.notifyItemInserted(contacts.size - 1)
+                            contacts.add(0,Contact(user._id, user.name, message.content, message.sentAt, null, false))
+                            contactAdapter.notifyItemInserted(0)
                         }
                     }
                 }
+
+                contactAdapter.notifyItemChanged(0)
             }
         }
     }
