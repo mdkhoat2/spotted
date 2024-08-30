@@ -37,9 +37,18 @@ class ContactListWithChatAdapter(
         fun bind(contact: Contact, onItemClick: (Contact) -> Unit) {
             nameTextView.text = contact.name
 
-            lastMessageTextView.text = contact.lastMessage+" . "+SupportUtil.getTimeSince(contact.sentAt.time)
+            lastMessageTextView.text = buildString {
+                append(contact.lastMessage)
+                append(" . ")
+                append(SupportUtil.getTimeSince(contact.sentAt.time))
+            }
             if (DataService.getAuthProfile()?._id ?: ""==contact.id){
-                lastMessageTextView.text = "You: "+contact.lastMessage+" . "+SupportUtil.getTimeSince(contact.sentAt.time)
+                lastMessageTextView.text = buildString {
+                    append("You: ")
+                    append(contact.lastMessage)
+                    append(" . ")
+                    append(SupportUtil.getTimeSince(contact.sentAt.time))
+                }
             }
 
 

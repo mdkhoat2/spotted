@@ -27,6 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress"
+            android:text="caynhat05062004@gmail.com"
             android:fontFamily="@font/flex" />
 
     </com.google.android.material.textfield.TextInputLayout>

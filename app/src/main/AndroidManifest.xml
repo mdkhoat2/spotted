@@ -50,7 +50,10 @@
 
         <activity android:name=".ui.chat.ContactListActivity" />
 
-        <activity android:name=".ui.chat.MessagingActivity" />
+        <activity
+            android:name=".ui.chat.MessagingActivity"
+            android:windowSoftInputMode="adjustPan">
+        </activity>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
