@@ -16,6 +16,7 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.size
 import androidx.fragment.app.Fragment
 import com.example.spotted.R
+import com.google.android.material.textfield.TextInputLayout
 
 object LayoutUtil {
     private fun hideKeyboard(view: View) {
@@ -78,6 +79,43 @@ object LayoutUtil {
             is AppCompatButton -> {
                 view.typeface = typeface
                 view.setFontVariationSettings(variationSettings)
+            }
+            is Button -> {
+                view.typeface = typeface
+                view.setFontVariationSettings(variationSettings)
+            }
+            is TextInputLayout -> {
+                val editText = view.editText
+                if (editText != null) {
+                    editText.typeface = typeface
+                    editText.setFontVariationSettings(variationSettings)
+                }
+            }
+        }
+    }
+
+    public fun applyVariableFont(activity: Activity, view: View, variationSettings: String) {
+        val typeface: Typeface? = ResourcesCompat.getFont(activity, R.font.flex)
+
+        when (view) {
+            is TextView -> {
+                view.typeface = typeface
+                view.setFontVariationSettings(variationSettings)
+            }
+            is EditText -> {
+                view.typeface = typeface
+                view.setFontVariationSettings(variationSettings)
+            }
+            is AppCompatButton -> {
+                view.typeface = typeface
+                view.setFontVariationSettings(variationSettings)
+            }
+            is Button -> {
+                view.typeface = typeface
+                view.setFontVariationSettings(variationSettings)
+            }
+            is TextInputLayout -> {
+                view.typeface = typeface;
             }
         }
     }

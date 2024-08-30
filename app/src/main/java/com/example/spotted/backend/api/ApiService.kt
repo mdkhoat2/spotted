@@ -43,4 +43,8 @@ interface ApiService {
 
     @GET("messages/inbox/{id}")
     fun getMessages(@Path("id") id: String,@Header("Authorization") token: String) : Call<List<Message>>
+
+    //Events
+    @GET("events/create")
+    fun createEvent(@Header("Authorization") token: String, @Body event: Event) : Call<Event>
 }
