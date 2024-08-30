@@ -1,10 +1,16 @@
 package com.example.spotted.ui.account
 
 import android.os.Bundle
+import android.widget.EditText
+import android.widget.ImageButton
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatButton
 import com.example.spotted.backend.dataServices.AuthDataService
 import com.example.spotted.backend.dataServices.DataService
 import com.example.spotted.databinding.ActivityChangePasswordBinding
+import com.example.spotted.util.LayoutUtil
+import com.google.android.material.textfield.TextInputLayout
 
 class ChangePasswordActivity : AppCompatActivity() {
     private lateinit var binding: ActivityChangePasswordBinding
@@ -12,9 +18,19 @@ class ChangePasswordActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityChangePasswordBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        binding.btnProceed.setOnClickListener {
+        binding.activityChangePasswordAppCompatButtonProceed.setOnClickListener {
             hideKeyboard()
             setupProceed()
+        }
+        val header : TextView = binding.activityChangePasswordTextViewHeader
+        val proceed : AppCompatButton = binding.activityChangePasswordAppCompatButtonProceed
+
+        LayoutUtil.applyVariableFont(this,header,"'wght' 500, 'wdth' 150")
+        LayoutUtil.applyVariableFont(this,proceed,"'wght' 500, 'wdth' 150")
+
+        val back : ImageButton = binding.activityChangePasswordImageButtonBack
+        back.setOnClickListener {
+            finish()
         }
     }
 
