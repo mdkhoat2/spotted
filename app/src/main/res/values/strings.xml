@@ -1,8 +1,9 @@
 <resources>
     <string name="app_name">Spotted</string>
     <string name="title_home">Home</string>
-    <string name="title_map">Sport Map</string>
-    <string name="title_notifications">Events</string>
+    <string name="title_create">Create</string>
+    <string name="title_events">Events</string>
+    <string name="title_notification">Notifications</string>
     <string name="title_account">Account</string>
     <string name="edit_profile">Edit profile</string>
     <string name="change_pass">Change password</string>

@@ -12,10 +12,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.spotted.R
-import com.example.spotted.classes.SportEvent
+import com.example.spotted.backend.dataModels.Event
+
 import com.example.spotted.databinding.FragmentEventsBinding
 import com.example.spotted.ui.chat.ContactListActivity
 import com.example.spotted.util.LayoutUtil
+import java.sql.Timestamp
 
 class EventsFragment : Fragment() {
 
@@ -25,10 +27,19 @@ class EventsFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
+    val time =  Timestamp(System.currentTimeMillis());
+
     private val eventsList = listOf(
-        SportEvent(R.drawable.ic_clock_black_24dp, "The Gatherer League", "Phu Tho Stadium", "17:15 / 16-05-2024"),
-        SportEvent(R.drawable.ic_create_black_24dp, "ADL League for Physicians", "Thong Nhat Stadium", "17:15 / 17-05-2024"),
-        // Add more events
+        Event("1", "Event 1", "Description 1", time, 60, listOf(0.0, 0.0), "type", "joinMode", 10, time),
+        Event("2", "Event 2", "Description 2", time, 60, listOf(0.0, 0.0), "type", "joinMode", 10, time),
+        Event("3", "Event 3", "Description 3", time, 60, listOf(0.0, 0.0), "type", "joinMode", 10, time),
+        Event("4", "Event 4", "Description 4", time, 60, listOf(0.0, 0.0), "type", "joinMode", 10, time),
+        Event("5", "Event 5", "Description 5", time, 60, listOf(0.0, 0.0), "type", "joinMode", 10, time),
+        Event("6", "Event 6", "Description 6", time, 60, listOf(0.0, 0.0), "type", "joinMode", 10, time),
+        Event("7", "Event 7", "Description 7", time, 60, listOf(0.0, 0.0), "type", "joinMode", 10, time),
+        Event("8", "Event 8", "Description 8", time, 60, listOf(0.0, 0.0), "type", "joinMode", 10, time),
+        Event("9", "Event 9", "Description 9", time, 60, listOf(0.0, 0.0), "type", "joinMode", 10, time),
+        Event("10", "Event 10", "Description 10", time, 60, listOf(0.0, 0.0), "type", "joinMode", 10, time),
     )
 
     override fun onCreateView(
