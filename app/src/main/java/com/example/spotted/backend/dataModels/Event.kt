@@ -11,10 +11,6 @@ data class Event(
     val location: List<Double>,
     val type: String,
     val joinMode: String,
-    val maxParticipants: Int,
+    val maxParticipants: Short,
     val deadline: Timestamp
-) {
-    fun isOver(): Boolean {
-        return start.time + duration * 60 * 1000 < System.currentTimeMillis()
-    }
-}
+)

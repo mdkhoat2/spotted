@@ -7,16 +7,32 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.spotted.R
-import com.example.spotted.classes.SportEvent
+import com.example.spotted.backend.dataModels.Event
+import com.example.spotted.util.SupportUtil
 
-class EventsAdapter(private val events: List<SportEvent>) : RecyclerView.Adapter<EventsAdapter.EventViewHolder>() {
+class EventsAdapter(private val events: List<Event>) : RecyclerView.Adapter<EventsAdapter.EventViewHolder>() {
+
+    //data class Event(
+    //    val _id: String,
+    //    val title: String,
+    //    val description: String,
+    //    val start: Timestamp,
+    //    val duration: Int,
+    //    val location: List<Double>,
+    //    val type: String,
+    //    val joinMode: String,
+    //    val maxParticipants: Int,
+    //    val deadline: Timestamp
+    //)
 
     class EventViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val eventIcon: ImageView = itemView.findViewById(R.id.event_icon)
         val eventTitle: TextView = itemView.findViewById(R.id.event_title)
-        val eventLocation: TextView = itemView.findViewById(R.id.event_location)
         val eventTime: TextView = itemView.findViewById(R.id.event_time)
+        val eventDate: TextView = itemView.findViewById(R.id.event_date)
+        val eventDetail: ImageView = itemView.findViewById(R.id.event_detail)
         val eventMore: ImageView = itemView.findViewById(R.id.event_more)
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventViewHolder {
@@ -26,13 +42,8 @@ class EventsAdapter(private val events: List<SportEvent>) : RecyclerView.Adapter
 
     override fun onBindViewHolder(holder: EventViewHolder, position: Int) {
         val event = events[position]
-        // Set data for each item
         holder.eventTitle.text = event.title
-        holder.eventLocation.text = event.location
-        holder.eventTime.text = event.time
-        // Set icon and other attributes as needed
-        holder.eventIcon.setImageResource(event.iconResId)
-        // holder.eventMore.setOnClickListener { /* handle more click */ }
+        holder.eventTime.text = SupportUtil.translateTime(event.start)
     }
 
     override fun getItemCount(): Int {

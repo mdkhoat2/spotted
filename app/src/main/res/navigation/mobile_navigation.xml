@@ -14,13 +14,19 @@
     <fragment
         android:id="@+id/navigation_create"
         android:name="com.example.spotted.ui.create.CreateEventFragment"
-        android:label="@string/title_map"
+        android:label="@string/title_create"
         tools:layout="@layout/fragment_create_event" />
+
+    <fragment
+        android:id="@+id/navigation_notification"
+        android:name="com.example.spotted.ui.notification.NotificationFragment"
+        android:label="@string/title_notification"
+        tools:layout="@layout/fragment_notification" />
 
     <fragment
         android:id="@+id/navigation_event"
         android:name="com.example.spotted.ui.events.EventsFragment"
-        android:label="@string/title_notifications"
+        android:label="@string/title_events"
         tools:layout="@layout/fragment_events" />
 
     <fragment

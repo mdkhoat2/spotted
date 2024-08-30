@@ -3,7 +3,6 @@ package com.example.spotted.ui.chat
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
-import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -15,10 +14,9 @@ import com.example.spotted.backend.dataModels.Message
 import com.example.spotted.backend.dataModels.SendMessageRequest
 import com.example.spotted.backend.dataServices.AuthDataService
 import com.example.spotted.backend.dataServices.MessageDataService
+import com.example.spotted.communication.adapters.ChatAdapter
 import com.example.spotted.communication.live.MessageLive
 import com.example.spotted.util.LayoutUtil
-import java.time.Instant
-import java.time.format.DateTimeFormatter
 
 class MessagingActivity() : AppCompatActivity(){
 

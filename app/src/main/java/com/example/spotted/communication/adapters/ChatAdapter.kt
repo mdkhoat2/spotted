@@ -1,6 +1,4 @@
-package com.example.spotted.ui.chat
-import android.graphics.drawable.GradientDrawable
-import android.provider.ContactsContract.Data
+package com.example.spotted.communication.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,10 +6,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.spotted.R
 import com.example.spotted.backend.dataModels.Message
-import com.example.spotted.backend.dataServices.DataService
-import com.example.spotted.communication.adapters.MessageAdapter
 import com.example.spotted.util.SupportUtil
-import java.sql.Timestamp
 import java.time.Instant
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
