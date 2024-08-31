@@ -28,7 +28,7 @@ class EditProfileActivity : AppCompatActivity() {
         binding.btnBack.setOnClickListener {
             finish()
         }
-        binding.btnProceed.setOnClickListener {
+        binding.activityChangePasswordAppCompatButtonProceed.setOnClickListener {
             hideKeyboard()
             setupProceed()
         }
