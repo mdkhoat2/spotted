@@ -3,7 +3,6 @@ package com.example.spotted.ui.chat
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
-import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -15,10 +14,9 @@ import com.example.spotted.backend.dataModels.Message
 import com.example.spotted.backend.dataModels.SendMessageRequest
 import com.example.spotted.backend.dataServices.AuthDataService
 import com.example.spotted.backend.dataServices.MessageDataService
+import com.example.spotted.communication.adapters.ChatAdapter
 import com.example.spotted.communication.live.MessageLive
 import com.example.spotted.util.LayoutUtil
-import java.time.Instant
-import java.time.format.DateTimeFormatter
 
 class MessagingActivity() : AppCompatActivity(){
 
@@ -38,10 +36,14 @@ class MessagingActivity() : AppCompatActivity(){
         messageList = mutableListOf()
 
         // List<Message>
-        MessageDataService.getMessages(otherId) { messages ->
+        MessageDataService.getMessages(otherId,0) { messages ->
             if (messages != null) {
+                println("message size "+messages.size)
+                //flip the messages to display the latest message at the bottom
+
+                val revMessages = messages.reversed()
                 messageList.clear()
-                messageList.addAll(messages)
+                messageList.addAll(revMessages)
                 chatAdapter.notifyDataSetChanged()
                 //println("Messages: $messageList")
                 recyclerView.scrollToPosition(messageList.size - 1)
@@ -52,6 +54,23 @@ class MessagingActivity() : AppCompatActivity(){
         recyclerView=findViewById(R.id.recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = chatAdapter
+
+        //when scoll up to limit, load more messages
+        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                if (!recyclerView.canScrollVertically(-1)) {
+                    val skip = messageList.size
+                    MessageDataService.getMessages(otherId,skip) { messages ->
+                        if (messages != null) {
+                            val revMessages = messages.reversed()
+                            messageList.addAll(0,revMessages)
+                            chatAdapter.notifyItemRangeInserted(0,revMessages.size)
+                            recyclerView.scrollToPosition(messages.reversed().size-1)
+                        }
+                    }
+                }
+            }
+        })
 
         //display the messages from the bottom
 

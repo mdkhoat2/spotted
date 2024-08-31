@@ -1,6 +1,4 @@
-package com.example.spotted.ui.chat
-import android.graphics.drawable.GradientDrawable
-import android.provider.ContactsContract.Data
+package com.example.spotted.communication.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,16 +6,15 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.spotted.R
 import com.example.spotted.backend.dataModels.Message
-import com.example.spotted.backend.dataServices.DataService
-import com.example.spotted.communication.adapters.MessageAdapter
 import com.example.spotted.util.SupportUtil
-import java.sql.Timestamp
 import java.time.Instant
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 
 class ChatAdapter(private val messageList: List<Message>
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    private var loadMoreLevel:Int = 0
+
     companion object {
         const val VIEW_TYPE_SENT = 1
         const val VIEW_TYPE_RECEIVED = 2
@@ -36,10 +33,7 @@ class ChatAdapter(private val messageList: List<Message>
             val view = LayoutInflater.from(parent.context).inflate(R.layout.item_received_message, parent, false)
             MessageHolder(view)
         }
-
     }
-
-
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val message = messageList[position]
@@ -64,6 +58,7 @@ class ChatAdapter(private val messageList: List<Message>
             setBubbleBackground(itemView, isTop, isBottom,!MessageAdapter(message).isReceived())
 
             if (shouldShowTimestamp(position)) {
+                println(position)
                 itemView.findViewById<TextView>(R.id.text_timestamp).text = SupportUtil.translateTime(message.sentAt)
             } else {
                 itemView.findViewById<TextView>(R.id.text_timestamp).visibility = View.GONE
@@ -90,12 +85,6 @@ class ChatAdapter(private val messageList: List<Message>
                 bubble.setBackgroundResource(if (isSent) R.drawable.sent_message_2 else R.drawable.received_message_2)
             }
         }
-    }
-
-
-    private fun formatTimestamp(instant: Instant): String {
-        val formatter = DateTimeFormatter.ofPattern("HH:mm").withZone(ZoneId.systemDefault())
-        return formatter.format(instant)
     }
 
     private fun isTopMessage(position: Int): Boolean {
@@ -126,5 +115,4 @@ class ChatAdapter(private val messageList: List<Message>
 
         return timeDifference > 3600000
     }
-
 }

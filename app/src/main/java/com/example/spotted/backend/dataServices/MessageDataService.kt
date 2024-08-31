@@ -44,8 +44,8 @@ object MessageDataService {
         })
     }
 
-    fun getMessages(id: String,onResult: (List<Message>?) -> Unit){
-        DataService.apiService.getMessages(id,"Bearer ${DataService.authToken}").enqueue(object : Callback<List<Message>> {
+    fun getMessages(id: String,skip: Int,onResult: (List<Message>?) -> Unit){
+        DataService.apiService.getMessages(id,skip,"Bearer ${DataService.authToken}").enqueue(object : Callback<List<Message>> {
             override fun onResponse(call: Call<List<Message>>, response: Response<List<Message>>) {
                 if (response.isSuccessful) {
                     onResult(response.body())

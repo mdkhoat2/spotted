@@ -14,6 +14,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.spotted.R
 import com.example.spotted.databinding.FragmentHomeBinding
+import com.example.spotted.ui.chat.ContactListActivity
+import com.example.spotted.ui.chat.MessagingActivity
 import com.example.spotted.ui.event.MapActivity
 import com.example.spotted.util.LayoutUtil
 
@@ -68,6 +70,12 @@ class HomeFragment : Fragment() {
         LayoutUtil.applyVariableFont(this,category,"'wght' 500, 'wdth' 150")
         LayoutUtil.applyVariableFont(this,location,"'wght' 500, 'wdth' 150")
         LayoutUtil.applyVariableFont(this,time,"'wght' 500, 'wdth' 150")
+
+        val messageBtn: Button = root.findViewById(R.id.fragmentHome_button_messages)
+        messageBtn.setOnClickListener{
+            val intent = Intent(activity,ContactListActivity::class.java)
+            startActivity(intent)
+        }
 
         return root
     }
