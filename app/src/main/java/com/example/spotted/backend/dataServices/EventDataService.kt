@@ -22,4 +22,26 @@ object EventDataService {
             }
         })
     }
+
+    fun inviteUserToEvent(invite: InviteRequest, onResult: (Invitation?) -> Unit){
+        DataService.apiService.inviteUserToEvent("Bearer ${DataService.authToken}", invite).enqueue(object : Callback<Invitation> {
+            override fun onResponse(call: Call<Invitation>, response: Response<Invitation>) {
+                if (response.isSuccessful) {
+                    onResult(response.body())
+                } else {
+                    DataService.extractMsg(response.errorBody())
+                    onResult(null)
+                }
+            }
+
+            override fun onFailure(call: Call<Invitation>, t: Throwable) {
+                onResult(null)
+            }
+        })
+    }
+
+    fun inviteUserToEvent(eventID: String, userID: String, onResult: (Invitation?) -> Unit){
+        val invite = InviteRequest(eventID, userID)
+        inviteUserToEvent(invite, onResult)
+    }
 }

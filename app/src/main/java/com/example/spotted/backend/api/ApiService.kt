@@ -47,4 +47,8 @@ interface ApiService {
     //Events
     @GET("events/create")
     fun createEvent(@Header("Authorization") token: String, @Body event: Event) : Call<Event>
+
+    //Invite user to event
+    @POST("events/invite")
+    fun inviteUserToEvent(@Header("Authorization") token: String, @Body invite: InviteRequest) : Call<Invitation>
 }
