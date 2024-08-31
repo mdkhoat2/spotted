@@ -5,7 +5,9 @@
     <color name="blue_300">#DCEAF7</color>
     <color name="blue_black">#001F4B</color>
     <color name="blue_white">#B7D5FF</color>
-    <color name="green">#00CC00</color>
+    <color name="green_700">#00912D</color>
+    <color name="green_500">#00C13C</color>
+    <color name="green_300">#C0FFD3</color>
     <color name="red_700">#FE3F2A</color>
     <color name="red_300">#FFD9D4</color>
 
