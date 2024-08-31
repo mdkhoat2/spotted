@@ -18,33 +18,59 @@ interface ApiService {
     fun signUp(@Body signUpRequest: SignUpRequest): Call<SignUpResponse>
 
     @POST("auth/reset-password")
-    fun resetPassword(@Header("Authorization") token: String, @Body body: ResetPasswordRequest): Call<ResetPasswordResponse>
+    fun resetPassword(
+        @Header("Authorization") token: String,
+        @Body body: ResetPasswordRequest
+    ): Call<ResetPasswordResponse>
 
     @POST("auth/forgot-password")
     fun forgotPassword(@Body body: ForgotPasswordRequest): Call<ForgotPasswordResponse>
 
     // updateAuthProfile with Authorization header
     @PUT("auth/profile")
-    fun updateAuthProfile(@Header("Authorization") token: String, @Body profile: ProfileUpdateRequest) : Call<User>
+    fun updateAuthProfile(
+        @Header("Authorization") token: String,
+        @Body profile: ProfileUpdateRequest
+    ): Call<User>
 
     @GET("auth/profile")
-    fun getAuthProfile(@Header("Authorization") token: String) : Call<User>
+    fun getAuthProfile(@Header("Authorization") token: String): Call<User>
 
     // Users
     @GET("users/{id}")
-    fun getUser(@Path("id") id: String) : Call<User>
+    fun getUser(@Path("id") id: String): Call<User>
 
     // Messages
     @POST("messages/send")
-    fun sendMessage(@Header("Authorization") token: String, @Body message: SendMessageRequest) : Call<Message>
+    fun sendMessage(
+        @Header("Authorization") token: String,
+        @Body message: SendMessageRequest
+    ): Call<Message>
 
     @GET("messages/last-messages")
-    fun getLastMessages(@Header("Authorization") token: String) : Call<List<Message>>
+    fun getLastMessages(@Header("Authorization") token: String): Call<List<Message>>
 
     @GET("messages/inbox/{id}")
-    fun getMessages(@Path("id") id: String,@Header("Authorization") token: String) : Call<List<Message>>
+    fun getMessages(
+        @Path("id") id: String,
+        @Header("Authorization") token: String
+    ): Call<List<Message>>
 
     //Events
-    @GET("events/create")
-    fun createEvent(@Header("Authorization") token: String, @Body event: Event) : Call<Event>
+    @POST("events/create")
+    fun createEvent(@Header("Authorization") token: String, @Body event: Event): Call<Event>
+
+    @POST("events/invitation/accept/{id}")
+    fun respondInvitation(@Header("Authorization") token: String, @Path("id") id: String,@Body Status: String): Call<Event>
+
+    @GET("events/joined")
+    fun getJoinedEvents(@Header("Authorization") token: String): Call<List<Event>>
+
+    @POST("events/admin")
+    fun inviteAdminEvents(
+        @Header("Authorization") token: String,
+        @Body eventId: String,
+        @Body userId: String,
+        @Body mode: String
+    ): Call<String>
 }

@@ -38,6 +38,7 @@ class MessagingActivity() : AppCompatActivity(){
         // List<Message>
         MessageDataService.getMessages(otherId) { messages ->
             if (messages != null) {
+                println("message size "+messages.size)
                 messageList.clear()
                 messageList.addAll(messages)
                 chatAdapter.notifyDataSetChanged()
