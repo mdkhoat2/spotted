@@ -36,11 +36,14 @@ class MessagingActivity() : AppCompatActivity(){
         messageList = mutableListOf()
 
         // List<Message>
-        MessageDataService.getMessages(otherId) { messages ->
+        MessageDataService.getMessages(otherId,0) { messages ->
             if (messages != null) {
                 println("message size "+messages.size)
+                //flip the messages to display the latest message at the bottom
+
+                val revMessages = messages.reversed()
                 messageList.clear()
-                messageList.addAll(messages)
+                messageList.addAll(revMessages)
                 chatAdapter.notifyDataSetChanged()
                 //println("Messages: $messageList")
                 recyclerView.scrollToPosition(messageList.size - 1)
@@ -51,6 +54,23 @@ class MessagingActivity() : AppCompatActivity(){
         recyclerView=findViewById(R.id.recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = chatAdapter
+
+        //when scoll up to limit, load more messages
+        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                if (!recyclerView.canScrollVertically(-1)) {
+                    val skip = messageList.size
+                    MessageDataService.getMessages(otherId,skip) { messages ->
+                        if (messages != null) {
+                            val revMessages = messages.reversed()
+                            messageList.addAll(0,revMessages)
+                            chatAdapter.notifyItemRangeInserted(0,revMessages.size)
+                            recyclerView.scrollToPosition(messages.reversed().size-1)
+                        }
+                    }
+                }
+            }
+        })
 
         //display the messages from the bottom
 

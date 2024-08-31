@@ -50,9 +50,10 @@ interface ApiService {
     @GET("messages/last-messages")
     fun getLastMessages(@Header("Authorization") token: String): Call<List<Message>>
 
-    @GET("messages/inbox/{id}")
+    @GET("messages/inbox/{id}/{skip}")
     fun getMessages(
         @Path("id") id: String,
+        @Path("skip") skip: Int,
         @Header("Authorization") token: String
     ): Call<List<Message>>
 
