@@ -18,7 +18,13 @@ class ForgotPasswordActivity : AppCompatActivity() {
         binding = ActivityForgotPasswordBinding.inflate(layoutInflater)
         setContentView(binding.root)
         emailFocusListener()
-        binding.btnResetPassword.setOnClickListener{setupResetPassword()}
+        binding.btnResetPassword.setOnClickListener{
+            Helper.hideKeyboard(this, binding.emailEditText)
+            setupResetPassword()
+        }
+        binding.activityForgotPasswordImageButtonBack.setOnClickListener{
+            finish()
+        }
     }
 
     private fun emailFocusListener()
@@ -32,8 +38,6 @@ class ForgotPasswordActivity : AppCompatActivity() {
 
     private fun setupResetPassword()
     {
-        hideKeyboard(this, binding.emailEditText)
-
         val email = binding.emailEditText.text.toString()
         AuthDataService.forgotPassword(email) {response ->
             if(response != null){
@@ -46,11 +50,6 @@ class ForgotPasswordActivity : AppCompatActivity() {
                 createDialog(this, "Failed", DataService.getMsg()){}
             }
         }
-    }
-
-    private fun hideKeyboard(context: Context, view: View){
-        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
     private fun createDialog(context: Context, title: String, message: String, callbackOK: () -> Unit){

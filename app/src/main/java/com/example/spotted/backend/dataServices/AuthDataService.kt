@@ -59,7 +59,7 @@ object AuthDataService {
             }
         })
     }
-    fun updateProfile(name: String, age: Int, phone: String, description: String, interests: List<String>, onResult: (User?) -> Unit) {
+    fun updateProfile(name: String, age: Int, phone: String, description: String, interests: String, onResult: (User?) -> Unit) {
         val profile = ProfileUpdateRequest(name, age, phone, description, interests)
         updateProfile(profile, onResult)
     }

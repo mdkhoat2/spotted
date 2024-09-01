@@ -9,12 +9,15 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/email_container"
+        style="@style/OutlinedRoundedBox"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="32dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginRight="32dp"
+        android:layout_marginEnd="24dp"
         android:hint="@string/email"
+        app:boxStrokeColor="@color/white"
+        app:boxStrokeWidth="1dp"
         app:helperTextTextAppearance="@font/flex"
         app:helperTextTextColor="@android:color/holo_red_dark"
         app:endIconMode="clear_text"
@@ -28,18 +31,23 @@
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress"
             android:text="caynhat05062004@gmail.com"
-            android:fontFamily="@font/flex" />
+            android:fontFamily="@font/instance"
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/passwordContainer"
+        style="@style/OutlinedRoundedBox"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="32dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginRight="32dp"
+        android:layout_marginEnd="24dp"
         android:hint="@string/password"
+        app:boxStrokeColor="@color/white"
+        app:boxStrokeWidth="1dp"
         app:passwordToggleEnabled="true"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -50,7 +58,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
-            android:fontFamily="@font/flex"
+            android:fontFamily="@font/instance"
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp"
             android:text="thanhduy"
             android:hint="@string/password"/>
     </com.google.android.material.textfield.TextInputLayout>
@@ -69,13 +79,17 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnSignIn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="32dp"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="24dp"
+        android:textAllCaps="false"
         android:background="@drawable/rounded_blue_white"
+        android:elevation="0dp"
         android:fontFamily="@font/flex"
         android:text="@string/sign_in"
-        android:layout_marginTop="64dp"
+        android:textSize="16sp"
         app:layout_constraintTop_toBottomOf="@id/passwordContainer"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>

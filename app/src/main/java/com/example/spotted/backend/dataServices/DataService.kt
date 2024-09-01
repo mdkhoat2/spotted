@@ -40,9 +40,6 @@ object DataService {
         return msg
     }
 
-
-
-
     internal fun connect() {
         try {
             mSocket = IO.socket(BuildConfig.API_BASE_URL)

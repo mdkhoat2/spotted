@@ -4,6 +4,7 @@ import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Context
 import android.widget.EditText
+import com.example.spotted.ui.account.doAsync
 import java.sql.Timestamp
 import java.time.Instant
 import java.time.ZoneId
@@ -77,6 +78,10 @@ object SupportUtil {
             val time = Instant.ofEpochMilli(time.time).atZone(ZoneId.systemDefault()).toLocalDateTime().format(dateFormatter)
             time
         }
+    }
 
+    fun createAsyncTask(context: Context, handler: () -> Boolean): Boolean{
+        val asyncTask = doAsync(context, handler).execute()
+        return asyncTask.get()
     }
 }

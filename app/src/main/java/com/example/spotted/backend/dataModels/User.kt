@@ -6,8 +6,9 @@ data class User(
     val email: String,
     val phone: String,
     val description: String,
-    val interests: List<String>,
-    val isVerified: Boolean
+    val interests: String,
+    val isVerified: Boolean,
+    val age: Int
 )
 
 data class ErrorResponse(

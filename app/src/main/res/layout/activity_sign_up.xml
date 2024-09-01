@@ -8,19 +8,49 @@
     android:background="@color/blue_700"
     tools:context=".ui.account.SignUpActivity">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/email_container"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/activitySignUp_textView_header"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginRight="32dp"
+        android:elevation="16dp"
+        android:shadowColor="#000000"
+        android:text="@string/sign_up"
+        android:textColor="@color/blue_white"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/activitySignUp_imageButton_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/back"
+        app:tint="@color/blue_white"
+        app:layout_constraintBottom_toBottomOf="@+id/activitySignUp_textView_header"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/activitySignUp_textView_header"
+        app:srcCompat="@drawable/icon_back_blue" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/email_container"
+        style="@style/OutlinedRoundedBox"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="24dp"
         android:hint="@string/email"
+        app:boxStrokeColor="@color/white"
+        app:boxStrokeWidth="1dp"
         app:helperTextTextAppearance="@font/flex"
         app:helperTextTextColor="@android:color/holo_red_dark"
         app:endIconMode="clear_text"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/activitySignUp_textView_header"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintRight_toRightOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -28,18 +58,23 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress"
-            android:fontFamily="@font/flex" />
+            android:fontFamily="@font/instance"
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/passwordContainer"
+        style="@style/OutlinedRoundedBox"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="32dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginRight="32dp"
+        android:layout_marginEnd="24dp"
         android:hint="@string/password"
+        app:boxStrokeColor="@color/white"
+        app:boxStrokeWidth="1dp"
         app:passwordToggleEnabled="true"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -50,17 +85,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
-            android:fontFamily="@font/flex"/>
+            android:fontFamily="@font/instance"
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/passwordConfirmContainer"
+        style="@style/OutlinedRoundedBox"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="32dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginRight="32dp"
+        android:layout_marginEnd="24dp"
         android:hint="@string/confirmPass"
+        app:boxStrokeColor="@color/white"
+        app:boxStrokeWidth="1dp"
         app:passwordToggleEnabled="true"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -71,18 +111,25 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
-            android:fontFamily="@font/flex"/>
+            android:fontFamily="@font/instance"
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnSignUp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="32dp"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="24dp"
         android:background="@drawable/rounded_blue_white"
+        android:elevation="0dp"
         android:fontFamily="@font/flex"
         android:text="@string/sign_up"
-        android:layout_marginTop="64dp"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="16sp"
         app:layout_constraintTop_toBottomOf="@id/passwordConfirmContainer"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>

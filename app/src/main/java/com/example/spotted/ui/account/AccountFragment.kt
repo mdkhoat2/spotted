@@ -26,12 +26,16 @@ class AccountFragment : Fragment() {
         val root: View = binding.root
 
         binding.btnLogout.setOnClickListener{
-            val intent = Intent(activity, LoginActivity::class.java)
-            startActivity(intent)
+            activity?.finish()
         }
 
         binding.btnChangePassword.setOnClickListener{
             val intent = Intent(activity, ChangePasswordActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.btnPersonalProfile.setOnClickListener{
+            val intent = Intent(activity, EditProfileActivity::class.java)
             startActivity(intent)
         }
 
