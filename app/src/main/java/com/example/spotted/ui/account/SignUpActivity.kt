@@ -14,8 +14,13 @@ class SignUpActivity : AppCompatActivity() {
         binding = ActivitySignUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
         emailFocusListener()
-        passwordFocusListener()
-        binding.btnSignUp.setOnClickListener{setupSignUp()}
+        binding.btnSignUp.setOnClickListener{
+            hideKeyboard()
+            setupSignUp()
+        }
+        binding.activitySignUpImageButtonBack.setOnClickListener{
+            finish()
+        }
     }
 
     private fun emailFocusListener()
@@ -27,21 +32,13 @@ class SignUpActivity : AppCompatActivity() {
         }
     }
 
-    private fun passwordFocusListener()
-    {
-        val error = Helper.passMatch(binding.passwordEditText.text.toString(), binding.passwordConfirmEditText.text.toString())
-        binding.passwordConfirmEditText.setOnFocusChangeListener{_, focused ->
-            if(!focused){
-                binding.passwordConfirmContainer.error = error
-            }
-        }
-    }
-
-    private fun setupSignUp(){
+    private fun hideKeyboard(){
         Helper.hideKeyboard(this, binding.passwordConfirmEditText)
         Helper.hideKeyboard(this, binding.emailEditText)
         Helper.hideKeyboard(this, binding.passwordEditText)
+    }
 
+    private fun setupSignUp(){
         val password = binding.passwordEditText.text.toString()
         val confirmPassword = binding.passwordConfirmEditText.text.toString()
         val email = binding.emailEditText.text.toString()
@@ -53,9 +50,7 @@ class SignUpActivity : AppCompatActivity() {
         AuthDataService.signUp(email, password) { response ->
             if(response != null){
                 Helper.createDialog(this, "Success", "Congratulations! Please check your mail and log in to new account"){
-                    Intent(this, LoginActivity::class.java).also{
-                        startActivity(it)
-                    }
+                        finish()
                 }
             }
             else{

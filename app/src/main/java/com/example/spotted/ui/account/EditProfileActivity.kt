@@ -25,10 +25,10 @@ class EditProfileActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        binding.btnBack.setOnClickListener {
+        binding.activityEditProfileImageButtonBack.setOnClickListener {
             finish()
         }
-        binding.activityChangePasswordAppCompatButtonProceed.setOnClickListener {
+        binding.activityEditProfileAppCompatButtonSaveChanges.setOnClickListener {
             hideKeyboard()
             setupProceed()
         }
