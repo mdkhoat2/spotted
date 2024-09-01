@@ -1,12 +1,15 @@
 package com.example.spotted
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.ImageButton
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.example.spotted.databinding.ActivityMainBinding
+import com.example.spotted.ui.create.CreateEventActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -28,10 +31,15 @@ class MainActivity : AppCompatActivity() {
                 R.id.navigation_home,R.id.navigation_event, R.id.navigation_create, R.id.navigation_notification ,R.id.navigation_account
             )
         )
+
         //setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
-
+        val addButton : ImageButton = findViewById(R.id.mainActivity_add_imageButton)
+        addButton.setOnClickListener {
+            intent = Intent(this, CreateEventActivity::class.java)
+            startActivity(intent)
+        }
 
     }
 }

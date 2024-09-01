@@ -33,7 +33,17 @@ class NotificationFragment : Fragment() {
 
         val notifications = listOf(
             NotificationItem(NotificationAdapter.TYPE_APPROVE_NEW, "A new request to join PR league is waiting for your approval."),
-            NotificationItem(NotificationAdapter.TYPE_REQUEST_ACCEPTED, "Your request to join ADL League has been accepted.")
+            NotificationItem(NotificationAdapter.TYPE_REQUEST_ACCEPTED, "Your request to join ADL League has been accepted."),
+            NotificationItem(NotificationAdapter.TYPE_APPROVE_NEW, "A new request to join ADL league is waiting for your approval."),
+            NotificationItem(NotificationAdapter.TYPE_APPROVE_NEW, "A new request to join PR league is waiting for your approval."),
+            NotificationItem(NotificationAdapter.TYPE_APPROVE_NEW, "A new request to join PR league is waiting for your approval."),
+            NotificationItem(NotificationAdapter.TYPE_REQUEST_ACCEPTED, "Your request to join ADL League has been accepted."),
+            NotificationItem(NotificationAdapter.TYPE_APPROVE_NEW, "A new request to join ADL league is waiting for your approval."),
+            NotificationItem(NotificationAdapter.TYPE_APPROVE_NEW, "A new request to join PR league is waiting for your approval."),
+            NotificationItem(NotificationAdapter.TYPE_APPROVE_NEW, "A new request to join PR league is waiting for your approval."),
+            NotificationItem(NotificationAdapter.TYPE_REQUEST_ACCEPTED, "Your request to join ADL League has been accepted."),
+            NotificationItem(NotificationAdapter.TYPE_APPROVE_NEW, "A new request to join ADL league is waiting for your approval."),
+            NotificationItem(NotificationAdapter.TYPE_APPROVE_NEW, "A new request to join PR league is waiting for your approval.")
         )
 
         val layoutManager = LinearLayoutManager(requireContext())
