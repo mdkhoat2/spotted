@@ -32,6 +32,7 @@ class EditProfileActivity : AppCompatActivity() {
             hideKeyboard()
             setupProceed()
         }
+
         setupProfile()
     }
 
@@ -43,12 +44,11 @@ class EditProfileActivity : AppCompatActivity() {
     private fun setupProfile(){
         AuthDataService.getProfile { response ->
             if (response != null) {
-                val list_information = Helper.extractString(response.description)
                 binding.editTextName.setText(response.name)
-                binding.editTextInterest.setText(response.interests.joinToString(", "))
+                binding.editTextInterest.setText(response.interests)
                 binding.editTextContact.setText(response.phone)
-                binding.editTextAge.setText(list_information.getOrNull(0) ?: "")
-                binding.editTextBio.setText(list_information.getOrNull(1) ?: "")
+                binding.editTextAge.setText(response.age.toString())
+                binding.editTextBio.setText(response.description)
             }
         }
     }
@@ -66,12 +66,9 @@ class EditProfileActivity : AppCompatActivity() {
         val interest = binding.editTextInterest.text.toString()
         val contact = binding.editTextContact.text.toString()
         val bio = binding.editTextBio.text.toString()
-        val age = binding.editTextAge.text.toString()
-        val description = Helper.concatString(age, bio)
+        val age = binding.editTextAge.text.toString().toInt()
 
-        val list_interest = interest.split(",").map { it.trim() }
-
-        AuthDataService.updateProfile(name, 0, contact, description, list_interest){it ->
+        AuthDataService.updateProfile(name, age, contact, bio, interest){it ->
             if(it != null){
                 Helper.createDialog(this, "Success", "Profile has been updated"){}
             }

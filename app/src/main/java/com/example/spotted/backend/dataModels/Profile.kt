@@ -5,6 +5,6 @@ data class ProfileUpdateRequest(
     val age: Int,
     val phone: String,
     val description: String,
-    val interests: List<String>
+    val interests: String
 )
 
