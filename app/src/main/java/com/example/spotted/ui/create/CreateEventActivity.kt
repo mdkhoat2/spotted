@@ -6,7 +6,10 @@ import android.os.Bundle
 import android.view.MotionEvent
 import android.view.View
 import android.widget.EditText
+import android.widget.ImageButton
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatButton
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
 import androidx.navigation.fragment.findNavController
@@ -32,19 +35,37 @@ class CreateEventActivity : AppCompatActivity() {
         LayoutUtil.setupUI(this, root)
 
         setupInput(root)
+
+        val header : TextView = binding.activityCreateEventHeaderTextView
+        val location : TextView = binding.activityCreateEventLocationTextView
+        val proceed : AppCompatButton = binding.activityCreateEventFinishAppCompatButton
+
+        LayoutUtil.applyVariableFont(this,header,"'wght' 500, 'wdth' 150")
+        LayoutUtil.applyVariableFont(this,location,"'wght' 500, 'wdth' 150")
+        LayoutUtil.applyVariableFont(this,proceed,"'wght' 500, 'wdth' 150")
+
+        val back : ImageButton = binding.activityChangePasswordImageButtonBack
+        back.setOnClickListener {
+            finish()
+        }
+
+        proceed.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            intent.putExtra("navigateTo", "home")
+            startActivity(intent)
+            finish()
+        }
+
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        val intent = Intent(this, MainActivity::class.java)
-        intent.putExtra("navigateTo", "home")
-        startActivity(intent)
     }
 
     @SuppressLint("ClickableViewAccessibility")
     private fun setupInput(view: View) {
         // Date EditText
-        val dateEditText: EditText = view.findViewById(R.id.DatePicker)
+        val dateEditText: EditText = view.findViewById(R.id.activityCreateEvent_date_editText)
 
         // Set an onClickListener for the drawable end
         dateEditText.setOnTouchListener { v, event ->
@@ -57,7 +78,7 @@ class CreateEventActivity : AppCompatActivity() {
             false
         }
 
-        val timeEditText: EditText = view.findViewById(R.id.TimePicker)
+        val timeEditText: EditText = view.findViewById(R.id.activityCreateEvent_time_editText)
 
         timeEditText.setOnTouchListener { v, event ->
             if (event.action == MotionEvent.ACTION_UP) {
