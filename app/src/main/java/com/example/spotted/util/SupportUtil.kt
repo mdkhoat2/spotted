@@ -6,6 +6,8 @@ import android.app.TimePickerDialog
 import android.content.Context
 import android.widget.EditText
 import com.example.spotted.ui.account.doAsync
+import java.io.File
+import java.io.InputStream
 import java.sql.Timestamp
 import java.time.Instant
 import java.time.LocalDateTime
@@ -124,5 +126,13 @@ object SupportUtil {
         progressDialog.setCancelable(false)
         progressDialog.show()
         return progressDialog
+    }
+
+    fun createFileFromInputStream(inputStream: InputStream, fileName: String): File {
+        val file = File(fileName)
+        file.outputStream().use { outputStream ->
+            inputStream.copyTo(outputStream)
+        }
+        return file
     }
 }

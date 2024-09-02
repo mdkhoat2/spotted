@@ -1,20 +1,28 @@
 package com.example.spotted.ui.account
 
+import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
+import android.provider.MediaStore
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.net.toFile
+import androidx.core.net.toUri
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.spotted.R
-import com.example.spotted.backend.dataModels.User
 import com.example.spotted.backend.dataServices.AuthDataService
 import com.example.spotted.backend.dataServices.DataService
 import com.example.spotted.databinding.ActivityEditProfileBinding
+import com.example.spotted.util.SupportUtil
+import java.io.File
 
 class EditProfileActivity : AppCompatActivity() {
     private lateinit var binding: ActivityEditProfileBinding
 
+    companion object {
+        val IMAGE_REQUEST_CODE = 100
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityEditProfileBinding.inflate(layoutInflater)
@@ -33,6 +41,10 @@ class EditProfileActivity : AppCompatActivity() {
             setupProceed()
         }
 
+        binding.activityEditProfileImageViewChangeAvatar.setOnClickListener{
+            pickImageGallery()
+        }
+
         setupProfile()
     }
 
@@ -42,14 +54,13 @@ class EditProfileActivity : AppCompatActivity() {
     }
 
     private fun setupProfile(){
-        AuthDataService.getProfile { response ->
-            if (response != null) {
-                binding.editTextName.setText(response.name)
-                binding.editTextInterest.setText(response.interests)
-                binding.editTextContact.setText(response.phone)
-                binding.editTextAge.setText(Helper.getAge(response.age))
-                binding.editTextBio.setText(response.description)
-            }
+        val response = DataService.getAuthProfile()
+        if(response != null){
+            binding.editTextName.setText(response.name)
+            binding.editTextInterest.setText(response.interests)
+            binding.editTextContact.setText(response.phone)
+            binding.editTextAge.setText(Helper.getAge(response.age))
+            binding.editTextBio.setText(response.description)
         }
     }
 
@@ -77,4 +88,29 @@ class EditProfileActivity : AppCompatActivity() {
             }
         }
     }
+
+    private fun pickImageGallery(){
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.type = "image/*"
+        startActivityForResult(intent, IMAGE_REQUEST_CODE)
+    }
+
+    @SuppressLint("Recycle")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == IMAGE_REQUEST_CODE && resultCode == RESULT_OK) {
+            data?.data?.let { uri ->
+                binding.activityEditProfileImageViewChangeAvatar.setImageURI(uri)
+                val file = File(uri.path!!)
+                AuthDataService.updateAvatar(file){
+                    if(it != null){
+                        Helper.createDialog(this, "Success", "Avatar has been updated"){}
+                    }
+                    else{
+                        Helper.createDialog(this, "Failed", DataService.getMsg()){}
+                }
+            }
+        }
+    }
+}
 }
