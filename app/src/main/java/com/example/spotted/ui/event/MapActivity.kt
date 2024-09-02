@@ -13,14 +13,12 @@ import com.example.spotted.backend.dataModels.Event
 import com.example.spotted.databinding.ActivityMapBinding
 import com.example.spotted.util.LayoutUtil
 import com.example.spotted.util.LocationHelper
-import com.example.spotted.util.SupportUtil
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.TypeFilter
 import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest
 import com.google.android.libraries.places.api.net.PlacesClient
@@ -167,18 +165,33 @@ class MapActivity: AppCompatActivity(), OnMapReadyCallback {
         val time4 = Timestamp(System.currentTimeMillis() + 300000000)
         val time5 = Timestamp(System.currentTimeMillis() - 4000000000)
 
-        eventList.addAll(listOf(
-            Event("1","Badminton 1",time,60, listOf(21.022411, 105.804817),"Sport","Everyone",10,time),
-            Event("2","Badminton 2",time2,60, listOf(21.028511, 105.804817),"Sport","Everyone",10,time),
-            Event("6","Badminton 6",time,60, listOf(21.028591, 105.804807),"Sport","Everyone",10,time),
-            Event("7","Badminton 7",time,60, listOf(21.028611, 105.804717),"Sport","Everyone",10,time)
+
+        eventList.addAll(listOf(//random close location
+            Event("1","Badminton 1",time,60, 21.022411, 105.804817,"badminton","Everyone",10,time),
+            Event("2","Badminton 2",time2,60,21.028511, 105.804217,"baseball","Everyone",10,time),
+            Event("3","Badminton 3",time3,60, 21.028531, 105.804717,"basketball","Everyone",10,time),
+            Event("4","Badminton 4",time4,60, 21.028501, 105.804917,"volleyball","Everyone",10,time)
         ))
 
         // Add all markers with icon to the map
+
         for (event in eventList) {
-            println(event.location)
-            val latLng = LatLng(event.location[0], event.location[1])
-            val marker = mMap.addMarker(MarkerOptions().position(latLng).title(event.description))
+            val latLng = LatLng(event.latitude, event.longitude)
+
+            // get the icon for the event
+//            val icon = when (event.type) {
+//                "badminton" -> R.drawable.badminton
+//                "baseball" -> R.drawable.baseball
+//                "basketball" -> R.drawable.basketball
+//                "volleyball" -> R.drawable.volleyball
+//                else -> R.drawable.badminton
+//            }
+
+            //mMap.addMarker(MarkerOptions().position(latLng).title(event.type).icon(bitmapDescriptor))
+
+            mMap.addMarker(MarkerOptions().position(latLng).title(event.type))
+
+
             // set camera to the first event
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))

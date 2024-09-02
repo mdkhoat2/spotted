@@ -98,11 +98,11 @@ class CreateEventActivity : AppCompatActivity(), OnMapReadyCallback {
         //create the event
         val name = nameEditText.text.toString()
         val sport = sportEditText.text.toString() // is type
-        val location: List<Double> = listOf(locationPos.latitude, locationPos.longitude)
         val dateTime:Timestamp = SupportUtil.getTimestampFromString(dateEditText.text.toString(),timeEditText.text.toString())
         val deadline = Timestamp(System.currentTimeMillis())
 
-        val event = Event("0", name, dateTime, 60, location, sport, "Everyone", 10, deadline)
+        val event = Event("0", name, dateTime, 60, locationPos.latitude, locationPos.longitude,
+            sport,"Everyone", 10, deadline)
 
         EventDataService.createEvent(event) { event ->
             if (event != null) {
@@ -180,7 +180,6 @@ class CreateEventActivity : AppCompatActivity(), OnMapReadyCallback {
             false
         }
     }
-
 
 
     override fun onMapReady(googleMap: GoogleMap) {
