@@ -35,13 +35,13 @@ class EventsFragment : Fragment() {
     val time5 = Timestamp(System.currentTimeMillis() - 4000000000)
 
     private val eventsList = listOf(
-        Event("1","Badminton 1",time,60, listOf(21.028511, 105.804817),"Sport","Everyone",10,time),
-        Event("2","Badminton 2",time2,60, listOf(21.028511, 105.804817),"Sport","Everyone",10,time),
-        Event("3","Badminton 3",time3,60, listOf(21.028511, 105.804817),"Sport","Everyone",10,time),
-        Event("4","Badminton 4",time4,60, listOf(21.028511, 105.804817),"Sport","Everyone",10,time),
-        Event("5","Badminton 5",time5,60, listOf(21.028511, 105.804817),"Sport","Everyone",10,time),
-        Event("6","Badminton 6",time,60, listOf(21.028511, 105.804817),"Sport","Everyone",10,time),
-        Event("7","Badminton 7",time,60, listOf(21.028511, 105.804817),"Sport","Everyone",10,time)
+        Event("1","Badminton 1",time,60, 21.028511, 105.804817,"Sport","Everyone",10,time),
+        Event("2","Badminton 2",time2,60, 21.028511, 105.804817,"Sport","Everyone",10,time),
+        Event("3","Badminton 3",time3,60, 21.028511, 105.804817,"Sport","Everyone",10,time),
+        Event("4","Badminton 4",time4,60, 21.028511, 105.804817,"Sport","Everyone",10,time),
+        Event("5","Badminton 5",time5,60, 21.028511, 105.804817,"Sport","Everyone",10,time),
+        Event("6","Badminton 6",time,60, 21.028511, 105.804817,"Sport","Everyone",10,time),
+        Event("7","Badminton 7",time,60, 21.028511, 105.804817,"Sport","Everyone",10,time)
     )
 
     override fun onCreateView(
