@@ -47,7 +47,7 @@ class EditProfileActivity : AppCompatActivity() {
                 binding.editTextName.setText(response.name)
                 binding.editTextInterest.setText(response.interests)
                 binding.editTextContact.setText(response.phone)
-                binding.editTextAge.setText(response.age.toString())
+                binding.editTextAge.setText(Helper.getAge(response.age))
                 binding.editTextBio.setText(response.description)
             }
         }
@@ -66,7 +66,7 @@ class EditProfileActivity : AppCompatActivity() {
         val interest = binding.editTextInterest.text.toString()
         val contact = binding.editTextContact.text.toString()
         val bio = binding.editTextBio.text.toString()
-        val age = binding.editTextAge.text.toString().toInt()
+        val age = Helper.getAgeInt(binding.editTextAge.text.toString())
 
         AuthDataService.updateProfile(name, age, contact, bio, interest){it ->
             if(it != null){
