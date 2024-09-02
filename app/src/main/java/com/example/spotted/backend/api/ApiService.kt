@@ -69,4 +69,8 @@ interface ApiService {
     //Invite user to event
     @POST("events/invite")
     fun inviteUserToEvent(@Header("Authorization") token: String, @Body invite: InviteRequest) : Call<Invitation>
+
+    // Update avatar
+    @PUT("auth/profile/avatar")
+    fun updateAvatar(@Header("Authorization") token: String, @Body avatar: AvatarUpdateRequest) : Call<AvatarUpdateResponse>
 }

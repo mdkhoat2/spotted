@@ -1,10 +1,15 @@
 package com.example.spotted.backend.dataServices
 
 
+import android.graphics.Bitmap
 import com.example.spotted.backend.dataModels.*
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.File
 
 object AuthDataService {
 
@@ -125,5 +130,26 @@ object AuthDataService {
                 onResult(null)
             }
         })
+    }
+
+    private fun updateAvatar(avatar: AvatarUpdateRequest, onResult: (AvatarUpdateResponse?) -> Unit) {
+        DataService.apiService.updateAvatar("Bearer ${DataService.authToken}", avatar).enqueue(object : Callback<AvatarUpdateResponse> {
+            override fun onResponse(call: Call<AvatarUpdateResponse>, response: Response<AvatarUpdateResponse>) {
+                DataService.extractMsg(response.errorBody())
+                onResult(response.body())
+            }
+
+            override fun onFailure(call: Call<AvatarUpdateResponse>, t: Throwable) {
+                DataService.msg = "Unknown error"
+                onResult(null)
+            }
+        })
+    }
+
+    fun updateAvatar(avatar: File, onResult: (AvatarUpdateResponse?) -> Unit) {
+        val requestBody = RequestBody.create("image/*".toMediaTypeOrNull(), avatar)
+        val avatarPart = MultipartBody.Part.createFormData("avatar", avatar.name, requestBody)
+        val request = AvatarUpdateRequest(avatarPart)
+        updateAvatar(request, onResult)
     }
 }
