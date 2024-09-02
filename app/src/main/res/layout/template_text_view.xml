@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/template_text_view_content"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/rounded_blue_300"
+        android:fontFamily="@font/instance"
+        android:textSize="14sp"
+        android:gravity="center|start"
+        android:paddingStart="48dp"
+        android:paddingTop="10dp"
+        android:text="New Test League"
+        android:textColor="@color/blue_700"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/template_text_view_header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/instance"
+        android:gravity="center|start"
+        android:paddingStart="48dp"
+        android:paddingTop="8dp"
+        android:text="Name"
+        android:textSize="10sp"
+        android:textColor="@color/blue_500"
+        app:layout_constraintStart_toStartOf="@+id/template_text_view_content"
+        app:layout_constraintTop_toTopOf="@+id/template_text_view_content" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
