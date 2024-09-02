@@ -7,6 +7,7 @@ import com.example.spotted.MainActivity
 import com.example.spotted.backend.dataServices.AuthDataService
 import com.example.spotted.backend.dataServices.DataService
 import com.example.spotted.databinding.ActivityLoginBinding
+import com.example.spotted.util.SupportUtil
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
@@ -34,9 +35,13 @@ class LoginActivity : AppCompatActivity() {
         Helper.hideKeyboard(this, binding.emailEditText)
         Helper.hideKeyboard(this, binding.passwordEditText)
 
+        val progress = SupportUtil.createProgressDialog(this)
+
         val email = binding.emailEditText.text.toString()
         val password = binding.passwordEditText.text.toString()
+
         AuthDataService.login(email, password) { response ->
+            progress.dismiss()
             if (response != null) {
                 Intent(this, MainActivity::class.java).also{
                     startActivity(it)

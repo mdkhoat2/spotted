@@ -1,6 +1,7 @@
 package com.example.spotted.util
 
 import android.app.DatePickerDialog
+import android.app.ProgressDialog
 import android.app.TimePickerDialog
 import android.content.Context
 import android.widget.EditText
@@ -80,8 +81,13 @@ object SupportUtil {
         }
     }
 
-    fun createAsyncTask(context: Context, handler: () -> Boolean): Boolean{
-        val asyncTask = doAsync(context, handler).execute()
-        return asyncTask.get()
+    // Use: val progress = SupportUtil.createProgressDialog(this)
+    // Use: before doing anything: progress.dismiss()
+    fun createProgressDialog(context: Context): ProgressDialog{
+        val progressDialog = ProgressDialog(context)
+        progressDialog.setMessage("Loading...")
+        progressDialog.setCancelable(false)
+        progressDialog.show()
+        return progressDialog
     }
 }
