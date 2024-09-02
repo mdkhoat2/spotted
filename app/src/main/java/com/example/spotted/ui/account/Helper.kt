@@ -49,4 +49,19 @@ object Helper {
     fun concatString(s1: String, s2: String): String{
         return s1 + "\n" + s2
     }
+    fun getAge(age: Int): String{
+        if(age == 0)
+            return " "
+        return age.toString()
+    }
+    fun getAgeInt(age: String): Int{
+        if(age.trim().isEmpty())
+            return 0
+        return age.toInt()
+    }
+    fun getValidInformation(infor: String): String{
+        if(infor.trim().isEmpty())
+            return " "
+        return infor
+    }
 }

@@ -30,6 +30,7 @@
     <string name="description_forgot">Please enter your registered email to reset the password</string>
     <string name="reset_pass">Reset Password</string>
     <string name="back">Back</string>
+    <string name="profile">Profile</string>
 
     <string-array name="sports">
         <item>Badminton</item>
