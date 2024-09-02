@@ -49,7 +49,7 @@ interface ApiService {
     ): Call<List<Message>>
 
     //Events
-    @GET("events/create")
+    @POST("events/create")
     fun createEvent(@Header("Authorization") token: String, @Body event: Event) : Call<Event>
 
     @POST("events/invitation/accept/{id}")

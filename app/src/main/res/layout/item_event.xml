@@ -35,7 +35,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/event_title"
+            android:id="@+id/event_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Event Title"
@@ -44,17 +44,17 @@
             android:textColor="@color/blue_700"/>
 
         <TextView
-            android:id="@+id/event_time"
+            android:id="@+id/event_type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="17:15"
+            android:text="Badminton"
             android:textSize="@dimen/text_size_medium"
             android:textColor="@color/blue_700"/>
         <TextView
-            android:id="@+id/event_date"
+            android:id="@+id/event_datetime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Thu 16-05-2024"
+            android:text="Thu 16-05-2024 17:15"
             android:textSize="@dimen/text_size_medium"
             android:textColor="@color/blue_700"
             android:layout_marginTop="4dp"/>
@@ -71,6 +71,7 @@
         android:src="@drawable/ic_edit_black_24dp"/>
 
     <ImageView
+
         android:layout_marginEnd="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"

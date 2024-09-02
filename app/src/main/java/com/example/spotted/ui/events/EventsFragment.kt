@@ -28,18 +28,20 @@ class EventsFragment : Fragment() {
     private val binding get() = _binding!!
 
     val time =  Timestamp(System.currentTimeMillis());
+    //some other time for testing
+    val time2 = Timestamp(System.currentTimeMillis() + 100000000)
+    val time3 = Timestamp(System.currentTimeMillis() + 2000000000)
+    val time4 = Timestamp(System.currentTimeMillis() + 300000000)
+    val time5 = Timestamp(System.currentTimeMillis() - 4000000000)
 
     private val eventsList = listOf(
-        Event("1", "Event 1", "Description 1", time, 60, listOf(0.0, 0.0), "type", "joinMode", 10, time),
-        Event("2", "Event 2", "Description 2", time, 60, listOf(0.0, 0.0), "type", "joinMode", 10, time),
-        Event("3", "Event 3", "Description 3", time, 60, listOf(0.0, 0.0), "type", "joinMode", 10, time),
-        Event("4", "Event 4", "Description 4", time, 60, listOf(0.0, 0.0), "type", "joinMode", 10, time),
-        Event("5", "Event 5", "Description 5", time, 60, listOf(0.0, 0.0), "type", "joinMode", 10, time),
-        Event("6", "Event 6", "Description 6", time, 60, listOf(0.0, 0.0), "type", "joinMode", 10, time),
-        Event("7", "Event 7", "Description 7", time, 60, listOf(0.0, 0.0), "type", "joinMode", 10, time),
-        Event("8", "Event 8", "Description 8", time, 60, listOf(0.0, 0.0), "type", "joinMode", 10, time),
-        Event("9", "Event 9", "Description 9", time, 60, listOf(0.0, 0.0), "type", "joinMode", 10, time),
-        Event("10", "Event 10", "Description 10", time, 60, listOf(0.0, 0.0), "type", "joinMode", 10, time),
+        Event("1","Badminton 1",time,60, listOf(21.028511, 105.804817),"Sport","Everyone",10,time),
+        Event("2","Badminton 2",time2,60, listOf(21.028511, 105.804817),"Sport","Everyone",10,time),
+        Event("3","Badminton 3",time3,60, listOf(21.028511, 105.804817),"Sport","Everyone",10,time),
+        Event("4","Badminton 4",time4,60, listOf(21.028511, 105.804817),"Sport","Everyone",10,time),
+        Event("5","Badminton 5",time5,60, listOf(21.028511, 105.804817),"Sport","Everyone",10,time),
+        Event("6","Badminton 6",time,60, listOf(21.028511, 105.804817),"Sport","Everyone",10,time),
+        Event("7","Badminton 7",time,60, listOf(21.028511, 105.804817),"Sport","Everyone",10,time)
     )
 
     override fun onCreateView(

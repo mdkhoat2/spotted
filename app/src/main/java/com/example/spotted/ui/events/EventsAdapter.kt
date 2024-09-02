@@ -13,8 +13,8 @@ import com.example.spotted.util.SupportUtil
 class EventsAdapter(private val events: List<Event>) : RecyclerView.Adapter<EventsAdapter.EventViewHolder>() {
 
     //data class Event(
+    //    // base on the backend data model
     //    val _id: String,
-    //    val title: String,
     //    val description: String,
     //    val start: Timestamp,
     //    val duration: Int,
@@ -27,23 +27,34 @@ class EventsAdapter(private val events: List<Event>) : RecyclerView.Adapter<Even
 
     class EventViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val eventIcon: ImageView = itemView.findViewById(R.id.event_icon)
-        val eventTitle: TextView = itemView.findViewById(R.id.event_title)
-        val eventTime: TextView = itemView.findViewById(R.id.event_time)
-        val eventDate: TextView = itemView.findViewById(R.id.event_date)
-        val eventDetail: ImageView = itemView.findViewById(R.id.event_detail)
-        val eventMore: ImageView = itemView.findViewById(R.id.event_more)
-
+        val eventDescription: TextView = itemView.findViewById(R.id.event_description)
+        val eventType: TextView = itemView.findViewById(R.id.event_type)
+        val eventTime: TextView = itemView.findViewById(R.id.event_datetime)
+        val moreBtn: ImageView = itemView.findViewById(R.id.event_more)
+        val editBtn: ImageView = itemView.findViewById(R.id.event_detail)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_event, parent, false)
+
         return EventViewHolder(itemView)
     }
 
     override fun onBindViewHolder(holder: EventViewHolder, position: Int) {
         val event = events[position]
-        holder.eventTitle.text = event.title
+
+        holder.eventDescription.text = event.description
+        holder.eventType.text = event.type
         holder.eventTime.text = SupportUtil.translateTime(event.start)
+        //holder.eventIcon.setImageResource(SupportUtil.getIcon(event.type))
+
+        holder.moreBtn.setOnClickListener {
+
+        }
+
+        holder.editBtn.setOnClickListener {
+
+        }
     }
 
     override fun getItemCount(): Int {

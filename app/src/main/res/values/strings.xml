@@ -39,7 +39,7 @@
         <item>Swimming</item>
     </string-array>
 
-    <string name="google_map_key">AIzaSyAXwkTJJyUV8yux-6seduQQwCsM86dYwtY</string>
-    <string name="google_places_key">AIzaSyAlMRTqMbUpAtYO4yrox5z22x6RdXPHXUE</string>
+    <string name="google_map_key">AIzaSyAN5IUqcZbfL66xvabQiySJGlx2ol-6QSE</string>
+    <string name="google_places_key">AIzaSyAN5IUqcZbfL66xvabQiySJGlx2ol-6QSE</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
