@@ -17,4 +17,20 @@
         <item name="cornerSize">32dp</item>
     </style>
 
+    <style name="RoundedBox" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="shapeAppearanceOverlay">
+            @style/ShapeAppearanceOverlay.MyApp.TextInputLayout.RoundedFilled
+        </item>
+        <item name="boxBackgroundColor">@android:color/transparent</item> <!-- No background color -->
+        <item name="boxStrokeColor">@drawable/selector_text_input_layout_white</item> <!-- White outline color -->
+        <item name="android:textColor">@color/white</item> <!-- White text color -->
+        <item name="android:textColorHint">@color/white</item> <!-- White hint text color -->
+        <item name="endIconTint">@drawable/selector_text_input_layout_icon</item> <!-- White end icon color -->"
+    </style>
+
+    <style name="ShapeAppearanceOverlay.MyApp.TextInputLayout.RoundedFilled" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">32dp</item>
+    </style>
+
 </resources>
