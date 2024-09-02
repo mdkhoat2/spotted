@@ -9,8 +9,11 @@ import android.widget.ImageButton
 import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
 import com.example.spotted.R
+import com.example.spotted.backend.dataModels.Event
 import com.example.spotted.databinding.ActivityMapBinding
 import com.example.spotted.util.LayoutUtil
+import com.example.spotted.util.LocationHelper
+import com.example.spotted.util.SupportUtil
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -18,10 +21,10 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.libraries.places.api.Places
-
-import com.google.android.libraries.places.api.model.RectangularBounds
+import com.google.android.libraries.places.api.model.TypeFilter
 import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest
 import com.google.android.libraries.places.api.net.PlacesClient
+import java.sql.Timestamp
 
 
 class MapActivity: AppCompatActivity(), OnMapReadyCallback {
@@ -33,12 +36,18 @@ class MapActivity: AppCompatActivity(), OnMapReadyCallback {
     private val suggestions = mutableListOf<String>()
     private lateinit var placesClient: PlacesClient
 
+    private var eventList = mutableListOf<Event>()
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMapBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         //val token = AutocompleteSessionToken.newInstance()
+
+        LocationHelper.initialize(this)
 
         val mapFragment = supportFragmentManager.findFragmentById(R.id.mapFragment) as SupportMapFragment
         mapFragment.getMapAsync(this)
@@ -65,14 +74,8 @@ class MapActivity: AppCompatActivity(), OnMapReadyCallback {
 
     private fun setUpPlaces() {
         // Initialize the SDK
-        val apiKey = "AIzaSyAN5IUqcZbfL66xvabQiySJGlx2ol-6QSE"
-
-        if (!Places.isInitialized()) {
-            Places.initialize(applicationContext, apiKey)
-        }
-
-        placesClient = Places.createClient(this)
-
+        LocationHelper.initializePlaces(this)
+        placesClient = LocationHelper.getPlacesClient()
 
         setupAutoCompleteTextView()
     }
@@ -103,12 +106,6 @@ class MapActivity: AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun performTextSearch(query: String) {
-
-        val locationBias = RectangularBounds.newInstance(
-            LatLng(8.1790665, 102.14441),  // Southwest corner of Vietnam
-            LatLng(23.393395, 109.4696483)  // Northeast corner of Vietnam
-        )
-
         val filteredEvents = listOf(
             "Phu Tho Stadium Thanh Hau",
             "Duy Lam Ben Thanh Market",
@@ -117,7 +114,7 @@ class MapActivity: AppCompatActivity(), OnMapReadyCallback {
 
         val request = FindAutocompletePredictionsRequest.builder().setQuery(query)
             .setCountries("VN")
-            .setLocationBias(locationBias) // Set the location bias
+            .setTypeFilter(TypeFilter.ADDRESS)
             .build()
 
         placesClient.findAutocompletePredictions(request)
@@ -146,8 +143,48 @@ class MapActivity: AppCompatActivity(), OnMapReadyCallback {
         mMap = googleMap
 
         // Add a marker and move the camera
-        val stadium = LatLng(10.762622, 106.660172) // Example coordinates
-        mMap.addMarker(MarkerOptions().position(stadium).title("Badminton event in Phu Tho Stadium"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(stadium, 15f))
+        LocationHelper.getCurrentLocation(this) { location ->
+            if (location != null) {
+//                val currentLatLng = LatLng(location.latitude, location.longitude)
+//                mMap.addMarker(MarkerOptions().position(currentLatLng).title("You are here"))
+//                val stadium = LatLng(10.762632, 106.660162)
+//                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 15f))
+//                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(stadium, 15f))
+            }
+        }
+
+        eventList.clear()
+
+        SetUpMarker()
+    }
+
+    //
+    fun SetUpMarker(){ // icon for each event
+        val time =  Timestamp(System.currentTimeMillis());
+        //some other time for testing
+        val time2 = Timestamp(System.currentTimeMillis() + 100000000)
+        val time3 = Timestamp(System.currentTimeMillis() + 2000000000)
+        val time4 = Timestamp(System.currentTimeMillis() + 300000000)
+        val time5 = Timestamp(System.currentTimeMillis() - 4000000000)
+
+        eventList.addAll(listOf(
+            Event("1","Badminton 1",time,60, listOf(21.022411, 105.804817),"Sport","Everyone",10,time),
+            Event("2","Badminton 2",time2,60, listOf(21.028511, 105.804817),"Sport","Everyone",10,time),
+            Event("6","Badminton 6",time,60, listOf(21.028591, 105.804807),"Sport","Everyone",10,time),
+            Event("7","Badminton 7",time,60, listOf(21.028611, 105.804717),"Sport","Everyone",10,time)
+        ))
+
+        // Add all markers with icon to the map
+        for (event in eventList) {
+            println(event.location)
+            val latLng = LatLng(event.location[0], event.location[1])
+            val marker = mMap.addMarker(MarkerOptions().position(latLng).title(event.description))
+            // set camera to the first event
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
+        }
+
+
+
     }
 }
