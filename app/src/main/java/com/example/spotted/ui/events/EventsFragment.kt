@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.spotted.R
 import com.example.spotted.backend.dataModels.Event
+import com.example.spotted.backend.dataServices.EventDataService
 
 import com.example.spotted.databinding.FragmentEventsBinding
 import com.example.spotted.ui.chat.ContactListActivity
@@ -27,22 +28,8 @@ class EventsFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
-    val time =  Timestamp(System.currentTimeMillis());
-    //some other time for testing
-    val time2 = Timestamp(System.currentTimeMillis() + 100000000)
-    val time3 = Timestamp(System.currentTimeMillis() + 2000000000)
-    val time4 = Timestamp(System.currentTimeMillis() + 300000000)
-    val time5 = Timestamp(System.currentTimeMillis() - 4000000000)
-
-    private val eventsList = listOf(
-        Event("1","Badminton 1",time,60, 21.028511, 105.804817,"Sport","Everyone",10,time),
-        Event("2","Badminton 2",time2,60, 21.028511, 105.804817,"Sport","Everyone",10,time),
-        Event("3","Badminton 3",time3,60, 21.028511, 105.804817,"Sport","Everyone",10,time),
-        Event("4","Badminton 4",time4,60, 21.028511, 105.804817,"Sport","Everyone",10,time),
-        Event("5","Badminton 5",time5,60, 21.028511, 105.804817,"Sport","Everyone",10,time),
-        Event("6","Badminton 6",time,60, 21.028511, 105.804817,"Sport","Everyone",10,time),
-        Event("7","Badminton 7",time,60, 21.028511, 105.804817,"Sport","Everyone",10,time)
-    )
+    private var eventList = mutableListOf<Event>()
+    private var adminId = mutableListOf<String>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -73,8 +60,39 @@ class EventsFragment : Fragment() {
     {
         val recyclerView: RecyclerView = view.findViewById(R.id.recycler_view_events)
         recyclerView.layoutManager = LinearLayoutManager(requireActivity())
-        val eventsAdapter = EventsAdapter(eventsList)
+        val eventsAdapter = EventsAdapter(eventList, adminId)
         recyclerView.adapter = eventsAdapter
+
+        EventDataService.getJoinedEvents { joinedEvents ->
+            if (joinedEvents != null) {
+                adminId.clear()
+                // event you are not admin will have adminId = null
+                for (joinedEvent in joinedEvents) {
+                    if (joinedEvent.admin != null)
+                    adminId.add(joinedEvent.admin.userID)
+                    else
+                        adminId.add("")
+                }
+
+                eventList.clear()
+                eventList.addAll(joinedEvents.map { it.event })
+
+                eventsAdapter.notifyDataSetChanged()
+            }
+        }
+        //data class Admin(
+        //    val _id: String,
+        //    val eventID: String,
+        //    val userID: String,
+        //    val mode: String,
+        //    val createdAt: Timestamp,
+        //    val __v: Int
+        //)
+        //data class JoinedEvent(
+        //    val joinedAt: Timestamp,
+        //    val event: Event,
+        //    val admin: Admin
+        //)
     }
 
     override fun onDestroyView() {

@@ -23,9 +23,9 @@ object EventDataService {
         })
     }
 
-    fun getJoinedEvents(onResult: (List<Event>?) -> Unit) {
-        DataService.apiService.getJoinedEvents("Bearer ${DataService.authToken}").enqueue(object : Callback<List<Event>> {
-            override fun onResponse(call: Call<List<Event>>, response: Response<List<Event>>) {
+    fun getJoinedEvents(onResult: (List<JoinedEvent>?) -> Unit) {
+        DataService.apiService.getJoinedEvents("Bearer ${DataService.authToken}").enqueue(object : Callback<List<JoinedEvent>> {
+            override fun onResponse(call: Call<List<JoinedEvent>>, response: Response<List<JoinedEvent>>) {
                 if (response.isSuccessful) {
                     onResult(response.body())
                 } else {
@@ -34,7 +34,7 @@ object EventDataService {
                 }
             }
 
-            override fun onFailure(call: Call<List<Event>>, t: Throwable) {
+            override fun onFailure(call: Call<List<JoinedEvent>>, t: Throwable) {
                 onResult(null)
             }
         })

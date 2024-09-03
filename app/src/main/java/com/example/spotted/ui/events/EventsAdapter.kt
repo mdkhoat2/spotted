@@ -1,5 +1,6 @@
 package com.example.spotted.ui.events
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,9 +9,11 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.spotted.R
 import com.example.spotted.backend.dataModels.Event
+import com.example.spotted.backend.dataServices.DataService
+import com.example.spotted.ui.event.EventDetailActivity
 import com.example.spotted.util.SupportUtil
 
-class EventsAdapter(private val events: List<Event>) : RecyclerView.Adapter<EventsAdapter.EventViewHolder>() {
+class EventsAdapter(private val events: List<Event>,private val adminId:List <String>) : RecyclerView.Adapter<EventsAdapter.EventViewHolder>() {
 
     //data class Event(
     //    // base on the backend data model
@@ -18,7 +21,9 @@ class EventsAdapter(private val events: List<Event>) : RecyclerView.Adapter<Even
     //    val description: String,
     //    val start: Timestamp,
     //    val duration: Int,
-    //    val location: List<Double>,
+    //    val latitude: Double,
+    //    val longitude: Double,
+    //    val address: String,
     //    val type: String,
     //    val joinMode: String,
     //    val maxParticipants: Int,
@@ -48,12 +53,23 @@ class EventsAdapter(private val events: List<Event>) : RecyclerView.Adapter<Even
         holder.eventTime.text = SupportUtil.translateTime(event.start)
         //holder.eventIcon.setImageResource(SupportUtil.getIcon(event.type))
 
-        holder.moreBtn.setOnClickListener {
+        // set on click listener for the whole item
+        holder.itemView.setOnClickListener {
+            val intent: Intent = Intent(holder.itemView.context, EventDetailActivity::class.java)
+            intent.putExtra("description", event.description)
+            intent.putExtra("type", event.type)
+            intent.putExtra("start", holder.eventTime.text)
+            intent.putExtra("latitude", event.latitude)
+            intent.putExtra("longitude", event.longitude)
+            intent.putExtra("address", event.address)
 
-        }
+            if (adminId[position]  == DataService.getAuthProfile()?._id) {
+                intent.putExtra("admin", true)
+            } else {
+                intent.putExtra("admin", false)
+            }
 
-        holder.editBtn.setOnClickListener {
-
+            holder.itemView.context.startActivity(intent)
         }
     }
 

@@ -1,5 +1,8 @@
 package com.example.spotted.ui.event
 
+import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.Canvas
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -8,15 +11,19 @@ import android.widget.AutoCompleteTextView
 import android.widget.ImageButton
 import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.example.spotted.R
 import com.example.spotted.backend.dataModels.Event
 import com.example.spotted.databinding.ActivityMapBinding
 import com.example.spotted.util.LayoutUtil
 import com.example.spotted.util.LocationHelper
+import com.example.spotted.util.SupportUtil
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.BitmapDescriptor
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.libraries.places.api.model.TypeFilter
@@ -90,7 +97,6 @@ class MapActivity: AppCompatActivity(), OnMapReadyCallback {
                 if (!s.isNullOrEmpty()) {
                     performTextSearch(s.toString())
                 }
-
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -167,10 +173,10 @@ class MapActivity: AppCompatActivity(), OnMapReadyCallback {
 
 
         eventList.addAll(listOf(//random close location
-            Event("1","Badminton 1",time,60, 21.022411, 105.804817,"badminton","Everyone",10,time),
-            Event("2","Badminton 2",time2,60,21.028511, 105.804217,"baseball","Everyone",10,time),
-            Event("3","Badminton 3",time3,60, 21.028531, 105.804717,"basketball","Everyone",10,time),
-            Event("4","Badminton 4",time4,60, 21.028501, 105.804917,"volleyball","Everyone",10,time)
+            Event("1","Badminton 1",time,60, 21.022411, 105.804817,"Nhaf Hauaj","badminton","Everyone",10,time),
+            Event("2","Badminton 2",time2,60,21.028511, 105.804217,"Nha Duy","baseball","Everyone",10,time),
+            Event("3","Badminton 3",time3,60, 21.028531, 105.804717,"dkfjkf","basketball","Everyone",10,time),
+            Event("4","Badminton 4",time4,60, 21.028501, 105.804917,"dfdfdsf","volleyball","Everyone",10,time)
         ))
 
         // Add all markers with icon to the map
@@ -179,25 +185,14 @@ class MapActivity: AppCompatActivity(), OnMapReadyCallback {
             val latLng = LatLng(event.latitude, event.longitude)
 
             // get the icon for the event
-//            val icon = when (event.type) {
-//                "badminton" -> R.drawable.badminton
-//                "baseball" -> R.drawable.baseball
-//                "basketball" -> R.drawable.basketball
-//                "volleyball" -> R.drawable.volleyball
-//                else -> R.drawable.badminton
-//            }
+            val icon = SupportUtil.getSportIcon(event.type)
 
-            //mMap.addMarker(MarkerOptions().position(latLng).title(event.type).icon(bitmapDescriptor))
+            // set the icon for the event
+            val bitmapDescriptor = SupportUtil.bitmapDescriptorFromVector(this, icon)
 
-            mMap.addMarker(MarkerOptions().position(latLng).title(event.type))
+            mMap.addMarker(MarkerOptions().position(latLng).title(event.type).icon(bitmapDescriptor))
 
-
-            // set camera to the first event
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
         }
-
-
-
     }
 }

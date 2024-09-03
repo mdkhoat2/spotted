@@ -142,32 +142,49 @@
         android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/activityCreateEvent_date_textInputLayout" />
-
-    <fragment
-        android:id="@+id/activityCreateEvent_autocomplete_fragment"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/activityCreateEvent_locationCardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
+        app:cardCornerRadius="24dp"
+        app:cardElevation="18dp"
         app:layout_constraintTop_toBottomOf="@+id/activityCreateEvent_location_textView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="24dp"
-        android:padding="@dimen/padding_medium"
-        />
-    <fragment
-        android:id="@+id/activityCreateEvent_mapFragment"
+        android:padding="@dimen/padding_medium" >
+        <fragment
+            android:id="@+id/activityCreateEvent_autocomplete_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
+            app:layout_constraintTop_toBottomOf="@+id/activityCreateEvent_location_textView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:padding="@dimen/padding_medium"
+            />
+    </androidx.cardview.widget.CardView>
+
+    <FrameLayout
+        android:id="@+id/activityCreateEvent_mapFrameLayout"
+        android:clipChildren="true"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="18dp"
         android:layout_marginEnd="24dp"
-        android:background="@drawable/rounded_white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/activityCreateEvent_autocomplete_fragment" />
+        app:layout_constraintTop_toBottomOf="@+id/activityCreateEvent_locationCardView"
+        android:background="@drawable/rounded_white" >
+        <fragment
+                android:id="@+id/activityCreateEvent_mapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:name="com.google.android.gms.maps.SupportMapFragment" />
+    </FrameLayout>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/activityCreateEvent_finish_appCompatButton"
@@ -185,7 +202,7 @@
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/activityCreateEvent_mapFragment" />
+        app:layout_constraintTop_toBottomOf="@+id/activityCreateEvent_mapFrameLayout" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
