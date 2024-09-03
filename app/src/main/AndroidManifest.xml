@@ -51,6 +51,8 @@
             android:name=".ui.chat.MessagingActivity"
             android:windowSoftInputMode="adjustPan"></activity>
 
+        <activity android:name=".ui.event.EventDetailActivity"/>
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAN5IUqcZbfL66xvabQiySJGlx2ol-6QSE" />

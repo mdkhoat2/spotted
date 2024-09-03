@@ -1,5 +1,6 @@
 package com.example.spotted.backend.dataModels
 
+import okhttp3.Address
 import java.sql.Timestamp
 
 data class Event(
@@ -10,11 +11,11 @@ data class Event(
     val duration: Int,
     val latitude: Double,
     val longitude: Double,
+    val address: String,
     val type: String,
     val joinMode: String,
     val maxParticipants: Int,
-    val deadline: Timestamp,
-
+    val deadline: Timestamp
 )
 
 //    "description": "Badminton 3",

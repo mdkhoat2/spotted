@@ -45,6 +45,7 @@ class CreateEventActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var timeEditText: EditText
     private lateinit var locationEditText: EditText
     private lateinit var locationPos: LatLng
+    private lateinit var locationAddress: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -101,7 +102,8 @@ class CreateEventActivity : AppCompatActivity(), OnMapReadyCallback {
         val dateTime:Timestamp = SupportUtil.getTimestampFromString(dateEditText.text.toString(),timeEditText.text.toString())
         val deadline = Timestamp(System.currentTimeMillis())
 
-        val event = Event("0", name, dateTime, 60, locationPos.latitude, locationPos.longitude,
+        val event = Event("0", name, dateTime, 60,
+            locationPos.latitude, locationPos.longitude, locationAddress,
             sport,"Everyone", 10, deadline)
 
         EventDataService.createEvent(event) { event ->
@@ -134,6 +136,7 @@ class CreateEventActivity : AppCompatActivity(), OnMapReadyCallback {
             override fun onPlaceSelected(place: Place) {
                 println("Place: ${place.name}, ${place.id}")
                 locationPos = place.latLng!!
+                locationAddress = place.name!!.toString()
                 mMap.clear()
                 mMap.addMarker(MarkerOptions().position(place.latLng!!).title(place.name))
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(place.latLng!!, 16f))
