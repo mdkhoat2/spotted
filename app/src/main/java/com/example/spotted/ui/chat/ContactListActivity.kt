@@ -13,15 +13,24 @@ import com.example.spotted.backend.dataServices.AuthDataService
 import com.example.spotted.backend.dataServices.MessageDataService
 import com.example.spotted.communication.adapters.MessageAdapter
 import com.example.spotted.communication.live.MessageLive
+import com.example.spotted.databinding.ActivityContactListBinding
 
 class ContactListActivity : AppCompatActivity() {
 
     private lateinit var contactAdapter: ContactListWithChatAdapter
     private var contacts: MutableList<Contact> = mutableListOf()
+    private lateinit var binding: ActivityContactListBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_contact_list)
+
+        binding = ActivityContactListBinding.inflate(layoutInflater)
+
+        setContentView(binding.root)
+
+        binding.activityContactListImageButtonBack.setOnClickListener {
+            finish()
+        }
 
         val recyclerView = findViewById<RecyclerView>(R.id.recycler_view_contacts)
         recyclerView.layoutManager = LinearLayoutManager(this)

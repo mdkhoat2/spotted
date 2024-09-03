@@ -1,5 +1,6 @@
 package com.example.spotted.ui.chat
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
@@ -16,6 +17,7 @@ import com.example.spotted.backend.dataServices.AuthDataService
 import com.example.spotted.backend.dataServices.MessageDataService
 import com.example.spotted.communication.adapters.ChatAdapter
 import com.example.spotted.communication.live.MessageLive
+import com.example.spotted.ui.profile.ProfileActivity
 import com.example.spotted.util.LayoutUtil
 
 class MessagingActivity() : AppCompatActivity(){
@@ -112,10 +114,7 @@ class MessagingActivity() : AppCompatActivity(){
             finish()
         }
 
-        val InfoButton:ImageView = findViewById(R.id.btn_info)
-        InfoButton.setOnClickListener {
-            Toast.makeText(this, "Info", Toast.LENGTH_SHORT).show()
-        }
+        setupShowProfile(otherId)
 
         MessageLive.setOnMessageReceivedCallback { message ->
             runOnUiThread {
@@ -126,6 +125,15 @@ class MessagingActivity() : AppCompatActivity(){
                 if (messageList.size > 1)
                     chatAdapter.notifyItemChanged(messageList.size - 2)
             }
+        }
+    }
+
+    private fun setupShowProfile(userID: String){
+        val InfoButton:ImageView = findViewById(R.id.btn_info)
+        InfoButton.setOnClickListener {
+            val intent = Intent(this, ProfileActivity::class.java)
+            intent.putExtra("otherId", userID)
+            startActivity(intent)
         }
     }
 }
