@@ -101,8 +101,8 @@ class EventDetailActivity() : AppCompatActivity(), OnMapReadyCallback {
         }
 
         //base on if you are the creator of the event or not, change the fragment
-
-
+        // get event admin boolean
+        val admin = intent.getBooleanExtra("admin", false)
 
     }
 

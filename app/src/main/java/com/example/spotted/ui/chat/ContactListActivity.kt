@@ -46,10 +46,13 @@ class ContactListActivity : AppCompatActivity() {
 
         MessageDataService.getLastMessages { response ->
                     if (response!=null){
+                        // sort the messages by time
+                        response.sortedBy { it.sentAt }
+
                         for (message in response){
 
                             val messageAdapter = MessageAdapter(message)
-                            println("Status: "+ messageAdapter.isReceived() + " " + messageAdapter.getOtherUserId() + " " + messageAdapter.isRead())
+                            println("Status: "+ message.sentAt + " " + messageAdapter.getOtherUserId() + " " + messageAdapter.isRead())
 
                             AuthDataService.getUser(messageAdapter.getOtherUserId()) { user ->
                                 if (user != null) {
