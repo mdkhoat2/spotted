@@ -32,125 +32,236 @@
         app:layout_constraintTop_toTopOf="@id/activityProfile_textView_header"
         app:srcCompat="@drawable/icon_back_blue" />
 
-    <com.google.android.material.textfield.TextInputLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/containerName"
-        style="@style/OutlinedRoundedBox"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/activityProfile_textView_header">
+        <TextView
+            android:id="@+id/name_text_view_content"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/rounded_blue_300"
+            android:fontFamily="@font/instance"
+            android:textSize="14sp"
+            android:gravity="center|start"
+            android:paddingStart="48dp"
+            android:paddingTop="10dp"
+            android:text="New Test League"
+            android:textColor="@color/blue_700"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/name_text_view_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/instance"
+            android:gravity="center|start"
+            android:paddingStart="48dp"
+            android:paddingTop="8dp"
+            android:text="@string/name"
+            android:textSize="10sp"
+            android:textColor="@color/blue_500"
+            app:layout_constraintStart_toStartOf="@id/name_text_view_content"
+            app:layout_constraintTop_toTopOf="@id/name_text_view_content" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/containerInterest"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/containerName">
+        <TextView
+            android:id="@+id/interest_text_view_content"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/rounded_blue_300"
+            android:fontFamily="@font/instance"
+            android:textSize="14sp"
+            android:gravity="center|start"
+            android:paddingStart="48dp"
+            android:paddingTop="10dp"
+            android:text="New Test League"
+            android:textColor="@color/blue_700"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/interest_text_view_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/instance"
+            android:gravity="center|start"
+            android:paddingStart="48dp"
+            android:paddingTop="8dp"
+            android:text="@string/interest"
+            android:textSize="10sp"
+            android:textColor="@color/blue_500"
+            app:layout_constraintStart_toStartOf="@id/interest_text_view_content"
+            app:layout_constraintTop_toTopOf="@id/interest_text_view_content" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/containerAge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/containerInterest">
+        <TextView
+            android:id="@+id/age_text_view_content"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/rounded_blue_300"
+            android:fontFamily="@font/instance"
+            android:textSize="14sp"
+            android:gravity="center|start"
+            android:paddingStart="48dp"
+            android:paddingTop="10dp"
+            android:text="New Test League"
+            android:textColor="@color/blue_700"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/age_text_view_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/instance"
+            android:gravity="center|start"
+            android:paddingStart="48dp"
+            android:paddingTop="8dp"
+            android:text="@string/age"
+            android:textSize="10sp"
+            android:textColor="@color/blue_500"
+            app:layout_constraintStart_toStartOf="@id/age_text_view_content"
+            app:layout_constraintTop_toTopOf="@id/age_text_view_content" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/containerPhone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/containerAge">
+        <TextView
+            android:id="@+id/phone_text_view_content"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/rounded_blue_300"
+            android:fontFamily="@font/instance"
+            android:textSize="14sp"
+            android:gravity="center|start"
+            android:paddingStart="48dp"
+            android:paddingTop="10dp"
+            android:text="New Test League"
+            android:textColor="@color/blue_700"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/template_text_view_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/instance"
+            android:gravity="center|start"
+            android:paddingStart="48dp"
+            android:paddingTop="8dp"
+            android:text="@string/contact"
+            android:textSize="10sp"
+            android:textColor="@color/blue_500"
+            app:layout_constraintStart_toStartOf="@id/phone_text_view_content"
+            app:layout_constraintTop_toTopOf="@id/phone_text_view_content" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/containerBio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/containerPhone">
+        <TextView
+            android:id="@+id/bio_text_view_content"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/rounded_blue_300"
+            android:fontFamily="@font/instance"
+            android:textSize="14sp"
+            android:gravity="center|start"
+            android:paddingStart="48dp"
+            android:paddingTop="10dp"
+            android:text="New Test League"
+            android:textColor="@color/blue_700"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/bio_text_view_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/instance"
+            android:gravity="center|start"
+            android:paddingStart="48dp"
+            android:paddingTop="8dp"
+            android:text="@string/bio"
+            android:textSize="10sp"
+            android:textColor="@color/blue_500"
+            app:layout_constraintStart_toStartOf="@id/bio_text_view_content"
+            app:layout_constraintTop_toTopOf="@id/bio_text_view_content" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/activityProfile_appCompatButton_send"
+        android:layout_width="0dp"
         android:layout_height="60dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="24dp"
-        android:hint="@string/name"
-        app:boxStrokeColor="@color/blue_700"
-        app:boxStrokeWidth="1dp"
+        android:background="@drawable/rounded_blue_dark"
+        android:elevation="0dp"
+        android:fontFamily="@font/flex"
+        android:paddingStart="48dp"
+        android:gravity="start|center"
+        android:text="@string/send_msg"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/activityProfile_textView_header">
+        app:layout_constraintTop_toBottomOf="@id/containerBio" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editTextName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingStart="24dp"
-            android:paddingEnd="24dp"
-            android:fontFamily="@font/instance"
-            android:inputType="textPersonName"/>
-    </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/containerInterest"
-        style="@style/OutlinedRoundedBox"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="24dp"
-        app:boxStrokeColor="@color/blue_700"
-        android:hint="@string/interest"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/containerName">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editTextInterest"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingStart="24dp"
-            android:paddingEnd="24dp"
-            android:fontFamily="@font/instance"
-            android:inputType="textPersonName"/>
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/containerAge"
-        style="@style/OutlinedRoundedBox"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="24dp"
-        app:boxStrokeColor="@color/blue_700"
-        android:hint="@string/age"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/containerInterest">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editTextAge"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingStart="24dp"
-            android:paddingEnd="24dp"
-            android:fontFamily="@font/instance"
-            android:inputType="numberDecimal"/>
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/containerContact"
-        style="@style/OutlinedRoundedBox"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="24dp"
-        app:boxStrokeColor="@color/blue_700"
-        android:hint="@string/contact"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/containerAge">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editTextContact"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingStart="24dp"
-            android:paddingEnd="24dp"
-            android:fontFamily="@font/instance"
-            android:inputType="phone"/>
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/containerBio"
-        style="@style/OutlinedRoundedBox"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="24dp"
-        app:boxStrokeColor="@color/blue_700"
-        android:hint="@string/bio"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/containerContact">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editTextBio"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingStart="24dp"
-            android:paddingEnd="24dp"
-            android:fontFamily="@font/instance"
-            android:inputType="textPersonName"/>
-    </com.google.android.material.textfield.TextInputLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -59,9 +59,4 @@ object Helper {
             return 0
         return age.toInt()
     }
-    fun getValidInformation(infor: String): String{
-        if(infor.trim().isEmpty())
-            return " "
-        return infor
-    }
 }

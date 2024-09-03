@@ -1,6 +1,7 @@
 package com.example.spotted.ui.profile
 
 import android.os.Bundle
+import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -13,7 +14,6 @@ import com.example.spotted.ui.account.Helper
 
 class ProfileActivity : AppCompatActivity() {
     private lateinit var binding: ActivityProfileBinding
-    private var userID: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,29 +26,36 @@ class ProfileActivity : AppCompatActivity() {
             insets
         }
 
-        userID = intent.getStringExtra("otherId")
+        val userID = intent.getStringExtra("otherId")
+
+        val isNeedSent = intent.getBooleanExtra("isNeedSent", false)
 
         binding.activityProfileImageButtonBack.setOnClickListener {
             finish()
         }
 
-        setupProfile()
+        setupProfile(userID)
 
-        binding.editTextAge.isEnabled = false
-        binding.editTextContact.isEnabled = false
-        binding.editTextBio.isEnabled = false
-        binding.editTextInterest.isEnabled = false
-        binding.editTextName.isEnabled = false
+        hideButtonSend(isNeedSent)
     }
 
-    private fun setupProfile(){
+    private fun hideButtonSend(isNeedSent: Boolean){
+        if(isNeedSent){
+            binding.activityProfileAppCompatButtonSend.visibility = View.VISIBLE
+        }
+        else{
+            binding.activityProfileAppCompatButtonSend.visibility = View.GONE
+        }
+    }
+
+    private fun setupProfile(userID: String?){
         AuthDataService.getUser(userID!!) { user ->
             if (user != null) {
-                binding.editTextName.setText(Helper.getValidInformation(user.name))
-                binding.editTextInterest.setText(Helper.getValidInformation(user.interests))
-                binding.editTextContact.setText(Helper.getValidInformation(user.phone))
-                binding.editTextAge.setText(Helper.getAge(user.age))
-                binding.editTextBio.setText(Helper.getValidInformation(user.description))
+                binding.nameTextViewContent.text = user.name
+                binding.interestTextViewContent.text = user.interests
+                binding.phoneTextViewContent.text = user.phone
+                binding.ageTextViewContent.text = Helper.getAge(user.age)
+                binding.bioTextViewContent.text = user.description
             }
             else{
                 Helper.createDialog(this, "Error", "User not found"){}
