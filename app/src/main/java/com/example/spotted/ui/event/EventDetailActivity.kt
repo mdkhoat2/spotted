@@ -2,6 +2,7 @@ package com.example.spotted.ui.event
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.location.Geocoder
 import android.os.Bundle
 import android.view.MotionEvent
 import android.view.View
@@ -17,6 +18,7 @@ import com.example.spotted.R
 import com.example.spotted.backend.dataModels.Event
 import com.example.spotted.backend.dataServices.EventDataService
 import com.example.spotted.databinding.ActivityCreateEventBinding
+import com.example.spotted.databinding.ActivityEventDetailBinding
 import com.example.spotted.ui.create.CreateEventViewModel
 import com.example.spotted.util.LayoutUtil
 import com.example.spotted.util.LocationHelper
@@ -33,18 +35,24 @@ import com.google.android.libraries.places.api.model.TypeFilter
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
 import java.sql.Timestamp
+import java.util.Locale
 
-class EventDetailActivity(event: Event) : AppCompatActivity(), OnMapReadyCallback {
-    private lateinit var binding: ActivityCreateEventBinding
+class EventDetailActivity() : AppCompatActivity(), OnMapReadyCallback {
+    private lateinit var binding: ActivityEventDetailBinding
     private lateinit var mMap: GoogleMap
+
+    private lateinit var description: String
+    private lateinit var type: String
+    private lateinit var start: String
+    private var latitude: Double = 0.0
+    private var longitude: Double = 0.0
 
     // all edit text fields
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val createEventViewModel = ViewModelProvider(this).get(CreateEventViewModel::class.java)
 
-        binding = ActivityCreateEventBinding.inflate(layoutInflater)
+        binding = ActivityEventDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
         val root: View = binding.root
 
@@ -53,16 +61,37 @@ class EventDetailActivity(event: Event) : AppCompatActivity(), OnMapReadyCallbac
         LayoutUtil.setupUI(this, root)
 
 
-        val header : TextView = binding.activityCreateEventHeaderTextView
-        val location : TextView = binding.activityCreateEventLocationTextView
-        val proceed : AppCompatButton = binding.activityCreateEventFinishAppCompatButton
+        val header : TextView = binding.activityEventDetailHeaderTextView
+        val location  = binding.activityEventDetailLocation
 
         LayoutUtil.applyVariableFont(this,header,"'wght' 500, 'wdth' 150")
         LayoutUtil.applyVariableFont(this,location,"'wght' 500, 'wdth' 150")
-        LayoutUtil.applyVariableFont(this,proceed,"'wght' 500, 'wdth' 150")
+        //LayoutUtil.applyVariableFont(this,proceed,"'wght' 500, 'wdth' 150")
 
-        val mapFragment = supportFragmentManager.findFragmentById(R.id.activityCreateEvent_mapFragment) as SupportMapFragment
+        val mapFragment = supportFragmentManager.findFragmentById(R.id.activityEventDetail_mapFragment) as SupportMapFragment
         mapFragment.getMapAsync(this)
+
+        val textName = findViewById<TextView>(R.id.text_view_content_name)
+        val textType = findViewById<TextView>(R.id.text_view_content_sport)
+        val textDateTime = findViewById<TextView>(R.id.text_view_content_datetime)
+        val textLocation = findViewById<TextView>(R.id.text_view_content_location)
+
+        //passing data from event to the activity
+        //get the description, type, start time, latitude, and longitude
+        description = intent.getStringExtra("description")?:""
+        type = intent.getStringExtra("type")?:""
+        start = intent.getStringExtra("start")?:""
+        latitude = intent.getDoubleExtra("latitude", 0.0)
+        longitude = intent.getDoubleExtra("longitude", 0.0)
+        val address = intent.getStringExtra("address")?:""
+
+
+        textName.text = description
+        textType.text = type
+        textDateTime.text = start
+
+
+        textLocation.text = address
 
         LocationSetup()
 
@@ -70,6 +99,10 @@ class EventDetailActivity(event: Event) : AppCompatActivity(), OnMapReadyCallbac
         back.setOnClickListener {
             finish()
         }
+
+        //base on if you are the creator of the event or not, change the fragment
+
+
 
     }
 
@@ -88,15 +121,10 @@ class EventDetailActivity(event: Event) : AppCompatActivity(), OnMapReadyCallbac
         mMap = googleMap
 
         // Add a marker and move the camera
-        LocationHelper.getCurrentLocation(this) { location ->
-            if (location != null) {
-                val currentLatLng = LatLng(location.latitude, location.longitude)
-                mMap.addMarker(MarkerOptions().position(currentLatLng).title("You are here"))
-                val stadium = LatLng(10.762632, 106.660162)
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 15f))
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(stadium, 15f))
-            }
-        }
+        val location = LatLng(latitude, longitude)
+        mMap.addMarker(MarkerOptions().position(location).title(description))
+        // move the camera and zoom in
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 15f))
     }
 }
 

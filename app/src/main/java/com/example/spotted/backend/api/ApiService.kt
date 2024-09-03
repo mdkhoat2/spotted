@@ -56,7 +56,7 @@ interface ApiService {
     fun respondInvitation(@Header("Authorization") token: String, @Path("id") id: String,@Body Status: String): Call<Event>
 
     @GET("events/joined")
-    fun getJoinedEvents(@Header("Authorization") token: String): Call<List<Event>>
+    fun getJoinedEvents(@Header("Authorization") token: String): Call<List<JoinedEvent>>
 
     @POST("events/admin")
     fun inviteAdminEvents(
@@ -69,4 +69,6 @@ interface ApiService {
     //Invite user to event
     @POST("events/invite")
     fun inviteUserToEvent(@Header("Authorization") token: String, @Body invite: InviteRequest) : Call<Invitation>
+
+
 }

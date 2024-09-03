@@ -167,10 +167,10 @@ class MapActivity: AppCompatActivity(), OnMapReadyCallback {
 
 
         eventList.addAll(listOf(//random close location
-            Event("1","Badminton 1",time,60, 21.022411, 105.804817,"badminton","Everyone",10,time),
-            Event("2","Badminton 2",time2,60,21.028511, 105.804217,"baseball","Everyone",10,time),
-            Event("3","Badminton 3",time3,60, 21.028531, 105.804717,"basketball","Everyone",10,time),
-            Event("4","Badminton 4",time4,60, 21.028501, 105.804917,"volleyball","Everyone",10,time)
+            Event("1","Badminton 1",time,60, 21.022411, 105.804817,"Nhaf Hauaj","badminton","Everyone",10,time),
+            Event("2","Badminton 2",time2,60,21.028511, 105.804217,"Nha Duy","baseball","Everyone",10,time),
+            Event("3","Badminton 3",time3,60, 21.028531, 105.804717,"dkfjkf","basketball","Everyone",10,time),
+            Event("4","Badminton 4",time4,60, 21.028501, 105.804917,"dfdfdsf","volleyball","Everyone",10,time)
         ))
 
         // Add all markers with icon to the map
