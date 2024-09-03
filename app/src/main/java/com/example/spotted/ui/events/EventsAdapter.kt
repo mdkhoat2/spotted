@@ -71,14 +71,6 @@ class EventsAdapter(private val events: List<Event>,private val adminId:List <St
 
             holder.itemView.context.startActivity(intent)
         }
-
-        holder.moreBtn.setOnClickListener {
-
-        }
-
-        holder.editBtn.setOnClickListener {
-
-        }
     }
 
     override fun getItemCount(): Int {

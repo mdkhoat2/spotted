@@ -63,20 +63,23 @@ class EventsFragment : Fragment() {
         val eventsAdapter = EventsAdapter(eventList, adminId)
         recyclerView.adapter = eventsAdapter
 
-        eventList.clear()
+        EventDataService.getJoinedEvents { joinedEvents ->
+            if (joinedEvents != null) {
+                adminId.clear()
+                // event you are not admin will have adminId = null
+                for (joinedEvent in joinedEvents) {
+                    if (joinedEvent.admin != null)
+                    adminId.add(joinedEvent.admin.userID)
+                    else
+                        adminId.add("")
+                }
 
+                eventList.clear()
+                eventList.addAll(joinedEvents.map { it.event })
 
-//        EventDataService.getJoinedEvents { joinedEvents ->
-//            if (joinedEvents != null) {
-//                eventList.clear()
-//                eventList.addAll(joinedEvents.map { it.event })
-//
-//                adminId.clear()
-//                //java.lang.NullPointerException: Attempt to invoke virtual method 'java.lang.String com.example.spotted.backend.dataModels.Admin.getUserID()' on a null object reference
-//                adminId.addAll(joinedEvents.map { it.admin.userID })
-//                eventsAdapter.notifyDataSetChanged()
-//            }
-//        }
+                eventsAdapter.notifyDataSetChanged()
+            }
+        }
         //data class Admin(
         //    val _id: String,
         //    val eventID: String,

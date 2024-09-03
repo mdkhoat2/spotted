@@ -4,11 +4,9 @@ import java.sql.Timestamp
 
 data class Admin(
     val _id: String,
-    val eventID: String,
     val userID: String,
     val mode: String,
-    val createdAt: Timestamp,
-    val __v: Int
+    val createdAt: Timestamp
 )
 data class JoinedEvent(
     val joinedAt: Timestamp,
