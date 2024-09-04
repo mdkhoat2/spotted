@@ -8,6 +8,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -73,7 +74,8 @@ class EventDetailActivity() : AppCompatActivity(), OnMapReadyCallback {
 
         val textName = findViewById<TextView>(R.id.text_view_content_name)
         val textType = findViewById<TextView>(R.id.text_view_content_sport)
-        val textDateTime = findViewById<TextView>(R.id.text_view_content_datetime)
+        val textDate = findViewById<TextView>(R.id.text_view_content_date)
+        val textTime = findViewById<TextView>(R.id.text_view_content_time)
         val textLocation = findViewById<TextView>(R.id.text_view_content_location)
 
         //passing data from event to the activity
@@ -88,8 +90,8 @@ class EventDetailActivity() : AppCompatActivity(), OnMapReadyCallback {
 
         textName.text = description
         textType.text = type
-        textDateTime.text = start
-
+        textDate.text = start //need processing here or before passing into intent the date and time
+        textTime.text = start //need processing here or before passing into intent the date and time
 
         textLocation.text = address
 
@@ -100,9 +102,81 @@ class EventDetailActivity() : AppCompatActivity(), OnMapReadyCallback {
             finish()
         }
 
+
+        // THE 5 DYNAMIC ELEMENTS
+        val manager: TextView = binding.activityEventDetailManagerContentTextView
+        manager.setOnClickListener {
+            //open the manager profile - CALL API
+        }
+
+        val participants: AppCompatButton = binding.activityEventDetailViewParticipantButtonAppCompatButton
+        participants.setOnClickListener {
+            //open the participants list - CALL API
+        }
+
+        val request: AppCompatButton = binding.activityEventDetailRequestButtonAppCompatButton
+        request.setOnClickListener {
+            //send the request to join the event - CALL API
+        }
+
+        val leave: AppCompatButton = binding.activityEventDetailLeaveButtonAppCompatButton
+        leave.setOnClickListener {
+            //leave the event - CALL API
+        }
+
+        val adminIcon: ImageView = binding.activityEventDetailAdminImageView
+
+
+        ///////////////////////////
+
+        val managerText: TextView = binding.activityEventDetailManagerTextView
+        val requestIcon: ImageView = binding.activityEventDetailRequestIconImageView
+        val leaveIcon: ImageView = binding.activityEventDetailLeaveIconImageView
+        val participantsIcon: ImageView = binding.activityEventDetailViewParticipantIconImageView
+
         //base on if you are the creator of the event or not, change the fragment
         // get event admin boolean
-        val admin = intent.getBooleanExtra("admin", false)
+        val permission = intent.getStringExtra("permission")
+
+        if (permission == "manager") {                  // THE MANAGER is an admin and can view participants
+            manager.visibility = View.INVISIBLE         // cannot see the profile of yourself
+            managerText.visibility = View.INVISIBLE
+
+            request.visibility = View.INVISIBLE         // cannot request
+            requestIcon.visibility = View.INVISIBLE
+
+            leave.visibility = View.INVISIBLE           // cannot leave
+            leaveIcon.visibility = View.INVISIBLE
+        }
+        else if (permission == "joined") {              // THE PARTICIPANTS can leave and view the manager's profile
+            request.visibility = View.INVISIBLE         // cannot request again
+            requestIcon.visibility = View.INVISIBLE
+
+            participants.visibility = View.INVISIBLE    // cannot view participants
+            participantsIcon.visibility = View.INVISIBLE
+
+            adminIcon.visibility = View.INVISIBLE       // are not admin
+        }
+        else if (permission == "guest") {               // GUESTS can send request and view the manager's profile
+            leave.visibility = View.INVISIBLE           // cannot leave
+            leaveIcon.visibility = View.INVISIBLE
+
+            participants.visibility = View.INVISIBLE    // cannot view participants
+            participantsIcon.visibility = View.INVISIBLE
+
+            adminIcon.visibility = View.INVISIBLE       // are not admin
+        }
+        else { // if there is an error in determining the permission, no action shall be taken but viewing only
+            adminIcon.visibility = View.INVISIBLE
+            manager.visibility = View.INVISIBLE
+            managerText.visibility = View.INVISIBLE
+            request.visibility = View.INVISIBLE
+            requestIcon.visibility = View.INVISIBLE
+            leave.visibility = View.INVISIBLE
+            leaveIcon.visibility = View.INVISIBLE
+            participants.visibility = View.INVISIBLE
+            participantsIcon.visibility = View.INVISIBLE
+        }
 
     }
 
