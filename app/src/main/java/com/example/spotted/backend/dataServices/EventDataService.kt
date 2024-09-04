@@ -107,6 +107,26 @@ object EventDataService {
         }
     }
 
+    //@GET("events/request-info/{id}")
+    //    fun getEventInfo(@Path("id") id: String, @Header("Authorization") token: String): Call<Event>
+
+    fun getEventInfo(eventId: String, onResult: (Event?) -> Unit) {
+        DataService.apiService.getEventInfo(eventId, "Bearer ${DataService.authToken}").enqueue(object : Callback<Event> {
+            override fun onResponse(call: Call<Event>, response: Response<Event>) {
+                if (response.isSuccessful) {
+                    onResult(response.body())
+                } else {
+                    DataService.extractMsg(response.errorBody())
+                    onResult(null)
+                }
+            }
+
+            override fun onFailure(call: Call<Event>, t: Throwable) {
+                onResult(null)
+            }
+        })
+    }
+
     fun inviteUserToEvent(invite: InviteRequest, onResult: (Invitation?) -> Unit){
         DataService.apiService.inviteUserToEvent("Bearer ${DataService.authToken}", invite).enqueue(object : Callback<Invitation> {
             override fun onResponse(call: Call<Invitation>, response: Response<Invitation>) {

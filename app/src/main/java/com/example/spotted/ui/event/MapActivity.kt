@@ -163,6 +163,8 @@ class MapActivity: AppCompatActivity(), OnMapReadyCallback {
             .addOnFailureListener { exception ->
                 exception.printStackTrace()
             }
+
+
     }
 
 
