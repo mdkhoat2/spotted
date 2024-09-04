@@ -73,6 +73,9 @@ interface ApiService {
         @Body mode: String
     ): Call<String>
 
+    @GET("events/request-info/{id}")
+    fun getEventInfo(@Path("id") id: String, @Header("Authorization") token: String): Call<Event>
+
     //Invite user to event
     @POST("events/invite")
     fun inviteUserToEvent(@Header("Authorization") token: String, @Body invite: InviteRequest) : Call<Invitation>
