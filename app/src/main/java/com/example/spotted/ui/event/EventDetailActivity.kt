@@ -48,6 +48,8 @@ class EventDetailActivity() : AppCompatActivity(), OnMapReadyCallback {
     private var latitude: Double = 0.0
     private var longitude: Double = 0.0
 
+    private lateinit var event: Event
+
     // all edit text fields
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -78,6 +80,14 @@ class EventDetailActivity() : AppCompatActivity(), OnMapReadyCallback {
         val textTime = findViewById<TextView>(R.id.text_view_content_time)
         val textLocation = findViewById<TextView>(R.id.text_view_content_location)
 
+        val id = intent.getStringExtra("id")?:""
+
+        EventDataService.getEventInfo(id) {
+            if (it != null) {
+                event = it
+            }
+        }
+
         //passing data from event to the activity
         //get the description, type, start time, latitude, and longitude
         description = intent.getStringExtra("description")?:""
@@ -90,8 +100,9 @@ class EventDetailActivity() : AppCompatActivity(), OnMapReadyCallback {
 
         textName.text = description
         textType.text = type
-        textDate.text = start //need processing here or before passing into intent the date and time
-        textTime.text = start //need processing here or before passing into intent the date and time
+        val split = SupportUtil.SplitDateTimeString(start)
+        textDate.text = split.first
+        textTime.text = split.second
 
         textLocation.text = address
 
@@ -183,8 +194,6 @@ class EventDetailActivity() : AppCompatActivity(), OnMapReadyCallback {
     private fun LocationSetup() {
         LocationHelper.initialize(this)
         LocationHelper.initializePlaces(this)
-
-
     }
 
     override fun onDestroy() {
@@ -193,11 +202,8 @@ class EventDetailActivity() : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
-
-        // Add a marker and move the camera
         val location = LatLng(latitude, longitude)
         mMap.addMarker(MarkerOptions().position(location).title(description))
-        // move the camera and zoom in
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 15f))
     }
 }

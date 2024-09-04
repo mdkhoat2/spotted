@@ -28,8 +28,12 @@ class EventsFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
-    private var eventList = mutableListOf<Event>()
-    private var adminId = mutableListOf<String>()
+    private var eventList = mutableListOf<Pair<Event,String>>()
+    private var eventListCopy = mutableListOf<Pair<Event,String>>()
+    private var sortAsc:Boolean = true
+
+    // EventAdapter is a class that extends RecyclerView.Adapter
+    private lateinit var eventsAdapter: EventsAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,10 +51,26 @@ class EventsFragment : Fragment() {
         setUpEvents(root)
 
         //button go to contact list activity
-        val chatBtn = root.findViewById(R.id.btn_Chat) as Button
+        val chatBtn: Button = root.findViewById(R.id.btn_Chat)
         chatBtn.setOnClickListener {
             val intent = Intent(requireActivity(), ContactListActivity::class.java)
             startActivity(intent)
+        }
+
+        val filterBtn: Button = root.findViewById(R.id.btn_filter)
+        filterBtn.setOnClickListener {
+
+        }
+
+        val sortBtn: Button = root.findViewById(R.id.btn_sort)
+        sortBtn.setOnClickListener {
+            sortAsc = !sortAsc
+            if (sortAsc) {
+                eventList.sortBy { it.first.start }
+            } else
+            eventList.sortByDescending { it.first.start }
+
+            eventsAdapter.notifyDataSetChanged()
         }
 
         return root
@@ -60,39 +80,30 @@ class EventsFragment : Fragment() {
     {
         val recyclerView: RecyclerView = view.findViewById(R.id.recycler_view_events)
         recyclerView.layoutManager = LinearLayoutManager(requireActivity())
-        val eventsAdapter = EventsAdapter(eventList, adminId)
+        eventsAdapter = EventsAdapter(eventList)
         recyclerView.adapter = eventsAdapter
 
         EventDataService.getJoinedEvents { joinedEvents ->
             if (joinedEvents != null) {
-                adminId.clear()
-                // event you are not admin will have adminId = null
-                for (joinedEvent in joinedEvents) {
-                    if (joinedEvent.admin != null)
-                    adminId.add(joinedEvent.admin.userID)
-                    else
-                        adminId.add("")
-                }
 
                 eventList.clear()
-                eventList.addAll(joinedEvents.map { it.event })
 
+                // admin can be null so we need to check
+                for (a in joinedEvents) {
+                    if (a.admin != null) {
+                        val b:Pair<Event,String> = Pair(a.event,a.admin._id)
+                        eventList.add(b)
+                    } else {
+                        val b:Pair<Event,String> = Pair(a.event,"")
+                        eventList.add(b)
+                    }
+                }
                 eventsAdapter.notifyDataSetChanged()
+
+                eventListCopy.clear()
+                eventListCopy.addAll(eventList)
             }
         }
-        //data class Admin(
-        //    val _id: String,
-        //    val eventID: String,
-        //    val userID: String,
-        //    val mode: String,
-        //    val createdAt: Timestamp,
-        //    val __v: Int
-        //)
-        //data class JoinedEvent(
-        //    val joinedAt: Timestamp,
-        //    val event: Event,
-        //    val admin: Admin
-        //)
     }
 
     override fun onDestroyView() {

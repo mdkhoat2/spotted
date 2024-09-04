@@ -13,22 +13,7 @@ import com.example.spotted.backend.dataServices.DataService
 import com.example.spotted.ui.event.EventDetailActivity
 import com.example.spotted.util.SupportUtil
 
-class EventsAdapter(private val events: List<Event>,private val adminId:List <String>) : RecyclerView.Adapter<EventsAdapter.EventViewHolder>() {
-
-    //data class Event(
-    //    // base on the backend data model
-    //    val _id: String,
-    //    val description: String,
-    //    val start: Timestamp,
-    //    val duration: Int,
-    //    val latitude: Double,
-    //    val longitude: Double,
-    //    val address: String,
-    //    val type: String,
-    //    val joinMode: String,
-    //    val maxParticipants: Int,
-    //    val deadline: Timestamp
-    //)
+class EventsAdapter(private val events: List<Pair<Event,String>>) : RecyclerView.Adapter<EventsAdapter.EventViewHolder>() {
 
     class EventViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val eventIcon: ImageView = itemView.findViewById(R.id.event_icon)
@@ -46,7 +31,7 @@ class EventsAdapter(private val events: List<Event>,private val adminId:List <St
     }
 
     override fun onBindViewHolder(holder: EventViewHolder, position: Int) {
-        val event = events[position]
+        val event = events[position].first
 
         holder.eventDescription.text = event.description
         holder.eventType.text = event.type
@@ -56,6 +41,7 @@ class EventsAdapter(private val events: List<Event>,private val adminId:List <St
         // set on click listener for the whole item
         holder.itemView.setOnClickListener {
             val intent: Intent = Intent(holder.itemView.context, EventDetailActivity::class.java)
+            intent.putExtra("id", event._id)
             intent.putExtra("description", event.description)
             intent.putExtra("type", event.type)
             intent.putExtra("start", holder.eventTime.text)
@@ -63,10 +49,10 @@ class EventsAdapter(private val events: List<Event>,private val adminId:List <St
             intent.putExtra("longitude", event.longitude)
             intent.putExtra("address", event.address)
 
-            if (adminId[position]  == DataService.getAuthProfile()?._id) {
-                intent.putExtra("admin", true)
+            if (events[position].second  == DataService.getAuthProfile()?._id) {
+                intent.putExtra("permission", "manager")
             } else {
-                intent.putExtra("admin", false)
+                intent.putExtra("permission", "guest")
             }
 
             holder.itemView.context.startActivity(intent)

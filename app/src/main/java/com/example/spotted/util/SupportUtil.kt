@@ -109,6 +109,18 @@ object SupportUtil {
         }
     }
 
+    fun SplitDateTimeString(dateTime: String): Pair<String, String> {
+        val splitDateTime = dateTime.split(" ")
+        // if no date return current date
+        if (splitDateTime.size == 1) {
+            val currentDate = LocalDateTime.now()
+            val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
+            val formattedDate = currentDate.format(formatter)
+            return Pair(formattedDate, splitDateTime[0])
+        }
+        return Pair(splitDateTime[0], splitDateTime[1])
+    }
+
     fun getTimestampFromString(date: String, time: String): Timestamp {
         // Date format: the input format is dd/MM/yyyy HH:mm
         // Change the format to yyyy-MM-dd HH:mm:ss
@@ -125,12 +137,6 @@ object SupportUtil {
         return timestamp
     }
 
-
-    fun getCurrentTime(): Timestamp {
-        val current = LocalDateTime.now()
-        val currentTimestamp = Timestamp.valueOf(current.toString())
-        return currentTimestamp
-    }
 
     // Use: val progress = SupportUtil.createProgressDialog(this)
     // Use: before doing anything: progress.dismiss()
