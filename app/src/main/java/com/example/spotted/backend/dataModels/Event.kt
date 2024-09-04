@@ -18,6 +18,12 @@ data class Event(
     val deadline: Timestamp
 )
 
+data class GetEventsRequest(
+    val latitude: Double,
+    val longitude: Double,
+    val distance: Double
+)
+
 //    "description": "Badminton 3",
 //    "start": "2024-08-30T00:00:00.000Z",
 //    "duration": 60,

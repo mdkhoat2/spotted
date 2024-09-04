@@ -14,6 +14,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.spotted.R
 import com.example.spotted.backend.dataModels.Event
+import com.example.spotted.backend.dataModels.GetEventsRequest
+import com.example.spotted.backend.dataServices.EventDataService
 import com.example.spotted.databinding.ActivityMapBinding
 import com.example.spotted.util.LayoutUtil
 import com.example.spotted.util.LocationHelper
@@ -42,6 +44,8 @@ class MapActivity: AppCompatActivity(), OnMapReadyCallback {
     private lateinit var placesClient: PlacesClient
 
     private var eventList = mutableListOf<Event>()
+
+    private lateinit var CurrentLocation: LatLng
 
 
 
@@ -106,30 +110,49 @@ class MapActivity: AppCompatActivity(), OnMapReadyCallback {
         searchBar.setOnItemClickListener { parent, view, position, id ->
             val selectedItem = parent.getItemAtPosition(position) as String
             searchBar.setText(selectedItem)
+            // Move the camera to the selected place
+
+            val event = eventList.find { it.description == selectedItem }
+            if (event != null) {
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
+                    LatLng(event.latitude, event.longitude), 15f))
+            }
+            else {
+                val latLng = LocationHelper.getLatLngFromAddress(this, selectedItem)
+                if (latLng != LatLng(0.0, 0.0)) {
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
+                }
+            }
         }
     }
 
+
     private fun performTextSearch(query: String) {
-        val filteredEvents = listOf(
-            "Phu Tho Stadium Thanh Hau",
-            "Duy Lam Ben Thanh Market",
-            "Con Cac Saigon Opera House"
-        ).filter { it.contains(query, ignoreCase = true) }
+        // Filter the events based on the description and address get the description
+        val filteredEvents = eventList.filter { it.description.contains(query, ignoreCase = true)
+                || it.address.contains(query, ignoreCase = true) }
+
+        val filteredName = filteredEvents.map { it.description }
 
         val request = FindAutocompletePredictionsRequest.builder().setQuery(query)
             .setCountries("VN")
-            .setTypeFilter(TypeFilter.ADDRESS)
+            .setTypeFilter(TypeFilter.ESTABLISHMENT)
             .build()
+
+//        val request = FindAutocompletePredictionsRequest.builder().setQuery(query)
+//            .setCountries("VN")
+//            .setTypeFilter(TypeFilter.ADDRESS)
+//            .build()
 
         placesClient.findAutocompletePredictions(request)
             .addOnSuccessListener { response ->
                 suggestions.clear() // Clear previous suggestions
 
-                for (S in filteredEvents) suggestions.add(S)
+                for (S in filteredName) suggestions.add(S)
 
                 val predictions = response.autocompletePredictions
                 for (prediction in predictions) {
-                    if (suggestions.size>5) break
+                    if (suggestions.size>7) break
                     suggestions.add(prediction.getPrimaryText(null).toString())
                 }
 
@@ -146,53 +169,51 @@ class MapActivity: AppCompatActivity(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
+        CurrentLocation = LatLng(21.028511,105.804817)
+
         // Add a marker and move the camera
         LocationHelper.getCurrentLocation(this) { location ->
             if (location != null) {
-//                val currentLatLng = LatLng(location.latitude, location.longitude)
-//                mMap.addMarker(MarkerOptions().position(currentLatLng).title("You are here"))
-//                val stadium = LatLng(10.762632, 106.660162)
-//                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 15f))
-//                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(stadium, 15f))
-            }
+                //CurrentLocation = LatLng(location.latitude, location.longitude)
+                CurrentLocation = LatLng(21.028511, 105.804817)
+                mMap.addMarker(MarkerOptions().position(CurrentLocation).title("You are here"))
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(CurrentLocation, 15f))
+            } else
+                println("Location is null")
         }
 
         eventList.clear()
-
-        SetUpMarker()
+        getEvents()
     }
 
+    fun getEvents(){
+        EventDataService.getEvents(
+            GetEventsRequest(CurrentLocation.latitude, CurrentLocation.longitude,
+                300000.0)) { events ->
+                if (events != null) {
+                    eventList.addAll(events)
+                    SetUpMarker()
+                }
+        }
+    }
     //
     fun SetUpMarker(){ // icon for each event
-        val time =  Timestamp(System.currentTimeMillis());
-        //some other time for testing
-        val time2 = Timestamp(System.currentTimeMillis() + 100000000)
-        val time3 = Timestamp(System.currentTimeMillis() + 2000000000)
-        val time4 = Timestamp(System.currentTimeMillis() + 300000000)
-        val time5 = Timestamp(System.currentTimeMillis() - 4000000000)
-
-
-        eventList.addAll(listOf(//random close location
-            Event("1","Badminton 1",time,60, 21.022411, 105.804817,"Nhaf Hauaj","badminton","Everyone",10,time),
-            Event("2","Badminton 2",time2,60,21.028511, 105.804217,"Nha Duy","baseball","Everyone",10,time),
-            Event("3","Badminton 3",time3,60, 21.028531, 105.804717,"dkfjkf","basketball","Everyone",10,time),
-            Event("4","Badminton 4",time4,60, 21.028501, 105.804917,"dfdfdsf","volleyball","Everyone",10,time)
-        ))
-
-        // Add all markers with icon to the map
 
         for (event in eventList) {
             val latLng = LatLng(event.latitude, event.longitude)
-
-            // get the icon for the event
             val icon = SupportUtil.getSportIcon(event.type)
-
-            // set the icon for the event
             val bitmapDescriptor = SupportUtil.bitmapDescriptorFromVector(this, icon)
 
-            mMap.addMarker(MarkerOptions().position(latLng).title(event.type).icon(bitmapDescriptor))
-
-            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
+            mMap.addMarker(MarkerOptions().position(latLng).title(event.description).icon(bitmapDescriptor))
+            // setup marker click listener
+            mMap.setOnMarkerClickListener { marker ->
+                val event = eventList.find { it.description == marker.title }
+                if (event != null) {
+                    // show event details
+                    println("Event: ${event.description}")
+                }
+                true
+            }
         }
     }
 }

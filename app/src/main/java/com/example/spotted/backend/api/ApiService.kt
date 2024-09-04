@@ -58,6 +58,13 @@ interface ApiService {
     @GET("events/joined")
     fun getJoinedEvents(@Header("Authorization") token: String): Call<List<JoinedEvent>>
 
+    @POST("events/search")
+    fun getEvents(
+        @Header("Authorization") token: String,
+        @Body getEventsRequest: GetEventsRequest
+    ): Call<List<Event>>
+
+
     @POST("events/admin")
     fun inviteAdminEvents(
         @Header("Authorization") token: String,

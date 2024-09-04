@@ -10,6 +10,7 @@ import android.location.Geocoder
 import com.example.spotted.R
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.tasks.Task
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.net.PlacesClient
@@ -70,6 +71,16 @@ object LocationHelper {
         return placesClient
     }
 
+    fun getLatLngFromAddress(context: Context, selectedItem: String) : LatLng {
+        val geocoder = Geocoder(context, Locale.getDefault())
+        val addresses = geocoder.getFromLocationName(selectedItem, 1)
+        if (addresses!!.isNotEmpty()) {
+            val lat = addresses[0].latitude
+            val lng = addresses[0].longitude
+            return LatLng(lat, lng)
+        }
+        return LatLng(0.0, 0.0)
+    }
 
 
 }

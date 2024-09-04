@@ -127,7 +127,7 @@ class CreateEventActivity : AppCompatActivity(), OnMapReadyCallback {
         autocompleteFragment.view?.setBackgroundResource(R.drawable.rounded_white)
 
         // Specify the types of place data to return.
-        autocompleteFragment.setPlaceFields(listOf(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG))
+        autocompleteFragment.setPlaceFields(listOf(Place.Field.NAME, Place.Field.LAT_LNG))
         autocompleteFragment.setCountries("VN")
         autocompleteFragment.setTypeFilter(TypeFilter.ADDRESS)
 
@@ -139,7 +139,7 @@ class CreateEventActivity : AppCompatActivity(), OnMapReadyCallback {
                 locationAddress = place.name!!.toString()
                 mMap.clear()
                 mMap.addMarker(MarkerOptions().position(place.latLng!!).title(place.name))
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(place.latLng!!, 16f))
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(place.latLng!!, 15f))
             }
 
             override fun onError(status: Status) {

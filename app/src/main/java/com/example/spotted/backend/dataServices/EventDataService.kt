@@ -22,6 +22,22 @@ object EventDataService {
             }
         })
     }
+    fun getEvents(getEventsRequest: GetEventsRequest, onResult: (List<Event>?) -> Unit) {
+        DataService.apiService.getEvents("Bearer ${DataService.authToken}", getEventsRequest).enqueue(object : Callback<List<Event>> {
+            override fun onResponse(call: Call<List<Event>>, response: Response<List<Event>>) {
+                if (response.isSuccessful) {
+                    onResult(response.body())
+                } else {
+                    DataService.extractMsg(response.errorBody())
+                    onResult(null)
+                }
+            }
+
+            override fun onFailure(call: Call<List<Event>>, t: Throwable) {
+                onResult(null)
+            }
+        })
+    }
 
     fun getJoinedEvents(onResult: (List<JoinedEvent>?) -> Unit) {
         DataService.apiService.getJoinedEvents("Bearer ${DataService.authToken}").enqueue(object : Callback<List<JoinedEvent>> {

@@ -131,7 +131,6 @@
             android:paddingEnd="24dp" />
     </com.google.android.material.textfield.TextInputLayout>
 
-
     <TextView
         android:id="@+id/activityCreateEvent_location_textView"
         android:layout_width="wrap_content"
@@ -175,15 +174,16 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="18dp"
         android:layout_marginEnd="24dp"
+        android:clipToOutline="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/activityCreateEvent_locationCardView"
-        android:background="@drawable/rounded_white" >
+        android:background="@drawable/rounded_transparent" >
         <fragment
-                android:id="@+id/activityCreateEvent_mapFragment"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:name="com.google.android.gms.maps.SupportMapFragment" />
+            android:id="@+id/activityCreateEvent_mapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:name="com.google.android.gms.maps.SupportMapFragment" />
     </FrameLayout>
 
     <androidx.appcompat.widget.AppCompatButton
