@@ -18,6 +18,7 @@
         android:shadowColor="#000000"
         android:text="Event Detail"
         android:textColor="@color/blue_700"
+        android:fontFamily="@font/instance"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -118,49 +119,92 @@
             app:layout_constraintTop_toTopOf="@+id/text_view_content_sport"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/activityCreateEvent_datetime_layout"
+    <LinearLayout
+        android:id="@+id/activityEventDetail_date_time_layout"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="24dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/activityCreateEvent_sport_layout">
+        app:layout_constraintTop_toBottomOf="@id/activityCreateEvent_sport_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginTop="12dp">
 
-        <TextView
-            android:id="@+id/text_view_content_datetime"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:background="@drawable/rounded_blue_300"
-            android:fontFamily="@font/instance"
-            android:textSize="14sp"
-            android:gravity="center|start"
-            android:paddingStart="48dp"
-            android:paddingTop="10dp"
-            android:text="Aug 30, 2024 15:00"
-            android:textColor="@color/blue_700"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/text_view_header_date"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/instance"
-            android:gravity="center|start"
-            android:paddingStart="48dp"
-            android:paddingTop="8dp"
-            android:text="Date Time"
-            android:textSize="10sp"
-            android:textColor="@color/blue_500"
-            app:layout_constraintStart_toStartOf="@+id/text_view_content_datetime"
-            app:layout_constraintTop_toTopOf="@+id/text_view_content_datetime"/>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_weight="1"            >
+            <TextView
+                android:id="@+id/text_view_content_date"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@drawable/rounded_blue_300"
+                android:fontFamily="@font/instance"
+                android:gravity="center|start"
+                android:paddingStart="48dp"
+                android:paddingTop="10dp"
+                android:text="Aug 30, 2024"
+                android:textColor="@color/blue_700"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                />
 
+            <TextView
+                android:id="@+id/text_view_header_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/instance"
+                android:gravity="center|start"
+                android:paddingStart="48dp"
+                android:paddingTop="8dp"
+                android:text="Date"
+                android:textSize="10sp"
+                android:textColor="@color/blue_500"
+                app:layout_constraintStart_toStartOf="@+id/text_view_content_date"
+                app:layout_constraintTop_toTopOf="@+id/text_view_content_date"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.2">
+
+            <TextView
+                android:id="@+id/text_view_content_time"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@drawable/rounded_blue_300"
+                android:fontFamily="@font/instance"
+                android:gravity="center|start"
+                android:paddingStart="48dp"
+                android:paddingTop="10dp"
+                android:layout_marginStart="12dp"
+                android:text="15:00"
+                android:textColor="@color/blue_700"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/text_view_header_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/instance"
+                android:gravity="center|start"
+                android:paddingStart="48dp"
+                android:paddingTop="8dp"
+                android:text="Time"
+                android:textSize="10sp"
+                android:textColor="@color/blue_500"
+                app:layout_constraintStart_toStartOf="@+id/text_view_content_time"
+                app:layout_constraintTop_toTopOf="@+id/text_view_content_time"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
 
 
     <TextView
@@ -171,8 +215,10 @@
         android:layout_marginTop="16dp"
         android:text="Location"
         android:textColor="@color/black"
+        android:fontFamily="@font/instance"
+        android:textSize="12sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/activityCreateEvent_datetime_layout" />
+        app:layout_constraintTop_toBottomOf="@+id/activityEventDetail_date_time_layout" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/activityEventDetail_location"
@@ -186,6 +232,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="24dp"
         android:background="@drawable/rounded_white" >
+
         <TextView
             android:id="@+id/text_view_content_location"
             android:layout_width="match_parent"
@@ -220,25 +267,161 @@
 
 
     <FrameLayout
+        android:id="@+id/frameLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="24dp"
-        android:clipToOutline="true"
         android:background="@drawable/rounded_transparent"
+        android:clipToOutline="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/activityEventDetail_location" >
+        app:layout_constraintTop_toBottomOf="@+id/activityEventDetail_location">
 
         <fragment
             android:id="@+id/activityEventDetail_mapFragment"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:name="com.google.android.gms.maps.SupportMapFragment"            />
+            android:layout_height="200dp" />
 
     </FrameLayout>
 
+    <TextView
+        android:id="@+id/activityEventDetail_manager_content_textView"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/rounded_blue_300"
+        android:fontFamily="@font/instance"
+        android:gravity="center|start"
+        android:paddingStart="48dp"
+        android:paddingTop="10dp"
+        android:text="Lam Thanh Duy"
+        android:textColor="@color/blue_700"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout" />
+
+    <TextView
+        android:id="@+id/activityEventDetail_manager_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/instance"
+        android:gravity="center|start"
+        android:paddingStart="48dp"
+        android:paddingTop="8dp"
+        android:text="Manager"
+        android:textSize="10sp"
+        android:textColor="@color/blue_500"
+        app:layout_constraintStart_toStartOf="@+id/activityEventDetail_manager_content_textView"
+        app:layout_constraintTop_toTopOf="@+id/activityEventDetail_manager_content_textView"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/activityEventDetail_viewParticipantButton_appCompatButton"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/rounded_blue_dark"
+        android:elevation="0dp"
+        android:fontFamily="@font/instance"
+        android:gravity="center|start"
+        android:paddingStart="48dp"
+        android:text="View participants"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout" />
+
+    <ImageView
+        android:id="@+id/activityEventDetail_viewParticipantIcon_imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:elevation="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/activityEventDetail_manager_content_textView"
+        app:layout_constraintEnd_toEndOf="@+id/activityEventDetail_manager_content_textView"
+        app:layout_constraintTop_toTopOf="@+id/activityEventDetail_manager_content_textView"
+        app:srcCompat="@drawable/icon_right_white" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/activityEventDetail_requestButton_appCompatButton"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/rounded_green_white"
+        android:elevation="0dp"
+        android:fontFamily="@font/instance"
+        android:gravity="center|start"
+        android:paddingStart="48dp"
+        android:text="Request to join"
+        android:textAllCaps="false"
+        android:textColor="@color/green_700"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activityEventDetail_manager_content_textView" />
+
+    <ImageView
+        android:id="@+id/activityEventDetail_requestIcon_imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:elevation="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/activityEventDetail_requestButton_appCompatButton"
+        app:layout_constraintEnd_toEndOf="@+id/activityEventDetail_requestButton_appCompatButton"
+        app:layout_constraintTop_toTopOf="@+id/activityEventDetail_requestButton_appCompatButton"
+        app:srcCompat="@drawable/icon_send_green" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/activityEventDetail_leaveButton_appCompatButton"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/rounded_red"
+        android:elevation="0dp"
+        android:fontFamily="@font/instance"
+        android:gravity="center|start"
+        android:paddingStart="48dp"
+        android:text="Leave"
+        android:textAllCaps="false"
+        android:textColor="@color/red_700"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activityEventDetail_manager_content_textView" />
+
+    <ImageView
+        android:id="@+id/activityEventDetail_leaveIcon_imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:elevation="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/activityEventDetail_leaveButton_appCompatButton"
+        app:layout_constraintEnd_toEndOf="@+id/activityEventDetail_leaveButton_appCompatButton"
+        app:layout_constraintTop_toTopOf="@+id/activityEventDetail_leaveButton_appCompatButton"
+        app:srcCompat="@drawable/icon_logout" />
+
+    <ImageView
+        android:id="@+id/activityEventDetail_admin_imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintBottom_toBottomOf="@+id/activityEventDetail_header_textView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/activityEventDetail_header_textView"
+        app:srcCompat="@drawable/icon_admin" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

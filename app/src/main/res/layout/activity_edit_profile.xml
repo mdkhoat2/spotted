@@ -48,9 +48,11 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/ic_change_avatar"
+        android:src="@drawable/icon_edit"
+        app:layout_constraintBottom_toBottomOf="@id/activityEditProfile_imageView_avatar"
         app:layout_constraintEnd_toEndOf="@id/activityEditProfile_imageView_avatar"
-        app:layout_constraintBottom_toBottomOf="@id/activityEditProfile_imageView_avatar"/>
+        app:layout_constraintStart_toStartOf="@+id/activityEditProfile_imageView_avatar"
+        app:layout_constraintTop_toTopOf="@+id/activityEditProfile_imageView_avatar" />
 
 
 
@@ -85,10 +87,10 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="12dp"
         android:layout_marginEnd="24dp"
-        app:boxStrokeColor="@color/blue_700"
         android:hint="@string/interest"
+        app:boxStrokeColor="@color/blue_700"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/containerName">
@@ -97,10 +99,10 @@
             android:id="@+id/editTextInterest"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingStart="24dp"
-            android:paddingEnd="24dp"
             android:fontFamily="@font/instance"
-            android:inputType="textPersonName"/>
+            android:inputType="textPersonName"
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -109,10 +111,10 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="12dp"
         android:layout_marginEnd="24dp"
-        app:boxStrokeColor="@color/blue_700"
         android:hint="@string/age"
+        app:boxStrokeColor="@color/blue_700"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/containerInterest">
@@ -121,10 +123,10 @@
             android:id="@+id/editTextAge"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingStart="24dp"
-            android:paddingEnd="24dp"
             android:fontFamily="@font/instance"
-            android:inputType="numberDecimal"/>
+            android:inputType="numberDecimal"
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -133,10 +135,10 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="12dp"
         android:layout_marginEnd="24dp"
-        app:boxStrokeColor="@color/blue_700"
         android:hint="@string/contact"
+        app:boxStrokeColor="@color/blue_700"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/containerAge">
@@ -145,10 +147,10 @@
             android:id="@+id/editTextContact"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingStart="24dp"
-            android:paddingEnd="24dp"
             android:fontFamily="@font/instance"
-            android:inputType="phone"/>
+            android:inputType="phone"
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -157,10 +159,10 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="12dp"
         android:layout_marginEnd="24dp"
-        app:boxStrokeColor="@color/blue_700"
         android:hint="@string/bio"
+        app:boxStrokeColor="@color/blue_700"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/containerContact">
@@ -169,10 +171,10 @@
             android:id="@+id/editTextBio"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingStart="24dp"
-            android:paddingEnd="24dp"
             android:fontFamily="@font/instance"
-            android:inputType="textPersonName"/>
+            android:inputType="textPersonName"
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.appcompat.widget.AppCompatButton
