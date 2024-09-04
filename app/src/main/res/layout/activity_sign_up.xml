@@ -37,44 +37,47 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/email_container"
-        style="@style/OutlinedRoundedBox"
+        style="@style/RoundedBox"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="24dp"
         android:hint="@string/email"
-        app:boxStrokeColor="@color/white"
         app:boxStrokeWidth="1dp"
-        app:helperTextTextAppearance="@font/flex"
-        app:helperTextTextColor="@android:color/holo_red_dark"
+        app:boxStrokeWidthFocused="3dp"
         app:endIconMode="clear_text"
-        app:layout_constraintTop_toBottomOf="@id/activitySignUp_textView_header"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintRight_toRightOf="parent">
+        app:endIconTint="@color/white"
+        app:hintTextColor="@color/white"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/activitySignUp_textView_header">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/emailEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textEmailAddress"
             android:fontFamily="@font/instance"
+            android:inputType="textEmailAddress"
             android:paddingStart="24dp"
-            android:paddingEnd="24dp" />
+            android:paddingEnd="24dp"
+            android:textColor="@color/white" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/passwordContainer"
-        style="@style/OutlinedRoundedBox"
+        style="@style/RoundedBox"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="24dp"
         android:hint="@string/password"
-        app:boxStrokeColor="@color/white"
         app:boxStrokeWidth="1dp"
+        app:boxStrokeWidthFocused="3dp"
+        app:endIconTint="@color/white"
+        app:hintTextColor="@color/white"
         app:passwordToggleEnabled="true"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -86,21 +89,24 @@
             android:layout_height="wrap_content"
             android:inputType="textPassword"
             android:fontFamily="@font/instance"
+            android:textColor="@color/white"
             android:paddingStart="24dp"
-            android:paddingEnd="24dp" />
+            android:paddingEnd="24dp"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/passwordConfirmContainer"
-        style="@style/OutlinedRoundedBox"
+        style="@style/RoundedBox"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="24dp"
-        android:hint="@string/confirmPass"
-        app:boxStrokeColor="@color/white"
+        android:hint="@string/confirm"
         app:boxStrokeWidth="1dp"
+        app:boxStrokeWidthFocused="3dp"
+        app:endIconTint="@color/white"
+        app:hintTextColor="@color/white"
         app:passwordToggleEnabled="true"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -112,8 +118,9 @@
             android:layout_height="wrap_content"
             android:inputType="textPassword"
             android:fontFamily="@font/instance"
+            android:textColor="@color/white"
             android:paddingStart="24dp"
-            android:paddingEnd="24dp" />
+            android:paddingEnd="24dp"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.appcompat.widget.AppCompatButton
