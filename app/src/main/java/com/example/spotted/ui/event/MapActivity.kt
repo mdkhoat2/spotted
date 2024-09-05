@@ -1,6 +1,7 @@
 package com.example.spotted.ui.event
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.os.Bundle
@@ -15,8 +16,10 @@ import androidx.core.content.ContextCompat
 import com.example.spotted.R
 import com.example.spotted.backend.dataModels.Event
 import com.example.spotted.backend.dataModels.GetEventsRequest
+import com.example.spotted.backend.dataServices.DataService
 import com.example.spotted.backend.dataServices.EventDataService
 import com.example.spotted.databinding.ActivityMapBinding
+import com.example.spotted.ui.create.CreateEventActivity
 import com.example.spotted.util.LayoutUtil
 import com.example.spotted.util.LocationHelper
 import com.example.spotted.util.SupportUtil
@@ -66,19 +69,21 @@ class MapActivity: AppCompatActivity(), OnMapReadyCallback {
 
         setUpPlaces()
 
-        val backBtn: ImageButton = findViewById(R.id.backButton)
-        backBtn.setOnClickListener {
+        binding.backButton.setOnClickListener {
             finish()
         }
 
-        val SportSpinner: Spinner = findViewById(R.id.spinnerSport)
+        binding.addButton.setOnClickListener{
+            val intent = Intent(this, CreateEventActivity::class.java)
+            startActivity(intent)
+        }
 
         val sports = resources.getStringArray(R.array.sports)
 
         val sportAdapter = ArrayAdapter(this,android.R.layout.simple_spinner_item,sports)
         sportAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
-        SportSpinner.adapter=sportAdapter
+        binding.spinnerSport.adapter=sportAdapter
     }
 
     private fun setUpPlaces() {
@@ -188,7 +193,7 @@ class MapActivity: AppCompatActivity(), OnMapReadyCallback {
         getEvents()
     }
 
-    fun getEvents(){
+    private fun getEvents(){
         EventDataService.getEvents(
             GetEventsRequest(CurrentLocation.latitude, CurrentLocation.longitude,
                 300000.0)) { events ->
@@ -199,7 +204,7 @@ class MapActivity: AppCompatActivity(), OnMapReadyCallback {
         }
     }
     //
-    fun SetUpMarker(){ // icon for each event
+    private fun SetUpMarker(){ // icon for each event
 
         for (event in eventList) {
             val latLng = LatLng(event.latitude, event.longitude)
@@ -212,7 +217,11 @@ class MapActivity: AppCompatActivity(), OnMapReadyCallback {
                 val event = eventList.find { it.description == marker.title }
                 if (event != null) {
                     // show event details
-                    println("Event: ${event.description}")
+                    val intent = Intent(this, EventDetailActivity::class.java)
+                    val role = EventDataService.getRole(DataService.getAuthProfile()!!._id, event._id)
+                    intent.putExtra("permission", role)
+                    EventDataService.setCurrentEvent(event)
+                    startActivity(intent)
                 }
                 true
             }
