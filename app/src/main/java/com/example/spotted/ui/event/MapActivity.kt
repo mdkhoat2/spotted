@@ -16,6 +16,7 @@ import androidx.core.content.ContextCompat
 import com.example.spotted.R
 import com.example.spotted.backend.dataModels.Event
 import com.example.spotted.backend.dataModels.GetEventsRequest
+import com.example.spotted.backend.dataServices.DataService
 import com.example.spotted.backend.dataServices.EventDataService
 import com.example.spotted.databinding.ActivityMapBinding
 import com.example.spotted.ui.create.CreateEventActivity
@@ -192,7 +193,7 @@ class MapActivity: AppCompatActivity(), OnMapReadyCallback {
         getEvents()
     }
 
-    fun getEvents(){
+    private fun getEvents(){
         EventDataService.getEvents(
             GetEventsRequest(CurrentLocation.latitude, CurrentLocation.longitude,
                 300000.0)) { events ->
@@ -203,7 +204,7 @@ class MapActivity: AppCompatActivity(), OnMapReadyCallback {
         }
     }
     //
-    fun SetUpMarker(){ // icon for each event
+    private fun SetUpMarker(){ // icon for each event
 
         for (event in eventList) {
             val latLng = LatLng(event.latitude, event.longitude)
@@ -216,7 +217,11 @@ class MapActivity: AppCompatActivity(), OnMapReadyCallback {
                 val event = eventList.find { it.description == marker.title }
                 if (event != null) {
                     // show event details
-                    println("Event: ${event.description}")
+                    val intent = Intent(this, EventDetailActivity::class.java)
+                    val role = EventDataService.getRole(DataService.getAuthProfile()!!._id, event._id)
+                    intent.putExtra("permission", role)
+                    EventDataService.setCurrentEvent(event)
+                    startActivity(intent)
                 }
                 true
             }

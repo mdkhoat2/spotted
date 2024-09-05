@@ -80,22 +80,14 @@ class EventDetailActivity() : AppCompatActivity(), OnMapReadyCallback {
         val textTime = findViewById<TextView>(R.id.text_view_content_time)
         val textLocation = findViewById<TextView>(R.id.text_view_content_location)
 
-        val id = intent.getStringExtra("id")?:""
-
-        EventDataService.getEventInfo(id) {
-            if (it != null) {
-                event = it
-            }
-        }
-
         //passing data from event to the activity
         //get the description, type, start time, latitude, and longitude
-        description = intent.getStringExtra("description")?:""
-        type = intent.getStringExtra("type")?:""
-        start = intent.getStringExtra("start")?:""
-        latitude = intent.getDoubleExtra("latitude", 0.0)
-        longitude = intent.getDoubleExtra("longitude", 0.0)
-        val address = intent.getStringExtra("address")?:""
+        description = EventDataService.getCurrentEvent()!!.description
+        type = EventDataService.getCurrentEvent()!!.type
+        start = SupportUtil.translateTime(EventDataService.getCurrentEvent()!!.start)
+        latitude = EventDataService.getCurrentEvent()!!.latitude
+        longitude = EventDataService.getCurrentEvent()!!.longitude
+        val address = EventDataService.getCurrentEvent()!!.address
 
 
         textName.text = description

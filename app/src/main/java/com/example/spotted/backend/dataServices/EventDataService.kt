@@ -6,6 +6,8 @@ import retrofit2.Response
 
 object EventDataService {
 
+    internal var currentEvent: Event? = null
+
     fun createEvent(event: Event, onResult: (Event?) -> Unit) {
         DataService.apiService.createEvent("Bearer ${DataService.authToken}", event).enqueue(object : Callback<Event> {
             override fun onResponse(call: Call<Event>, response: Response<Event>) {
@@ -147,5 +149,21 @@ object EventDataService {
     fun inviteUserToEvent(eventID: String, userID: String, onResult: (Invitation?) -> Unit){
         val invite = InviteRequest(eventID, userID)
         inviteUserToEvent(invite, onResult)
+    }
+
+    fun getRole(userID: String, eventID: String): String{
+        return "guest"
+    }
+
+    fun getAdmin(eventID: String): User?{
+        return null
+    }
+
+    fun setCurrentEvent(event: Event){
+        currentEvent = event
+    }
+
+    fun getCurrentEvent(): Event?{
+        return currentEvent
     }
 }

@@ -13,9 +13,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.spotted.R
+import com.example.spotted.backend.dataModels.NotificationModel
 import com.example.spotted.databinding.FragmentNotificationBinding
 import com.example.spotted.ui.event.MapActivity
 import com.example.spotted.util.LayoutUtil
+import com.example.spotted.util.SupportUtil
 
 class NotificationFragment : Fragment() {
 
@@ -31,31 +33,32 @@ class NotificationFragment : Fragment() {
         _binding = FragmentNotificationBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val notifications = listOf(
-            NotificationItem(NotificationAdapter.TYPE_APPROVE_NEW, "A new request to join PR league is waiting for your approval."),
-            NotificationItem(NotificationAdapter.TYPE_REQUEST_ACCEPTED, "Your request to join ADL League has been accepted."),
-            NotificationItem(NotificationAdapter.TYPE_APPROVE_NEW, "A new request to join ADL league is waiting for your approval."),
-            NotificationItem(NotificationAdapter.TYPE_APPROVE_NEW, "A new request to join PR league is waiting for your approval."),
-            NotificationItem(NotificationAdapter.TYPE_APPROVE_NEW, "A new request to join PR league is waiting for your approval."),
-            NotificationItem(NotificationAdapter.TYPE_REQUEST_ACCEPTED, "Your request to join ADL League has been accepted."),
-            NotificationItem(NotificationAdapter.TYPE_APPROVE_NEW, "A new request to join ADL league is waiting for your approval."),
-            NotificationItem(NotificationAdapter.TYPE_APPROVE_NEW, "A new request to join PR league is waiting for your approval."),
-            NotificationItem(NotificationAdapter.TYPE_APPROVE_NEW, "A new request to join PR league is waiting for your approval."),
-            NotificationItem(NotificationAdapter.TYPE_REQUEST_ACCEPTED, "Your request to join ADL League has been accepted."),
-            NotificationItem(NotificationAdapter.TYPE_APPROVE_NEW, "A new request to join ADL league is waiting for your approval."),
-            NotificationItem(NotificationAdapter.TYPE_APPROVE_NEW, "A new request to join PR league is waiting for your approval.")
-        )
-
         val layoutManager = LinearLayoutManager(requireContext())
         binding.fragmentNotificationRecyclerView.layoutManager = layoutManager
 
-        val adapter = NotificationAdapter(requireContext(), notifications)
+        val adapter = NotificationAdapter(requireContext(), createNotificationItems(getNotifications()))
         binding.fragmentNotificationRecyclerView.adapter = adapter
 
         val header : TextView = binding.fragmentNotificationHeader
         LayoutUtil.applyVariableFont(this, header, "'wght' 500, 'wdth' 150")
 
         return root
+    }
+
+    private fun getNotifications(): List<NotificationModel>{
+        val notifications = mutableListOf<NotificationModel>()
+        for (i in 1..10){
+            notifications.add(NotificationModel("New Request", "A new request to join PR league is waiting for your approval."))
+        }
+        return notifications
+    }
+
+    private fun createNotificationItems(listNotifications: List<NotificationModel>): List<NotificationItem>{
+        val notifications = mutableListOf<NotificationItem>()
+        for (notification in listNotifications){
+            notifications.add(SupportUtil.getNotificationItem(notification)!!)
+        }
+        return notifications
     }
 
     override fun onDestroyView() {
