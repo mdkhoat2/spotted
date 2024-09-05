@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.spotted.R
 import com.example.spotted.backend.dataModels.Event
 import com.example.spotted.backend.dataServices.DataService
+import com.example.spotted.backend.dataServices.EventDataService
 import com.example.spotted.ui.event.EventDetailActivity
 import com.example.spotted.util.SupportUtil
 
@@ -36,26 +37,28 @@ class EventsAdapter(private val events: List<Pair<Event,String>>) : RecyclerView
         holder.eventDescription.text = event.description
         holder.eventType.text = event.type
         holder.eventTime.text = SupportUtil.translateTime(event.start)
-        //holder.eventIcon.setImageResource(SupportUtil.getIcon(event.type))
+        holder.eventIcon.setImageResource(SupportUtil.getSportIcon(event.type))
+
+        if (events[position].second  == "") {
+            holder.editBtn.visibility = View.GONE
+        } else {
+            holder.editBtn.visibility = View.VISIBLE
+        }
 
         // set on click listener for the whole item
         holder.itemView.setOnClickListener {
-            val intent: Intent = Intent(holder.itemView.context, EventDetailActivity::class.java)
-            intent.putExtra("id", event._id)
-            intent.putExtra("description", event.description)
-            intent.putExtra("type", event.type)
-            intent.putExtra("start", holder.eventTime.text)
-            intent.putExtra("latitude", event.latitude)
-            intent.putExtra("longitude", event.longitude)
-            intent.putExtra("address", event.address)
+            val intent = Intent(holder.itemView.context, EventDetailActivity::class.java)
 
-            if (events[position].second  == DataService.getAuthProfile()?._id) {
-                intent.putExtra("permission", "manager")
-            } else {
-                intent.putExtra("permission", "guest")
+            EventDataService.getRole(event._id) {
+                if (it != null) {
+                    intent.putExtra("permission", it)
+                } else {
+                    intent.putExtra("permission", "none")
+                }
+
+                EventDataService.setCurrentEvent(event)
+                holder.itemView.context.startActivity(intent)
             }
-
-            holder.itemView.context.startActivity(intent)
         }
     }
 

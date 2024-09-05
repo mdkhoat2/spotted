@@ -218,10 +218,17 @@ class MapActivity: AppCompatActivity(), OnMapReadyCallback {
                 if (event != null) {
                     // show event details
                     val intent = Intent(this, EventDetailActivity::class.java)
-                    val role = EventDataService.getRole(DataService.getAuthProfile()!!._id, event._id)
-                    intent.putExtra("permission", role)
-                    EventDataService.setCurrentEvent(event)
-                    startActivity(intent)
+
+                    EventDataService.getRole(event._id){
+                        if (it != null) {
+                            intent.putExtra("permission", it)
+                        } else {
+                            intent.putExtra("permission", "none")
+                        }
+
+                        EventDataService.setCurrentEvent(event)
+                        startActivity(intent)
+                    }
                 }
                 true
             }

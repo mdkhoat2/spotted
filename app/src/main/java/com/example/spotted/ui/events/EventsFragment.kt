@@ -65,7 +65,7 @@ class EventsFragment : Fragment() {
         val sortBtn: Button = root.findViewById(R.id.btn_sort)
         sortBtn.setOnClickListener {
             sortAsc = !sortAsc
-            if (sortAsc) {
+            if (this.sortAsc) {
                 eventList.sortBy { it.first.start }
             } else
             eventList.sortByDescending { it.first.start }

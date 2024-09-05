@@ -64,6 +64,9 @@ interface ApiService {
         @Body getEventsRequest: GetEventsRequest
     ): Call<List<Event>>
 
+    @POST ("events/request-join")
+    fun requestJoinEvent(@Header("Authorization") token: String,@Body eventId: String): Call<Event>
+
 
     @POST("events/admin")
     fun inviteAdminEvents(
@@ -76,6 +79,15 @@ interface ApiService {
     @GET("events/get/{id}")
     fun getEventInfo(@Path("id") id: String, @Header("Authorization") token: String): Call<Event>
 
+    @GET("events/get-role/{id}")
+    fun getRole(@Path("id") id: String, @Header("Authorization") token: String): Call<String>
+
+    @GET("events/get-participants/{id}")
+    fun getParticipants(@Path("id") id: String, @Header("Authorization") token: String): Call<List<User>>
+
+    @GET ("events/get-admins/{id}")
+    fun getAdmins(@Path("id") id: String, @Header("Authorization") token: String): Call<List<Admin>>
+
     //Invite user to event
     @POST("events/invite")
     fun inviteUserToEvent(@Header("Authorization") token: String, @Body invite: InviteRequest) : Call<Invitation>
@@ -84,6 +96,4 @@ interface ApiService {
     @PUT("auth/profile/avatar")
     fun updateAvatar(@Header("Authorization") token: String, @Body avatar: AvatarUpdateRequest) : Call<AvatarUpdateResponse>
 
-    @GET("notifications/get/{timestamp}")
-    fun getNotifications(@Path("timestamp") timestamp: String, @Header("Authorization") token: String): Call<List<NotificationModel>>
 }
