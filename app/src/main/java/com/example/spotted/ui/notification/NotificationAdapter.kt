@@ -29,11 +29,7 @@ class NotificationAdapter(
         fun bind(notification: NotificationItem) {
             messageTextView.text = notification.message
             itemView.setOnClickListener {
-                val intent = Intent(context, EventDetailActivity::class.java)
-                val role = EventDataService.getRole(DataService.getAuthProfile()!!._id, notification.event!!._id)
-                intent.putExtra("permission", role)
-                EventDataService.setCurrentEvent(notification.event)
-                context.startActivity(intent)
+
             }
         }
     }
