@@ -1,6 +1,7 @@
 package com.example.spotted.ui.event
 
 import android.annotation.SuppressLint
+import android.app.ProgressDialog
 import android.content.Intent
 import android.location.Geocoder
 import android.os.Bundle
@@ -51,7 +52,7 @@ class EventDetailActivity() : AppCompatActivity(), OnMapReadyCallback {
     private var latitude: Double = 0.0
     private var longitude: Double = 0.0
 
-    private lateinit var event: Event
+    private lateinit var progress: ProgressDialog
 
     // all edit text fields
 
@@ -63,9 +64,9 @@ class EventDetailActivity() : AppCompatActivity(), OnMapReadyCallback {
         val root: View = binding.root
 
         setContentView(root)
-
         LayoutUtil.setupUI(this, root)
 
+        progress = SupportUtil.createProgressDialog(this)
 
         val header : TextView = binding.activityEventDetailHeaderTextView
         val location  = binding.activityEventDetailLocation
@@ -224,6 +225,7 @@ class EventDetailActivity() : AppCompatActivity(), OnMapReadyCallback {
         val location = LatLng(latitude, longitude)
         mMap.addMarker(MarkerOptions().position(location).title(description))
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 15f))
+        progress.dismiss()
     }
 }
 

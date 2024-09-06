@@ -1,6 +1,7 @@
 package com.example.spotted.ui.create
 
 import android.annotation.SuppressLint
+import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.MotionEvent
@@ -40,12 +41,17 @@ class CreateEventActivity : AppCompatActivity(), OnMapReadyCallback {
 
     // all edit text fields
     private lateinit var nameEditText: EditText
+    private lateinit var descriptionEditText: EditText
     private lateinit var sportEditText: EditText
     private lateinit var dateEditText: EditText
     private lateinit var timeEditText: EditText
-    private lateinit var locationEditText: EditText
+    private lateinit var deadlineDateEditText: EditText
+    private lateinit var deadlineTimeEditText: EditText
+
     private lateinit var locationPos: LatLng
     private lateinit var locationAddress: String
+
+    private lateinit var progress: ProgressDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,9 +62,9 @@ class CreateEventActivity : AppCompatActivity(), OnMapReadyCallback {
         val root: View = binding.root
 
         setContentView(root)
-
         LayoutUtil.setupUI(this, root)
 
+        progress = SupportUtil.createProgressDialog(this)
         setupInput(root)
 
         val header : TextView = binding.activityCreateEventHeaderTextView
@@ -80,10 +86,6 @@ class CreateEventActivity : AppCompatActivity(), OnMapReadyCallback {
         }
 
         proceed.setOnClickListener {
-//            val intent = Intent(this, MapActivity::class.java)
-//            intent.putExtra("navigateTo", "home")
-//            startActivity(intent)
-
             createTheEvent()
         }
 
@@ -98,14 +100,18 @@ class CreateEventActivity : AppCompatActivity(), OnMapReadyCallback {
 
         //create the event
         val name = nameEditText.text.toString()
+        val description = descriptionEditText.text.toString()
         val sport = sportEditText.text.toString() // is type
         val dateTime:Timestamp = SupportUtil.getTimestampFromString(dateEditText.text.toString(),timeEditText.text.toString())
-        // deadline is 1 hour before the event
-        val deadline = Timestamp(dateTime.time - 3600000)
 
-        val event = Event("0", name,"", dateTime, 60,
+        // if no deadline is set, set it to the event start time
+
+        val deadline:Timestamp = if (deadlineDateEditText.text.isEmpty() || deadlineTimeEditText.text.isEmpty()) {dateTime}
+        else {SupportUtil.getTimestampFromString(deadlineDateEditText.text.toString(),deadlineTimeEditText.text.toString())}
+
+        val event = Event("0", name,description, dateTime, 60,
             locationPos.latitude, locationPos.longitude, locationAddress,
-            sport,"Everyone", 10, deadline)
+            sport,"Everyone", 20, deadline)
 
         EventDataService.createEvent(event) { event ->
             if (event != null) {
@@ -157,6 +163,7 @@ class CreateEventActivity : AppCompatActivity(), OnMapReadyCallback {
     private fun setupInput(view: View) {
         nameEditText = view.findViewById(R.id.activityCreateEvent_name_editText)
         sportEditText = view.findViewById(R.id.activityCreateEvent_sport_editText)
+        descriptionEditText = view.findViewById(R.id.activityCreateEvent_description_editText)
 
         // Date EditText
         dateEditText = view.findViewById(R.id.activityCreateEvent_date_editText)
@@ -183,6 +190,30 @@ class CreateEventActivity : AppCompatActivity(), OnMapReadyCallback {
             }
             false
         }
+
+        deadlineDateEditText = view.findViewById(R.id.activityCreateEvent_DLdate_editText)
+
+        deadlineDateEditText.setOnTouchListener { v, event ->
+            if (event.action == MotionEvent.ACTION_UP) {
+                if (event.rawX >= (deadlineDateEditText.right - deadlineDateEditText.compoundDrawables[2].bounds.width())) {
+                    SupportUtil.showDatePicker(deadlineDateEditText, this)
+                    return@setOnTouchListener true
+                }
+            }
+            false
+        }
+
+        deadlineTimeEditText = view.findViewById(R.id.activityCreateEvent_DLtime_editText)
+
+        deadlineTimeEditText.setOnTouchListener { v, event ->
+            if (event.action == MotionEvent.ACTION_UP) {
+                if (event.rawX >= (deadlineTimeEditText.right - deadlineTimeEditText.compoundDrawables[2].bounds.width())) {
+                    SupportUtil.showTimePicker(deadlineTimeEditText, this)
+                    return@setOnTouchListener true
+                }
+            }
+            false
+        }
     }
 
 
@@ -191,12 +222,11 @@ class CreateEventActivity : AppCompatActivity(), OnMapReadyCallback {
 
         // Add a marker and move the camera
         LocationHelper.getCurrentLocation(this) { location ->
+            progress.dismiss()
             if (location != null) {
                 val currentLatLng = LatLng(location.latitude, location.longitude)
                 mMap.addMarker(MarkerOptions().position(currentLatLng).title("You are here"))
-                val stadium = LatLng(10.762632, 106.660162)
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 15f))
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(stadium, 15f))
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 15f))
             }
         }
     }

@@ -1,5 +1,6 @@
 package com.example.spotted.ui.event
 
+import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
@@ -47,13 +48,14 @@ class MapActivity: AppCompatActivity(), OnMapReadyCallback {
 
     private var CurrentFilter = "All"
 
+    private lateinit var progress: ProgressDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMapBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        //val token = AutocompleteSessionToken.newInstance()
+        progress = SupportUtil.createProgressDialog(this)
 
         LocationHelper.initialize(this)
 
@@ -181,7 +183,6 @@ class MapActivity: AppCompatActivity(), OnMapReadyCallback {
                 CurrentLocation = LatLng(21.028511, 105.804817)
                 DeviceLocation = CurrentLocation
                 binding.centerButton.callOnClick()
-
                 getEvents()
             }
         }
@@ -200,8 +201,9 @@ class MapActivity: AppCompatActivity(), OnMapReadyCallback {
     private fun getEvents(){
         eventList.clear()
         EventDataService.getEvents(
-            GetEventsRequest(CurrentLocation.latitude, CurrentLocation.longitude,
-                300000.0)) { events ->
+            GetEventsRequest(CurrentLocation.latitude, CurrentLocation.longitude,300000.0)) {
+            events ->
+                progress.dismiss()
                 if (events != null) {
                     eventList.addAll(events)
                     filterEvents()

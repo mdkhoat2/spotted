@@ -18,7 +18,7 @@ class EventsAdapter(private val events: List<Pair<Event,String>>) : RecyclerView
 
     class EventViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val eventIcon: ImageView = itemView.findViewById(R.id.event_icon)
-        val eventDescription: TextView = itemView.findViewById(R.id.event_description)
+        val eventName: TextView = itemView.findViewById(R.id.event_name)
         val eventType: TextView = itemView.findViewById(R.id.event_type)
         val eventTime: TextView = itemView.findViewById(R.id.event_datetime)
         val moreBtn: ImageView = itemView.findViewById(R.id.event_more)
@@ -34,7 +34,7 @@ class EventsAdapter(private val events: List<Pair<Event,String>>) : RecyclerView
     override fun onBindViewHolder(holder: EventViewHolder, position: Int) {
         val event = events[position].first
 
-        holder.eventDescription.text = event.description
+        holder.eventName.text = event.name
         holder.eventType.text = event.type
         holder.eventTime.text = SupportUtil.translateTime(event.start)
         holder.eventIcon.setImageResource(SupportUtil.getSportIcon(event.type))
