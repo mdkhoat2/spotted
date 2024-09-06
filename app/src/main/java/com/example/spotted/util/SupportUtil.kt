@@ -1,6 +1,6 @@
 package com.example.spotted.util
 
-import NotificationItem
+import NotificationAdapter
 import android.app.DatePickerDialog
 import android.app.ProgressDialog
 import android.app.TimePickerDialog
@@ -10,7 +10,6 @@ import android.graphics.Canvas
 import android.widget.EditText
 import androidx.core.content.ContextCompat
 import com.example.spotted.R
-import com.example.spotted.backend.dataModels.NotificationModel
 import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import java.io.File
@@ -189,11 +188,11 @@ object SupportUtil {
         }
     }
 
-    fun getNotificationItem(notification: NotificationModel): NotificationItem?{
-        when(notification.type){
-            "New Request" -> return NotificationItem(NotificationAdapter.TYPE_APPROVE_NEW, notification.message)
-            "Request Accepted" -> return NotificationItem(NotificationAdapter.TYPE_REQUEST_ACCEPTED, notification.message)
-            else -> return null
+    fun getNotificationType(type: String): Int{
+        return when(type){
+            "New Request" -> NotificationAdapter.TYPE_APPROVE_NEW
+            "Request Accepted" -> NotificationAdapter.TYPE_REQUEST_ACCEPTED
+            else -> NotificationAdapter.TYPE_REQUEST_ACCEPTED
         }
     }
 }

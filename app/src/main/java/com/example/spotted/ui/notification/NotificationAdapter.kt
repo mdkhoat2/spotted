@@ -1,14 +1,17 @@
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.spotted.R
+import com.example.spotted.backend.dataModels.NotificationItem
+import com.example.spotted.backend.dataServices.DataService
+import com.example.spotted.backend.dataServices.EventDataService
+import com.example.spotted.ui.event.EventDetailActivity
+import com.example.spotted.util.SupportUtil
 
-data class NotificationItem(val type: Int, val message: String)
 
 class NotificationAdapter(
     private val context: Context,
@@ -56,7 +59,7 @@ class NotificationAdapter(
     }
 
     override fun getItemViewType(position: Int): Int {
-        return notificationList[position].type
+        return notificationList[position].typeInt
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
