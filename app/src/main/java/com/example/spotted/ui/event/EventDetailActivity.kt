@@ -17,9 +17,11 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.spotted.MainActivity
 import com.example.spotted.R
 import com.example.spotted.backend.dataModels.Event
+import com.example.spotted.backend.dataServices.AuthDataService
 import com.example.spotted.backend.dataServices.EventDataService
 import com.example.spotted.databinding.ActivityCreateEventBinding
 import com.example.spotted.databinding.ActivityEventDetailBinding
+import com.example.spotted.ui.chat.MessagingActivity
 import com.example.spotted.ui.create.CreateEventViewModel
 import com.example.spotted.util.LayoutUtil
 import com.example.spotted.util.LocationHelper
@@ -105,16 +107,39 @@ class EventDetailActivity() : AppCompatActivity(), OnMapReadyCallback {
             finish()
         }
 
-
         // THE 5 DYNAMIC ELEMENTS
         val manager: TextView = binding.activityEventDetailManagerContentTextView
-        manager.setOnClickListener {
-            //open the manager profile - CALL API
+
+        //set text for the manager
+        EventDataService.getAdmins(EventDataService.getCurrentEvent()!!._id) { it ->
+            if (it != null) {
+                AuthDataService.getUser(it[0].userID) {itt->
+                    if (itt != null) {
+                        manager.text = itt.name
+                    }
+                }
+
+                manager.setOnClickListener {itt->
+                    if (itt != null) {
+                         val intent = Intent(this, MessagingActivity::class.java)
+                         intent.putExtra("otherId", it[0].userID)
+                         startActivity(intent)
+                    }
+                }
+            }
+
         }
+
+
 
         val participants: AppCompatButton = binding.activityEventDetailViewParticipantButtonAppCompatButton
         participants.setOnClickListener {
             //open the participants list - CALL API
+            EventDataService.getParticipants(EventDataService.getCurrentEvent()!!._id) {
+                if (it != null) {
+                    println(it)
+                }
+            }
         }
 
         val request: AppCompatButton = binding.activityEventDetailRequestButtonAppCompatButton
@@ -141,7 +166,7 @@ class EventDetailActivity() : AppCompatActivity(), OnMapReadyCallback {
         // get event admin boolean
         val permission = intent.getStringExtra("permission")
 
-        if (permission == "manager") {                  // THE MANAGER is an admin and can view participants
+        if (permission == "admin") {                  // THE MANAGER is an admin and can view participants
             manager.visibility = View.INVISIBLE         // cannot see the profile of yourself
             managerText.visibility = View.INVISIBLE
 
@@ -151,7 +176,7 @@ class EventDetailActivity() : AppCompatActivity(), OnMapReadyCallback {
             leave.visibility = View.INVISIBLE           // cannot leave
             leaveIcon.visibility = View.INVISIBLE
         }
-        else if (permission == "joined") {              // THE PARTICIPANTS can leave and view the manager's profile
+        else if (permission == "participant") {              // THE PARTICIPANTS can leave and view the manager's profile
             request.visibility = View.INVISIBLE         // cannot request again
             requestIcon.visibility = View.INVISIBLE
 
@@ -160,7 +185,7 @@ class EventDetailActivity() : AppCompatActivity(), OnMapReadyCallback {
 
             adminIcon.visibility = View.INVISIBLE       // are not admin
         }
-        else if (permission == "guest") {               // GUESTS can send request and view the manager's profile
+        else if (permission == "none") {               // GUESTS can send request and view the manager's profile
             leave.visibility = View.INVISIBLE           // cannot leave
             leaveIcon.visibility = View.INVISIBLE
 

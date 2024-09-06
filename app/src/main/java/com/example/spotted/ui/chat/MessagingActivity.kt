@@ -47,9 +47,10 @@ class MessagingActivity() : AppCompatActivity(){
                 messageList.clear()
                 messageList.addAll(revMessages)
                 chatAdapter.notifyDataSetChanged()
-                //println("Messages: $messageList")
+                println("Messages: $messageList")
                 recyclerView.scrollToPosition(messageList.size - 1)
-            }
+            }   else
+                Toast.makeText(this, "Failed to load messages", Toast.LENGTH_SHORT).show()
         }
 
         chatAdapter = ChatAdapter(messageList)

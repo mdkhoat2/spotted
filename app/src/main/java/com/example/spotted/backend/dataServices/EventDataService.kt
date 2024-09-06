@@ -109,26 +109,6 @@ object EventDataService {
         }
     }
 
-    //@GET("events/request-info/{id}")
-    //    fun getEventInfo(@Path("id") id: String, @Header("Authorization") token: String): Call<Event>
-
-    fun getEventInfo(eventId: String, onResult: (Event?) -> Unit) {
-        DataService.apiService.getEventInfo(eventId, "Bearer ${DataService.authToken}").enqueue(object : Callback<Event> {
-            override fun onResponse(call: Call<Event>, response: Response<Event>) {
-                if (response.isSuccessful) {
-                    onResult(response.body())
-                } else {
-                    DataService.extractMsg(response.errorBody())
-                    onResult(null)
-                }
-            }
-
-            override fun onFailure(call: Call<Event>, t: Throwable) {
-                onResult(null)
-            }
-        })
-    }
-
     fun inviteUserToEvent(invite: InviteRequest, onResult: (Invitation?) -> Unit){
         DataService.apiService.inviteUserToEvent("Bearer ${DataService.authToken}", invite).enqueue(object : Callback<Invitation> {
             override fun onResponse(call: Call<Invitation>, response: Response<Invitation>) {
@@ -151,12 +131,71 @@ object EventDataService {
         inviteUserToEvent(invite, onResult)
     }
 
-    fun getRole(userID: String, eventID: String): String{
-        return "guest"
+    fun getRole(eventId: String, onResult: (String?) -> Unit) {
+        DataService.apiService.getRole(eventId, "Bearer ${DataService.authToken}").enqueue(object : Callback<String> {
+            override fun onResponse(call: Call<String>, response: Response<String>) {
+                if (response.isSuccessful) {
+                    onResult(response.body())
+                } else {
+                    DataService.extractMsg(response.errorBody())
+                    onResult(null)
+                }
+            }
+
+            override fun onFailure(call: Call<String>, t: Throwable) {
+                onResult(null)
+            }
+        })
     }
 
-    fun getAdmin(eventID: String): User?{
-        return null
+    fun getEventInfo(eventId: String, onResult: (Event?) -> Unit) {
+        DataService.apiService.getEventInfo(eventId, "Bearer ${DataService.authToken}").enqueue(object : Callback<Event> {
+            override fun onResponse(call: Call<Event>, response: Response<Event>) {
+                if (response.isSuccessful) {
+                    onResult(response.body())
+                } else {
+                    DataService.extractMsg(response.errorBody())
+                    onResult(null)
+                }
+            }
+
+            override fun onFailure(call: Call<Event>, t: Throwable) {
+                onResult(null)
+            }
+        })
+    }
+
+    fun getParticipants(eventId: String, onResult: (List<User>?) -> Unit) {
+        DataService.apiService.getParticipants(eventId, "Bearer ${DataService.authToken}").enqueue(object : Callback<List<User>> {
+            override fun onResponse(call: Call<List<User>>, response: Response<List<User>>) {
+                if (response.isSuccessful) {
+                    onResult(response.body())
+                } else {
+                    DataService.extractMsg(response.errorBody())
+                    onResult(null)
+                }
+            }
+
+            override fun onFailure(call: Call<List<User>>, t: Throwable) {
+                onResult(null)
+            }
+        })
+    }
+
+    fun getAdmins(eventId: String, onResult: (List<Admin>?) -> Unit) {
+        DataService.apiService.getAdmins(eventId, "Bearer ${DataService.authToken}").enqueue(object : Callback<List<Admin>> {
+            override fun onResponse(call: Call<List<Admin>>, response: Response<List<Admin>>) {
+                if (response.isSuccessful) {
+                    onResult(response.body())
+                } else {
+                    DataService.extractMsg(response.errorBody())
+                    onResult(null)
+                }
+            }
+            override fun onFailure(call: Call<List<Admin>>, t: Throwable) {
+                onResult(null)
+            }
+        })
     }
 
     fun setCurrentEvent(event: Event){

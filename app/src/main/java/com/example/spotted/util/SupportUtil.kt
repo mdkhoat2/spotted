@@ -20,6 +20,7 @@ import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.util.Calendar
+import java.util.Locale
 import kotlin.math.abs
 
 object SupportUtil {
@@ -32,10 +33,7 @@ object SupportUtil {
         val datePickerDialog =
             DatePickerDialog(context, { _, selectedYear, selectedMonth, selectedDay ->
                 // dd/MM/yyyy
-                // force month to be 2 digits
-                val monthString =
-                    if (selectedMonth + 1 < 10) "0${selectedMonth + 1}" else "${selectedMonth + 1}"
-                // force day to be 2 digits
+                val monthString = if (selectedMonth + 1 < 10) "0${selectedMonth + 1}" else "${selectedMonth + 1}"
                 val dayString = if (selectedDay < 10) "0$selectedDay" else "$selectedDay"
                 val selectedDate = "$dayString/$monthString/$selectedYear"
                 editText.setText(selectedDate)
@@ -85,7 +83,6 @@ object SupportUtil {
     }
 
     fun translateTime(time: Timestamp): String {
-        // if same day, show time, else show date and time
         val timeNow = System.currentTimeMillis()
         val timeNowCal = Calendar.getInstance()
         timeNowCal.timeInMillis = timeNow
@@ -122,17 +119,13 @@ object SupportUtil {
     }
 
     fun getTimestampFromString(date: String, time: String): Timestamp {
-        // Date format: the input format is dd/MM/yyyy HH:mm
-        // Change the format to yyyy-MM-dd HH:mm:ss
         val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")
         val dateTime = "$date $time"
         val localDateTime = LocalDateTime.parse(dateTime, formatter)
 
-        // make localDateTime to String with the format yyyy-MM-dd HH:mm:ss
         val formatter2 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
         val formattedDateTime = localDateTime.format(formatter2)
 
-        // make the formattedDateTime to Timestamp
         val timestamp = Timestamp.valueOf(formattedDateTime)
         return timestamp
     }
@@ -175,12 +168,17 @@ object SupportUtil {
     }
 
     fun getSportIcon(eventType: String): Int {
-        return when (eventType) {
+        // uncapitalized the event type
+        val eventTypes = eventType.lowercase(Locale.getDefault())
+        // get rid of spaces
+        eventTypes.replace(" ", "")
+
+        return when (eventTypes) {
             "badminton" -> R.drawable.badminton
             "baseball" -> R.drawable.baseball
             "basketball" -> R.drawable.basketball
             "volleyball" -> R.drawable.volleyball
-            "football" -> R.drawable.football
+            "football","soccer" -> R.drawable.football
             "billiard" -> R.drawable.billiard
             "ping_pong" -> R.drawable.ping_pong
             "tennis" -> R.drawable.tennis
