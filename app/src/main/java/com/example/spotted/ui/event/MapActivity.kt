@@ -127,7 +127,7 @@ class MapActivity: AppCompatActivity(), OnMapReadyCallback {
             searchBar.setText(selectedItem)
             // Move the camera to the selected place
 
-            val event = eventList.find { it.description == selectedItem }
+            val event = eventList.find { it.name == selectedItem }
             if (event != null) {
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
                     LatLng(event.latitude, event.longitude), 15f))
@@ -142,11 +142,11 @@ class MapActivity: AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun performTextSearch(query: String) {
-        // Filter the events based on the description and address get the description
-        val filteredEvents = eventList.filter { it.description.contains(query, ignoreCase = true)
+        // Filter the events based on the name and address get the name
+        val filteredEvents = eventList.filter { it.name.contains(query, ignoreCase = true)
                 || it.address.contains(query, ignoreCase = true) }
 
-        val filteredName = filteredEvents.map { it.description }
+        val filteredName = filteredEvents.map { it.name }
 
         val request = FindAutocompletePredictionsRequest.builder().setQuery(query)
             .setCountries("VN")
@@ -227,10 +227,10 @@ class MapActivity: AppCompatActivity(), OnMapReadyCallback {
             val icon = SupportUtil.getSportIcon(event.type)
             val bitmapDescriptor = SupportUtil.bitmapDescriptorFromVector(this, icon)
 
-            mMap.addMarker(MarkerOptions().position(latLng).title(event.description).icon(bitmapDescriptor))
+            mMap.addMarker(MarkerOptions().position(latLng).title(event.name).icon(bitmapDescriptor))
             // setup marker click listener
             mMap.setOnMarkerClickListener { marker ->
-                val event = eventListFiltered.find { it.description == marker.title }
+                val event = eventListFiltered.find { it.name == marker.title }
                 if (event != null) {
                     // show event details
                     val intent = Intent(this, EventDetailActivity::class.java)

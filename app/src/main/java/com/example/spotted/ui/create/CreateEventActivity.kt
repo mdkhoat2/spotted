@@ -100,9 +100,10 @@ class CreateEventActivity : AppCompatActivity(), OnMapReadyCallback {
         val name = nameEditText.text.toString()
         val sport = sportEditText.text.toString() // is type
         val dateTime:Timestamp = SupportUtil.getTimestampFromString(dateEditText.text.toString(),timeEditText.text.toString())
-        val deadline = Timestamp(System.currentTimeMillis())
+        // deadline is 1 hour before the event
+        val deadline = Timestamp(dateTime.time - 3600000)
 
-        val event = Event("0", name, dateTime, 60,
+        val event = Event("0", name,"", dateTime, 60,
             locationPos.latitude, locationPos.longitude, locationAddress,
             sport,"Everyone", 10, deadline)
 

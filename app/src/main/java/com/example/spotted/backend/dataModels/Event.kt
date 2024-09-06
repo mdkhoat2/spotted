@@ -6,7 +6,8 @@ import java.sql.Timestamp
 data class Event(
     // base on the backend data model
     val _id: String,
-    val description: String,
+    val name: String,
+    val description: String?,
     val start: Timestamp,
     val duration: Int,
     val latitude: Double,

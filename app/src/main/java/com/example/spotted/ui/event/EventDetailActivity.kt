@@ -44,6 +44,7 @@ class EventDetailActivity() : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var binding: ActivityEventDetailBinding
     private lateinit var mMap: GoogleMap
 
+    private lateinit var name: String
     private lateinit var description: String
     private lateinit var type: String
     private lateinit var start: String
@@ -84,7 +85,8 @@ class EventDetailActivity() : AppCompatActivity(), OnMapReadyCallback {
 
         //passing data from event to the activity
         //get the description, type, start time, latitude, and longitude
-        description = EventDataService.getCurrentEvent()!!.description
+        name = EventDataService.getCurrentEvent()!!.name
+        description = EventDataService.getCurrentEvent()!!.description?:""
         type = EventDataService.getCurrentEvent()!!.type
         start = SupportUtil.translateTime(EventDataService.getCurrentEvent()!!.start)
         latitude = EventDataService.getCurrentEvent()!!.latitude
