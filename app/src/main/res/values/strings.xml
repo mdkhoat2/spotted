@@ -35,11 +35,18 @@
     <string name="send_msg">Send message</string>
 
     <string-array name="sports">
-        <item>Badminton</item>
-        <item>Football</item>
-        <item>Basketball</item>
-        <item>Volleyball</item>
-        <item>Swimming</item>
+        <item>All</item>
+        <item>badminton</item>
+        <item>baseball</item>
+        <item>basketball</item>
+        <item>billiard</item>
+        <item>bowling</item>
+        <item>football</item>
+        <item>golf</item>
+        <item>ping_pong</item>
+        <item>tennis</item>
+        <item>volleyball</item>
+        <item>Others</item>
     </string-array>
 
     <string name="google_map_key">AIzaSyAN5IUqcZbfL66xvabQiySJGlx2ol-6QSE</string>

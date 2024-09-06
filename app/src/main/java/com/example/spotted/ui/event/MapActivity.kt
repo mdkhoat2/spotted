@@ -1,22 +1,17 @@
 package com.example.spotted.ui.event
 
-import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.Canvas
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.View
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
-import android.widget.ImageButton
-import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import com.example.spotted.R
 import com.example.spotted.backend.dataModels.Event
 import com.example.spotted.backend.dataModels.GetEventsRequest
-import com.example.spotted.backend.dataServices.DataService
 import com.example.spotted.backend.dataServices.EventDataService
 import com.example.spotted.databinding.ActivityMapBinding
 import com.example.spotted.ui.create.CreateEventActivity
@@ -27,14 +22,12 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.BitmapDescriptor
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
+import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.libraries.places.api.model.TypeFilter
 import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest
 import com.google.android.libraries.places.api.net.PlacesClient
-import java.sql.Timestamp
 
 
 class MapActivity: AppCompatActivity(), OnMapReadyCallback {
@@ -47,9 +40,12 @@ class MapActivity: AppCompatActivity(), OnMapReadyCallback {
     private lateinit var placesClient: PlacesClient
 
     private var eventList = mutableListOf<Event>()
+    private var eventListFiltered = mutableListOf<Event>()
 
-    private lateinit var CurrentLocation: LatLng
+    private var CurrentLocation: LatLng = LatLng(0.0, 0.0)
+    private var DeviceLocation: LatLng = LatLng(0.0, 0.0)
 
+    private var CurrentFilter = "All"
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,9 +60,7 @@ class MapActivity: AppCompatActivity(), OnMapReadyCallback {
         val mapFragment = supportFragmentManager.findFragmentById(R.id.mapFragment) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
-
         LayoutUtil.setupUI(this, binding.root )
-
         setUpPlaces()
 
         binding.backButton.setOnClickListener {
@@ -78,11 +72,28 @@ class MapActivity: AppCompatActivity(), OnMapReadyCallback {
             startActivity(intent)
         }
 
-        val sports = resources.getStringArray(R.array.sports)
+        binding.centerButton.setOnClickListener {
+            val newCamPos = CameraPosition(
+                DeviceLocation,15f,0f,0f
+            )
+            mMap.animateCamera(CameraUpdateFactory.newCameraPosition(newCamPos))
+        }
 
+        val sports = resources.getStringArray(R.array.sports)
         val sportAdapter = ArrayAdapter(this,android.R.layout.simple_spinner_item,sports)
         sportAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
+        binding.spinnerSport.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                CurrentFilter = sports[position]
+                filterEvents()
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                CurrentFilter = "All"
+                filterEvents()
+            }
+        }
         binding.spinnerSport.adapter=sportAdapter
     }
 
@@ -97,7 +108,6 @@ class MapActivity: AppCompatActivity(), OnMapReadyCallback {
     private fun setupAutoCompleteTextView() {
         searchBar = findViewById(R.id.searchBar)
 
-        // Set up the adapter with the initial custom suggestions
         adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, suggestions)
         searchBar.setAdapter(adapter)
 
@@ -131,7 +141,6 @@ class MapActivity: AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
-
     private fun performTextSearch(query: String) {
         // Filter the events based on the description and address get the description
         val filteredEvents = eventList.filter { it.description.contains(query, ignoreCase = true)
@@ -143,11 +152,6 @@ class MapActivity: AppCompatActivity(), OnMapReadyCallback {
             .setCountries("VN")
             .setTypeFilter(TypeFilter.ESTABLISHMENT)
             .build()
-
-//        val request = FindAutocompletePredictionsRequest.builder().setQuery(query)
-//            .setCountries("VN")
-//            .setTypeFilter(TypeFilter.ADDRESS)
-//            .build()
 
         placesClient.findAutocompletePredictions(request)
             .addOnSuccessListener { response ->
@@ -165,48 +169,60 @@ class MapActivity: AppCompatActivity(), OnMapReadyCallback {
                 adapter.addAll(suggestions);
                 adapter.notifyDataSetChanged();
             }
-            .addOnFailureListener { exception ->
-                exception.printStackTrace()
-            }
-
-
     }
-
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
+        mMap.setMinZoomPreference(10f)
 
-        CurrentLocation = LatLng(21.028511,105.804817)
-
-        // Add a marker and move the camera
         LocationHelper.getCurrentLocation(this) { location ->
             if (location != null) {
                 //CurrentLocation = LatLng(location.latitude, location.longitude)
                 CurrentLocation = LatLng(21.028511, 105.804817)
-                mMap.addMarker(MarkerOptions().position(CurrentLocation).title("You are here"))
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(CurrentLocation, 15f))
-            } else
-                println("Location is null")
+                DeviceLocation = CurrentLocation
+                binding.centerButton.callOnClick()
+
+                getEvents()
+            }
         }
 
-        eventList.clear()
-        getEvents()
+        // set if user move the camera out of current range of events load more
+        mMap.setOnCameraMoveListener {
+            val center = mMap.cameraPosition.target
+            val distance = LocationHelper.calculateDistance(center, CurrentLocation)
+            if (distance > 300000.0) {
+                CurrentLocation = center
+                getEvents()
+            }
+        }
     }
 
     private fun getEvents(){
+        eventList.clear()
         EventDataService.getEvents(
             GetEventsRequest(CurrentLocation.latitude, CurrentLocation.longitude,
                 300000.0)) { events ->
                 if (events != null) {
                     eventList.addAll(events)
-                    SetUpMarker()
+                    filterEvents()
                 }
         }
     }
-    //
-    private fun SetUpMarker(){ // icon for each event
+    private fun filterEvents(){
+        eventListFiltered.clear()
+        eventListFiltered.addAll(eventList.filter
+        { it.type == CurrentFilter || CurrentFilter == "All" })
 
-        for (event in eventList) {
+        setUpMarker()
+    }
+
+    //
+    private fun setUpMarker(){ // icon for each event
+        mMap.clear()
+
+        mMap.addMarker(MarkerOptions().position(DeviceLocation).title("You are here"))
+
+        for (event in eventListFiltered) {
             val latLng = LatLng(event.latitude, event.longitude)
             val icon = SupportUtil.getSportIcon(event.type)
             val bitmapDescriptor = SupportUtil.bitmapDescriptorFromVector(this, icon)
@@ -214,7 +230,7 @@ class MapActivity: AppCompatActivity(), OnMapReadyCallback {
             mMap.addMarker(MarkerOptions().position(latLng).title(event.description).icon(bitmapDescriptor))
             // setup marker click listener
             mMap.setOnMarkerClickListener { marker ->
-                val event = eventList.find { it.description == marker.title }
+                val event = eventListFiltered.find { it.description == marker.title }
                 if (event != null) {
                     // show event details
                     val intent = Intent(this, EventDetailActivity::class.java)

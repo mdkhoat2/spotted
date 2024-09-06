@@ -82,5 +82,16 @@ object LocationHelper {
         return LatLng(0.0, 0.0)
     }
 
+    fun calculateDistance(a:LatLng,b:LatLng) : Double { // in meters
+        val earthRadius = 6371000.0 // in meters
+        val dLat = Math.toRadians(b.latitude - a.latitude)
+        val dLng = Math.toRadians(b.longitude - a.longitude)
+        val x = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                Math.cos(Math.toRadians(a.latitude)) * Math.cos(Math.toRadians(b.latitude)) *
+                Math.sin(dLng / 2) * Math.sin(dLng / 2)
+        val c = 2 * Math.atan2(Math.sqrt(x), Math.sqrt(1 - x))
+        return earthRadius * c
+
+    }
 
 }

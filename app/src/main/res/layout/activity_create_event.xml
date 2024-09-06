@@ -75,6 +75,7 @@
         app:layout_constraintTop_toBottomOf="@+id/activityCreateEvent_name_textInputLayout">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:inputType="textAutoCorrect"
             android:id="@+id/activityCreateEvent_sport_editText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

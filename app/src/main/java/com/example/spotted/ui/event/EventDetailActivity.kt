@@ -107,7 +107,6 @@ class EventDetailActivity() : AppCompatActivity(), OnMapReadyCallback {
             finish()
         }
 
-
         // THE 5 DYNAMIC ELEMENTS
         val manager: TextView = binding.activityEventDetailManagerContentTextView
 
@@ -123,14 +122,10 @@ class EventDetailActivity() : AppCompatActivity(), OnMapReadyCallback {
                 manager.setOnClickListener {itt->
                     if (itt != null) {
                          val intent = Intent(this, MessagingActivity::class.java)
-                         println("con me m JDAHDKAJSHDJKASHDJKAS "+it[0].userID)
                          intent.putExtra("otherId", it[0].userID)
                          startActivity(intent)
                     }
                 }
-
-            } else {
-                Toast.makeText(this, "Error getting manager", Toast.LENGTH_SHORT).show()
             }
 
         }
@@ -143,8 +138,6 @@ class EventDetailActivity() : AppCompatActivity(), OnMapReadyCallback {
             EventDataService.getParticipants(EventDataService.getCurrentEvent()!!._id) {
                 if (it != null) {
                     println(it)
-                } else {
-                    Toast.makeText(this, "Error getting participants", Toast.LENGTH_SHORT).show()
                 }
             }
         }
