@@ -85,5 +85,5 @@ interface ApiService {
     fun updateAvatar(@Header("Authorization") token: String, @Body avatar: AvatarUpdateRequest) : Call<AvatarUpdateResponse>
 
     @GET("notifications/get/{timestamp}")
-    fun getNotifications(@Path("timestamp") timestamp: String, @Header("Authorization") token: String): Call<List<NotificationModel>>
+    fun getNotifications(@Path("timestamp") timestamp: String, @Header("Authorization") token: String): Call<List<NotificationItem>>
 }
