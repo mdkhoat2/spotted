@@ -1,6 +1,7 @@
 package com.example.spotted.ui.event
 
 import android.annotation.SuppressLint
+import android.app.ProgressDialog
 import android.content.Intent
 import android.location.Geocoder
 import android.os.Bundle
@@ -18,6 +19,7 @@ import com.example.spotted.MainActivity
 import com.example.spotted.R
 import com.example.spotted.backend.dataModels.Event
 import com.example.spotted.backend.dataServices.AuthDataService
+import com.example.spotted.backend.dataServices.DataService
 import com.example.spotted.backend.dataServices.EventDataService
 import com.example.spotted.databinding.ActivityCreateEventBinding
 import com.example.spotted.databinding.ActivityEventDetailBinding
@@ -44,13 +46,14 @@ class EventDetailActivity() : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var binding: ActivityEventDetailBinding
     private lateinit var mMap: GoogleMap
 
+    private lateinit var name: String
     private lateinit var description: String
     private lateinit var type: String
     private lateinit var start: String
     private var latitude: Double = 0.0
     private var longitude: Double = 0.0
 
-    private lateinit var event: Event
+    private lateinit var progress: ProgressDialog
 
     // all edit text fields
 
@@ -62,9 +65,9 @@ class EventDetailActivity() : AppCompatActivity(), OnMapReadyCallback {
         val root: View = binding.root
 
         setContentView(root)
-
         LayoutUtil.setupUI(this, root)
 
+        progress = SupportUtil.createProgressDialog(this)
 
         val header : TextView = binding.activityEventDetailHeaderTextView
         val location  = binding.activityEventDetailLocation
@@ -84,15 +87,15 @@ class EventDetailActivity() : AppCompatActivity(), OnMapReadyCallback {
 
         //passing data from event to the activity
         //get the description, type, start time, latitude, and longitude
-        description = EventDataService.getCurrentEvent()!!.description
+        name = EventDataService.getCurrentEvent()!!.title?:""
+        description = EventDataService.getCurrentEvent()!!.description?:""
         type = EventDataService.getCurrentEvent()!!.type
         start = SupportUtil.translateTime(EventDataService.getCurrentEvent()!!.start)
         latitude = EventDataService.getCurrentEvent()!!.latitude
         longitude = EventDataService.getCurrentEvent()!!.longitude
         val address = EventDataService.getCurrentEvent()!!.address
 
-
-        textName.text = description
+        textName.text = name
         textType.text = type
         val split = SupportUtil.SplitDateTimeString(start)
         textDate.text = split.first
@@ -144,7 +147,16 @@ class EventDetailActivity() : AppCompatActivity(), OnMapReadyCallback {
 
         val request: AppCompatButton = binding.activityEventDetailRequestButtonAppCompatButton
         request.setOnClickListener {
-            //send the request to join the event - CALL API
+            EventDataService.requestJoinEvent(EventDataService.getCurrentEvent()!!._id,
+                DataService.getAuthProfile()?._id ?: ""
+            ) {
+                if (it != null) {
+                    println(it)
+                    Toast.makeText(this, "Request sent", Toast.LENGTH_SHORT).show()
+                } else
+                    println("Request failed")
+                    Toast.makeText(this, "Request failed", Toast.LENGTH_SHORT).show()
+            }
         }
 
         val leave: AppCompatButton = binding.activityEventDetailLeaveButtonAppCompatButton
@@ -222,6 +234,7 @@ class EventDetailActivity() : AppCompatActivity(), OnMapReadyCallback {
         val location = LatLng(latitude, longitude)
         mMap.addMarker(MarkerOptions().position(location).title(description))
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 15f))
+        progress.dismiss()
     }
 }
 

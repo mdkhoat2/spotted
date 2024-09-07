@@ -7,7 +7,6 @@
     tools:context=".ui.event.MapActivity"
     android:clickable="true"
     >
-
     <!-- Map Background Image -->
     <fragment
         android:id="@+id/mapFragment"

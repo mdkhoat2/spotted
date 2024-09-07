@@ -49,6 +49,12 @@
         <item>Others</item>
     </string-array>
 
+    <string-array name="owner">
+        <item>All</item>
+        <item>Mine</item>
+        <item>Others</item>
+    </string-array>
+
     <string name="google_map_key">AIzaSyAN5IUqcZbfL66xvabQiySJGlx2ol-6QSE</string>
     <string name="google_places_key">AIzaSyAN5IUqcZbfL66xvabQiySJGlx2ol-6QSE</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>

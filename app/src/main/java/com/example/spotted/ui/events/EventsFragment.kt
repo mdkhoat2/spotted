@@ -5,7 +5,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Button
+import android.widget.Spinner
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -30,7 +33,7 @@ class EventsFragment : Fragment() {
 
     private var eventList = mutableListOf<Pair<Event,String>>()
     private var eventListCopy = mutableListOf<Pair<Event,String>>()
-    private var sortAsc:Boolean = true
+    private var sortUsing: Int = 0
 
     // EventAdapter is a class that extends RecyclerView.Adapter
     private lateinit var eventsAdapter: EventsAdapter
@@ -41,7 +44,7 @@ class EventsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val eventsViewModel =
-            ViewModelProvider(this).get(EventsViewModel::class.java)
+            ViewModelProvider(this)[EventsViewModel::class.java]
 
         _binding = FragmentEventsBinding.inflate(inflater, container, false)
         val root: View = binding.root
@@ -57,18 +60,40 @@ class EventsFragment : Fragment() {
             startActivity(intent)
         }
 
-        val filterBtn: Button = root.findViewById(R.id.btn_filter)
-        filterBtn.setOnClickListener {
+        //spinner filter
+        val sports = resources.getStringArray(R.array.sports)
+        val sportAdapter = ArrayAdapter(requireContext(),android.R.layout.simple_spinner_item,sports)
+        sportAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
+        binding.spinnerSport.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                val sport = sports[position]
+                println("Filter: "+sport)
+                if (sport == "All") eventsAdapter.filter.filter("")
+
+                else eventsAdapter.filter.filter(sport)
+            }
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
+        binding.spinnerSport.adapter=sportAdapter
 
+
+        //button sort
         val sortBtn: Button = root.findViewById(R.id.btn_sort)
         sortBtn.setOnClickListener {
-            sortAsc = !sortAsc
-            if (this.sortAsc) eventList.sortBy { it.first.start }
-            else eventList.sortByDescending { it.first.start }
+            when (sortUsing) {
+                0 -> {
+                   eventsAdapter.sortBy(SortType.NAME)
+                }
+                1 -> {
+                    eventsAdapter.sortBy(SortType.TYPE)
+                }
+                2 -> {
+                    eventsAdapter.sortBy(SortType.DATE)
+                }
 
-            eventsAdapter.notifyDataSetChanged()
+            }
+            sortUsing = (sortUsing+1)%3
         }
 
         return root

@@ -41,14 +41,14 @@
             android:drawableLeft="@drawable/ic_notifications_black_24dp"
             android:background="@drawable/rounded_white"/>
 
-        <Button
-            android:id="@+id/btn_filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <Spinner
+            android:id="@+id/spinner_sport"
+            android:layout_width="140dp"
+            android:layout_height="50dp"
             android:layout_marginEnd="8dp"
             android:text="Filter"
             android:drawableLeft="@drawable/ic_filter_black_24dp"
-            android:background="@drawable/rounded_white"/>
+            android:background="@drawable/bg_spinner"/>
 
         <Button
             android:id="@+id/btn_sort"
