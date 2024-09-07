@@ -21,15 +21,19 @@ class NotificationAdapter(
     companion object {
         const val TYPE_APPROVE_NEW = 1
         const val TYPE_REQUEST_ACCEPTED = 2
+        const val TYPE_CREATE_EVENT = 3
+        const val TYPE_REQUEST_REJECTED = 4
     }
 
     inner class ApproveNewViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val messageTextView: TextView = itemView.findViewById(R.id.notificationItem_approve_textView)
 
         fun bind(notification: NotificationItem) {
-            messageTextView.text = notification.message
+            messageTextView.text = notification.content
             itemView.setOnClickListener {
-
+                val intent = Intent(context, EventDetailActivity::class.java)
+                intent.putExtra("eventID", notification.eventID)
+                context.startActivity(intent)
             }
         }
     }
@@ -38,7 +42,23 @@ class NotificationAdapter(
         private val messageTextView: TextView = itemView.findViewById(R.id.notificationItem_accepted_textView)
 
         fun bind(notification: NotificationItem) {
-            messageTextView.text = notification.message
+            messageTextView.text = notification.content
+        }
+    }
+
+    inner class RequestRejectedViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val messageTextView: TextView = itemView.findViewById(R.id.notificationItem_accepted_textView)
+
+        fun bind(notification: NotificationItem) {
+            messageTextView.text = notification.content
+        }
+    }
+
+    inner class CreateEventViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val messageTextView: TextView = itemView.findViewById(R.id.notificationItem_accepted_textView)
+
+        fun bind(notification: NotificationItem) {
+            messageTextView.text = notification.content
         }
     }
 
@@ -53,6 +73,16 @@ class NotificationAdapter(
                 val view = LayoutInflater.from(parent.context)
                     .inflate(R.layout.item_notification_request_accepted, parent, false)
                 RequestAcceptedViewHolder(view)
+            }
+            TYPE_REQUEST_REJECTED -> {
+                val view = LayoutInflater.from(parent.context)
+                    .inflate(R.layout.item_notification_request_accepted, parent, false)
+                RequestRejectedViewHolder(view)
+            }
+            TYPE_CREATE_EVENT -> {
+                val view = LayoutInflater.from(parent.context)
+                    .inflate(R.layout.item_notification_request_accepted, parent, false)
+                CreateEventViewHolder(view)
             }
             else -> throw IllegalArgumentException("Invalid view type")
         }
