@@ -1,5 +1,6 @@
 package com.example.spotted.ui.event
 
+import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
@@ -47,13 +48,14 @@ class MapActivity: AppCompatActivity(), OnMapReadyCallback {
 
     private var CurrentFilter = "All"
 
+    private lateinit var progress: ProgressDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMapBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        //val token = AutocompleteSessionToken.newInstance()
+        progress = SupportUtil.createProgressDialog(this)
 
         LocationHelper.initialize(this)
 
@@ -127,7 +129,7 @@ class MapActivity: AppCompatActivity(), OnMapReadyCallback {
             searchBar.setText(selectedItem)
             // Move the camera to the selected place
 
-            val event = eventList.find { it.description == selectedItem }
+            val event = eventList.find { it.name == selectedItem }
             if (event != null) {
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
                     LatLng(event.latitude, event.longitude), 15f))
@@ -142,11 +144,11 @@ class MapActivity: AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun performTextSearch(query: String) {
-        // Filter the events based on the description and address get the description
-        val filteredEvents = eventList.filter { it.description.contains(query, ignoreCase = true)
+        // Filter the events based on the name and address get the name
+        val filteredEvents = eventList.filter { it.name.contains(query, ignoreCase = true)
                 || it.address.contains(query, ignoreCase = true) }
 
-        val filteredName = filteredEvents.map { it.description }
+        val filteredName = filteredEvents.map { it.name }
 
         val request = FindAutocompletePredictionsRequest.builder().setQuery(query)
             .setCountries("VN")
@@ -181,7 +183,6 @@ class MapActivity: AppCompatActivity(), OnMapReadyCallback {
                 CurrentLocation = LatLng(21.028511, 105.804817)
                 DeviceLocation = CurrentLocation
                 binding.centerButton.callOnClick()
-
                 getEvents()
             }
         }
@@ -200,8 +201,9 @@ class MapActivity: AppCompatActivity(), OnMapReadyCallback {
     private fun getEvents(){
         eventList.clear()
         EventDataService.getEvents(
-            GetEventsRequest(CurrentLocation.latitude, CurrentLocation.longitude,
-                300000.0)) { events ->
+            GetEventsRequest(CurrentLocation.latitude, CurrentLocation.longitude,300000.0)) {
+            events ->
+                progress.dismiss()
                 if (events != null) {
                     eventList.addAll(events)
                     filterEvents()
@@ -227,10 +229,10 @@ class MapActivity: AppCompatActivity(), OnMapReadyCallback {
             val icon = SupportUtil.getSportIcon(event.type)
             val bitmapDescriptor = SupportUtil.bitmapDescriptorFromVector(this, icon)
 
-            mMap.addMarker(MarkerOptions().position(latLng).title(event.description).icon(bitmapDescriptor))
+            mMap.addMarker(MarkerOptions().position(latLng).title(event.name).icon(bitmapDescriptor))
             // setup marker click listener
             mMap.setOnMarkerClickListener { marker ->
-                val event = eventListFiltered.find { it.description == marker.title }
+                val event = eventListFiltered.find { it.name == marker.title }
                 if (event != null) {
                     // show event details
                     val intent = Intent(this, EventDetailActivity::class.java)

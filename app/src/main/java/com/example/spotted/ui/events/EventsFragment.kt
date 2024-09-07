@@ -41,7 +41,7 @@ class EventsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val eventsViewModel =
-            ViewModelProvider(this).get(EventsViewModel::class.java)
+            ViewModelProvider(this)[EventsViewModel::class.java]
 
         _binding = FragmentEventsBinding.inflate(inflater, container, false)
         val root: View = binding.root
@@ -59,7 +59,6 @@ class EventsFragment : Fragment() {
 
         val filterBtn: Button = root.findViewById(R.id.btn_filter)
         filterBtn.setOnClickListener {
-
         }
 
         val sortBtn: Button = root.findViewById(R.id.btn_sort)
