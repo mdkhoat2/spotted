@@ -198,6 +198,34 @@ object EventDataService {
         })
     }
 
+    fun requestJoinEvent(eventId: String, userId: String, onResult: (Event?) -> Unit) {
+        val joinRequest = JoinRequest(eventId, listOf(userId))
+        DataService.apiService.requestJoinEvent("Bearer ${DataService.authToken}", joinRequest).enqueue(object : Callback<Event> {
+            override fun onResponse(call: Call<Event>, response: Response<Event>) {
+                if (response.isSuccessful) {
+                    onResult(response.body())
+                } else {
+                    DataService.extractMsg(response.errorBody())
+                    onResult(null)
+                }
+            }
+
+            override fun onFailure(call: Call<Event>, t: Throwable) {
+                onResult(null)
+            }
+        })
+    }
+
+    // pass in event id and one user id
+    fun requestJoinEvent(eventId: String, userId: String) {
+        requestJoinEvent(eventId, userId) { event ->
+            if (event != null) {
+                println("Requested to join event")
+            }
+        }
+    }
+
+
     fun setCurrentEvent(event: Event){
         currentEvent = event
     }

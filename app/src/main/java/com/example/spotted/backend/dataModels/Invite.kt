@@ -7,6 +7,11 @@ data class InviteRequest(
     val userID: String
 )
 
+data class JoinRequest(
+    val eventID: String,
+    val userIDs: List<String>
+)
+
 data class Invitation(
     val userID: String,
     val adminID: String,

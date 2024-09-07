@@ -103,15 +103,12 @@ class CreateEventActivity : AppCompatActivity(), OnMapReadyCallback {
         val description = descriptionEditText.text.toString()
         val sport = sportEditText.text.toString() // is type
         val dateTime:Timestamp = SupportUtil.getTimestampFromString(dateEditText.text.toString(),timeEditText.text.toString())
-
-        // if no deadline is set, set it to the event start time
-
         val deadline:Timestamp = if (deadlineDateEditText.text.isEmpty() || deadlineTimeEditText.text.isEmpty()) {dateTime}
         else {SupportUtil.getTimestampFromString(deadlineDateEditText.text.toString(),deadlineTimeEditText.text.toString())}
 
         val event = Event("0", name,description, dateTime, 60,
             locationPos.latitude, locationPos.longitude, locationAddress,
-            sport,"Everyone", 20, deadline)
+            sport,"Accepted Only", 20, deadline)
 
         EventDataService.createEvent(event) { event ->
             if (event != null) {

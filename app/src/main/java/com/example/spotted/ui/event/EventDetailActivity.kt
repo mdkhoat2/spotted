@@ -19,6 +19,7 @@ import com.example.spotted.MainActivity
 import com.example.spotted.R
 import com.example.spotted.backend.dataModels.Event
 import com.example.spotted.backend.dataServices.AuthDataService
+import com.example.spotted.backend.dataServices.DataService
 import com.example.spotted.backend.dataServices.EventDataService
 import com.example.spotted.databinding.ActivityCreateEventBinding
 import com.example.spotted.databinding.ActivityEventDetailBinding
@@ -86,7 +87,7 @@ class EventDetailActivity() : AppCompatActivity(), OnMapReadyCallback {
 
         //passing data from event to the activity
         //get the description, type, start time, latitude, and longitude
-        name = EventDataService.getCurrentEvent()!!.name
+        name = EventDataService.getCurrentEvent()!!.title?:""
         description = EventDataService.getCurrentEvent()!!.description?:""
         type = EventDataService.getCurrentEvent()!!.type
         start = SupportUtil.translateTime(EventDataService.getCurrentEvent()!!.start)
@@ -94,8 +95,7 @@ class EventDetailActivity() : AppCompatActivity(), OnMapReadyCallback {
         longitude = EventDataService.getCurrentEvent()!!.longitude
         val address = EventDataService.getCurrentEvent()!!.address
 
-
-        textName.text = description
+        textName.text = name
         textType.text = type
         val split = SupportUtil.SplitDateTimeString(start)
         textDate.text = split.first
@@ -147,7 +147,16 @@ class EventDetailActivity() : AppCompatActivity(), OnMapReadyCallback {
 
         val request: AppCompatButton = binding.activityEventDetailRequestButtonAppCompatButton
         request.setOnClickListener {
-            //send the request to join the event - CALL API
+            EventDataService.requestJoinEvent(EventDataService.getCurrentEvent()!!._id,
+                DataService.getAuthProfile()?._id ?: ""
+            ) {
+                if (it != null) {
+                    println(it)
+                    Toast.makeText(this, "Request sent", Toast.LENGTH_SHORT).show()
+                } else
+                    println("Request failed")
+                    Toast.makeText(this, "Request failed", Toast.LENGTH_SHORT).show()
+            }
         }
 
         val leave: AppCompatButton = binding.activityEventDetailLeaveButtonAppCompatButton

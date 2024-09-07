@@ -65,7 +65,8 @@ interface ApiService {
     ): Call<List<Event>>
 
     @POST ("events/request-join")
-    fun requestJoinEvent(@Header("Authorization") token: String,@Body eventId: String): Call<Event>
+    fun requestJoinEvent(@Header("Authorization") token: String,
+                         @Body joinRequest: JoinRequest) : Call<Event>
 
 
     @POST("events/admin")

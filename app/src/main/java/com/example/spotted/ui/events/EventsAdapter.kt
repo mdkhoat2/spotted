@@ -4,6 +4,8 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -14,7 +16,10 @@ import com.example.spotted.backend.dataServices.EventDataService
 import com.example.spotted.ui.event.EventDetailActivity
 import com.example.spotted.util.SupportUtil
 
-class EventsAdapter(private val events: List<Pair<Event,String>>) : RecyclerView.Adapter<EventsAdapter.EventViewHolder>() {
+class EventsAdapter(private val events: List<Pair<Event,String>>) :
+    RecyclerView.Adapter<EventsAdapter.EventViewHolder>(), Filterable {
+
+    private var filteredEvents: List<Pair<Event, String>> = events
 
     class EventViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val eventIcon: ImageView = itemView.findViewById(R.id.event_icon)
@@ -32,9 +37,9 @@ class EventsAdapter(private val events: List<Pair<Event,String>>) : RecyclerView
     }
 
     override fun onBindViewHolder(holder: EventViewHolder, position: Int) {
-        val event = events[position].first
+        val event = filteredEvents[position].first
 
-        holder.eventName.text = event.name
+        holder.eventName.text = event.title
         holder.eventType.text = event.type
         holder.eventTime.text = SupportUtil.translateTime(event.start)
         holder.eventIcon.setImageResource(SupportUtil.getSportIcon(event.type))
@@ -63,6 +68,42 @@ class EventsAdapter(private val events: List<Pair<Event,String>>) : RecyclerView
     }
 
     override fun getItemCount(): Int {
-        return events.size
+        return filteredEvents.size
     }
+
+    override fun getFilter(): Filter {
+        return object : Filter() {
+            override fun performFiltering(constraint: CharSequence?): FilterResults {
+                val filterString = constraint?.toString() ?: ""
+                filteredEvents = if (filterString.isEmpty()) {
+                    events
+                } else {
+                    events.filter {
+                        it.first.type.contains(filterString, ignoreCase = true)
+                    }
+                }
+                return FilterResults().apply { values = filteredEvents }
+            }
+
+            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+                filteredEvents = results?.values as List<Pair<Event, String>>
+                notifyDataSetChanged()
+            }
+        }
+    }
+
+    fun sortBy(sortType: SortType) {
+        filteredEvents = when (sortType) {
+            SortType.NAME -> filteredEvents.sortedBy { it.first.title }
+            SortType.TYPE -> filteredEvents.sortedBy { it.first.type }
+            SortType.DATE -> filteredEvents.sortedBy { it.first.start }
+        }
+        notifyDataSetChanged()
+    }
+}
+
+enum class SortType {
+    NAME,
+    TYPE,
+    DATE
 }
