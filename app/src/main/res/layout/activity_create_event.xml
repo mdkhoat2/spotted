@@ -201,66 +201,6 @@
             android:name="com.google.android.gms.maps.SupportMapFragment" />
     </FrameLayout>
 
-    <LinearLayout
-        android:id="@+id/activityCreateEvent_deadline_linearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/activityCreateEvent_mapFrameLayout">
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/activityCreateEvent_DLdate_textInputLayout"
-            style="@style/OutlinedRoundedBox"
-            android:layout_height="60dp"
-            android:layout_width="0dp"
-            android:layout_marginTop="12dp"
-            android:layout_weight="1.2"
-            android:hint="Deadline"
-            app:boxStrokeColor="@color/blue_700"
-            app:boxStrokeWidth="1dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/activityCreateEvent_sport_textInputLayout">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/activityCreateEvent_DLdate_editText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableEnd="@drawable/ic_create_black_24dp"
-                android:fontFamily="@font/instance"
-                android:inputType="date"
-                android:paddingStart="24dp"
-                android:paddingEnd="24dp" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/activityCreateEvent_DLtime_textInputLayout"
-            style="@style/OutlinedRoundedBox"
-            android:layout_height="60dp"
-            android:layout_width="0dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginStart="12dp"
-            android:layout_weight="1"
-            android:hint="Time"
-            app:boxStrokeColor="@color/blue_700"
-            app:boxStrokeWidth="1dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/activityCreateEvent_sport_textInputLayout">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/activityCreateEvent_DLtime_editText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableEnd="@drawable/ic_clock_black_24dp"
-                android:fontFamily="@font/instance"
-                android:inputType="time"
-                android:paddingStart="24dp"
-                android:paddingEnd="24dp" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-    </LinearLayout>
-
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/activityCreateEvent_description_textInputLayout"
         style="@style/OutlinedRoundedBox"
@@ -274,7 +214,7 @@
         app:boxStrokeWidth="1dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/activityCreateEvent_deadline_linearLayout">
+        app:layout_constraintTop_toBottomOf="@+id/activityCreateEvent_mapFrameLayout">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/activityCreateEvent_description_editText"

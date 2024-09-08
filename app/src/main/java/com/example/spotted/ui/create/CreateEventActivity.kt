@@ -103,12 +103,10 @@ class CreateEventActivity : AppCompatActivity(), OnMapReadyCallback {
         val description = descriptionEditText.text.toString()
         val sport = sportEditText.text.toString() // is type
         val dateTime:Timestamp = SupportUtil.getTimestampFromString(dateEditText.text.toString(),timeEditText.text.toString())
-        val deadline:Timestamp = if (deadlineDateEditText.text.isEmpty() || deadlineTimeEditText.text.isEmpty()) {dateTime}
-        else {SupportUtil.getTimestampFromString(deadlineDateEditText.text.toString(),deadlineTimeEditText.text.toString())}
 
         val event = Event("0", name,description, dateTime, 60,
             locationPos.latitude, locationPos.longitude, locationAddress,
-            sport,"Accepted Only", 20, deadline)
+            sport,"Accepted Only", 20,dateTime )
 
         EventDataService.createEvent(event) { event ->
             if (event != null) {
@@ -182,30 +180,6 @@ class CreateEventActivity : AppCompatActivity(), OnMapReadyCallback {
             if (event.action == MotionEvent.ACTION_UP) {
                 if (event.rawX >= (timeEditText.right - timeEditText.compoundDrawables[2].bounds.width())) {
                     SupportUtil.showTimePicker(timeEditText, this)
-                    return@setOnTouchListener true
-                }
-            }
-            false
-        }
-
-        deadlineDateEditText = view.findViewById(R.id.activityCreateEvent_DLdate_editText)
-
-        deadlineDateEditText.setOnTouchListener { v, event ->
-            if (event.action == MotionEvent.ACTION_UP) {
-                if (event.rawX >= (deadlineDateEditText.right - deadlineDateEditText.compoundDrawables[2].bounds.width())) {
-                    SupportUtil.showDatePicker(deadlineDateEditText, this)
-                    return@setOnTouchListener true
-                }
-            }
-            false
-        }
-
-        deadlineTimeEditText = view.findViewById(R.id.activityCreateEvent_DLtime_editText)
-
-        deadlineTimeEditText.setOnTouchListener { v, event ->
-            if (event.action == MotionEvent.ACTION_UP) {
-                if (event.rawX >= (deadlineTimeEditText.right - deadlineTimeEditText.compoundDrawables[2].bounds.width())) {
-                    SupportUtil.showTimePicker(deadlineTimeEditText, this)
                     return@setOnTouchListener true
                 }
             }

@@ -230,10 +230,10 @@
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="24dp"
-        android:background="@drawable/rounded_white" >
+        android:layout_marginEnd="24dp">
 
         <TextView
+            android:maxLines="1"
             android:id="@+id/text_view_content_location"
             android:layout_width="match_parent"
             android:layout_height="60dp"
@@ -243,7 +243,7 @@
             android:gravity="center|start"
             android:paddingStart="48dp"
             android:paddingTop="10dp"
-            android:text="76 Nuyrnr St, New York, NY 10001"
+            android:text="76 Nuyrnr St, New York, NY 10001 "
             android:textColor="@color/blue_700"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -287,6 +287,51 @@
 
     </FrameLayout>
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/activityEventDetail_description_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="24dp" >
+
+        <TextView
+            android:maxLines="1"
+            android:id="@+id/text_view_content_description"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@drawable/rounded_blue_300"
+            android:fontFamily="@font/instance"
+            android:textSize="14sp"
+            android:gravity="center|start"
+            android:paddingStart="48dp"
+            android:paddingTop="10dp"
+            android:text="Con cho lam on dung doi nua"
+            android:textColor="@color/blue_700"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/text_view_header_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/instance"
+            android:gravity="center|start"
+            android:paddingStart="48dp"
+            android:paddingTop="8dp"
+            android:text="Description"
+            android:textSize="10sp"
+            android:textColor="@color/blue_500"
+            app:layout_constraintStart_toStartOf="@+id/text_view_content_description"
+            app:layout_constraintTop_toTopOf="@+id/text_view_content_description"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <TextView
         android:id="@+id/activityEventDetail_manager_content_textView"
         android:layout_width="match_parent"
@@ -294,17 +339,17 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="24dp"
-        android:background="@drawable/rounded_blue_300"
+        android:background="@drawable/rounded_blue_dark"
         android:fontFamily="@font/instance"
         android:gravity="center|start"
         android:paddingStart="48dp"
         android:paddingTop="10dp"
         android:text="Lam Thanh Duy"
-        android:textColor="@color/blue_700"
+        android:textColor="@color/white"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/frameLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/activityEventDetail_description_layout" />
 
     <TextView
         android:id="@+id/activityEventDetail_manager_textView"
@@ -316,7 +361,7 @@
         android:paddingTop="8dp"
         android:text="Manager"
         android:textSize="10sp"
-        android:textColor="@color/blue_500"
+        android:textColor="@color/blue_300"
         app:layout_constraintStart_toStartOf="@+id/activityEventDetail_manager_content_textView"
         app:layout_constraintTop_toTopOf="@+id/activityEventDetail_manager_content_textView"/>
 
@@ -338,7 +383,7 @@
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/frameLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/activityEventDetail_description_layout" />
 
     <ImageView
         android:id="@+id/activityEventDetail_viewParticipantIcon_imageView"
@@ -382,36 +427,6 @@
         app:layout_constraintTop_toTopOf="@+id/activityEventDetail_requestButton_appCompatButton"
         app:srcCompat="@drawable/icon_send_green" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/activityEventDetail_leaveButton_appCompatButton"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="24dp"
-        android:background="@drawable/rounded_red"
-        android:elevation="0dp"
-        android:fontFamily="@font/instance"
-        android:gravity="center|start"
-        android:paddingStart="48dp"
-        android:text="Leave"
-        android:textAllCaps="false"
-        android:textColor="@color/red_700"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/activityEventDetail_manager_content_textView" />
-
-    <ImageView
-        android:id="@+id/activityEventDetail_leaveIcon_imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:elevation="8dp"
-        app:layout_constraintBottom_toBottomOf="@+id/activityEventDetail_leaveButton_appCompatButton"
-        app:layout_constraintEnd_toEndOf="@+id/activityEventDetail_leaveButton_appCompatButton"
-        app:layout_constraintTop_toTopOf="@+id/activityEventDetail_leaveButton_appCompatButton"
-        app:srcCompat="@drawable/icon_logout" />
 
     <ImageView
         android:id="@+id/activityEventDetail_admin_imageView"

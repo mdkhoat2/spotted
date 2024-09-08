@@ -84,6 +84,7 @@ class EventDetailActivity() : AppCompatActivity(), OnMapReadyCallback {
         val textDate = findViewById<TextView>(R.id.text_view_content_date)
         val textTime = findViewById<TextView>(R.id.text_view_content_time)
         val textLocation = findViewById<TextView>(R.id.text_view_content_location)
+        val textDescription = findViewById<TextView>(R.id.text_view_content_description)
 
         //passing data from event to the activity
         //get the description, type, start time, latitude, and longitude
@@ -94,14 +95,14 @@ class EventDetailActivity() : AppCompatActivity(), OnMapReadyCallback {
         latitude = EventDataService.getCurrentEvent()!!.latitude
         longitude = EventDataService.getCurrentEvent()!!.longitude
         val address = EventDataService.getCurrentEvent()!!.address
+        val split = SupportUtil.SplitDateTimeString(start)
 
         textName.text = name
         textType.text = type
-        val split = SupportUtil.SplitDateTimeString(start)
         textDate.text = split.first
         textTime.text = split.second
-
         textLocation.text = address
+        textDescription.text = description
 
         LocationSetup()
 
@@ -159,19 +160,13 @@ class EventDetailActivity() : AppCompatActivity(), OnMapReadyCallback {
             }
         }
 
-        val leave: AppCompatButton = binding.activityEventDetailLeaveButtonAppCompatButton
-        leave.setOnClickListener {
-            //leave the event - CALL API
-        }
 
         val adminIcon: ImageView = binding.activityEventDetailAdminImageView
-
 
         ///////////////////////////
 
         val managerText: TextView = binding.activityEventDetailManagerTextView
         val requestIcon: ImageView = binding.activityEventDetailRequestIconImageView
-        val leaveIcon: ImageView = binding.activityEventDetailLeaveIconImageView
         val participantsIcon: ImageView = binding.activityEventDetailViewParticipantIconImageView
 
         //base on if you are the creator of the event or not, change the fragment
@@ -184,9 +179,6 @@ class EventDetailActivity() : AppCompatActivity(), OnMapReadyCallback {
 
             request.visibility = View.INVISIBLE         // cannot request
             requestIcon.visibility = View.INVISIBLE
-
-            leave.visibility = View.INVISIBLE           // cannot leave
-            leaveIcon.visibility = View.INVISIBLE
         }
         else if (permission == "participant") {              // THE PARTICIPANTS can leave and view the manager's profile
             request.visibility = View.INVISIBLE         // cannot request again
@@ -198,8 +190,6 @@ class EventDetailActivity() : AppCompatActivity(), OnMapReadyCallback {
             adminIcon.visibility = View.INVISIBLE       // are not admin
         }
         else if (permission == "none") {               // GUESTS can send request and view the manager's profile
-            leave.visibility = View.INVISIBLE           // cannot leave
-            leaveIcon.visibility = View.INVISIBLE
 
             participants.visibility = View.INVISIBLE    // cannot view participants
             participantsIcon.visibility = View.INVISIBLE
@@ -212,8 +202,6 @@ class EventDetailActivity() : AppCompatActivity(), OnMapReadyCallback {
             managerText.visibility = View.INVISIBLE
             request.visibility = View.INVISIBLE
             requestIcon.visibility = View.INVISIBLE
-            leave.visibility = View.INVISIBLE
-            leaveIcon.visibility = View.INVISIBLE
             participants.visibility = View.INVISIBLE
             participantsIcon.visibility = View.INVISIBLE
         }
