@@ -6,8 +6,8 @@ import java.sql.Timestamp
 data class NotificationItem(
     val type: String = "",
     var typeInt: Int = 1,
-    val message: String = "Hello world",
-    val event: Event? = null
+    val content: String = "Hello world",
+    val eventID: String = ""
 )
 
 data class RequestData(
