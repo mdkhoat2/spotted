@@ -30,14 +30,20 @@ object SupportUtil {
         val month = calendar.get(Calendar.MONTH)
         val day = calendar.get(Calendar.DAY_OF_MONTH)
 
-        val datePickerDialog =
-            DatePickerDialog(context, { _, selectedYear, selectedMonth, selectedDay ->
-                // dd/MM/yyyy
-                val monthString = if (selectedMonth + 1 < 10) "0${selectedMonth + 1}" else "${selectedMonth + 1}"
-                val dayString = if (selectedDay < 10) "0$selectedDay" else "$selectedDay"
-                val selectedDate = "$dayString/$monthString/$selectedYear"
+        val datePickerDialog = DatePickerDialog(
+            context, { view, year, month, dayOfMonth ->
+                val monthString = if (month < 9) "0${month + 1}" else "${month + 1}"
+                val dayString = if (dayOfMonth < 10) "0$dayOfMonth" else "$dayOfMonth"
+                val selectedDate = "$dayString/$monthString/$year"
                 editText.setText(selectedDate)
-            }, year, month, day)
+            },
+            year,
+            month,
+            day
+        )
+
+        datePickerDialog.datePicker.minDate = System.currentTimeMillis()
+
 
         datePickerDialog.show()
     }

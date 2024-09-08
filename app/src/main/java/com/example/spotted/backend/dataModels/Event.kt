@@ -16,7 +16,7 @@ data class Event(
     val type: String,
     val joinMode: String,
     val maxParticipants: Int,
-    val deadline: Timestamp
+    val deadline: Timestamp?
 )
 
 data class GetEventsRequest(
