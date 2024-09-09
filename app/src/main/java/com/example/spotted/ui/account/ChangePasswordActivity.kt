@@ -32,6 +32,7 @@ class ChangePasswordActivity : AppCompatActivity() {
         back.setOnClickListener {
             finish()
         }
+        LayoutUtil.setupUI(this,binding.root)
     }
 
     private fun hideKeyboard(){

@@ -3,10 +3,13 @@ package com.example.spotted.ui.account
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.TextView
 import com.example.spotted.MainActivity
+import com.example.spotted.R
 import com.example.spotted.backend.dataServices.AuthDataService
 import com.example.spotted.backend.dataServices.DataService
 import com.example.spotted.databinding.ActivityLoginBinding
+import com.example.spotted.util.LayoutUtil
 import com.example.spotted.util.SupportUtil
 
 class LoginActivity : AppCompatActivity() {
@@ -19,6 +22,14 @@ class LoginActivity : AppCompatActivity() {
         binding.btnSignIn.setOnClickListener{setupSignIn()}
         binding.tvForgotPassword.setOnClickListener{setupForgotPassword()}
         binding.signUp.setOnClickListener{setupSignUp()}
+        val forgotPassword : TextView = findViewById(R.id.tv_forgotPassword)
+        val signUp : TextView = findViewById(R.id.sign_up)
+
+        LayoutUtil.applyVariableFont(this,forgotPassword,"'wght' 700, 'wdth' 150")
+        LayoutUtil.applyVariableFont(this,signUp,"'wght' 700, 'wdth' 150")
+        LayoutUtil.setupUImanual(this,forgotPassword)
+        LayoutUtil.setupUImanual(this,signUp)
+        LayoutUtil.setupUI(this,binding.root)
     }
 
     private fun emailFocusListener()

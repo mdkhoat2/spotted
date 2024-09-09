@@ -2,6 +2,7 @@ package com.example.spotted.ui.chat
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,6 +15,7 @@ import com.example.spotted.backend.dataServices.MessageDataService
 import com.example.spotted.communication.adapters.MessageAdapter
 import com.example.spotted.communication.live.MessageLive
 import com.example.spotted.databinding.ActivityContactListBinding
+import com.example.spotted.util.LayoutUtil
 
 class ContactListActivity : AppCompatActivity() {
 
@@ -31,6 +33,9 @@ class ContactListActivity : AppCompatActivity() {
         binding.activityContactListImageButtonBack.setOnClickListener {
             finish()
         }
+
+        val header : TextView = findViewById(R.id.activityContactList_textView_header)
+        LayoutUtil.applyVariableFont(this,header,"'wght' 500, 'wdth' 150")
 
         val recyclerView = findViewById<RecyclerView>(R.id.recycler_view_contacts)
         recyclerView.layoutManager = LinearLayoutManager(this)

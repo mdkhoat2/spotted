@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -81,7 +82,7 @@ class MessagingActivity() : AppCompatActivity(){
         LayoutUtil.setupUI(this, recyclerView)
 
         val chatBox:EditText = findViewById(R.id.edit_text_message)
-        val sendButton:Button = findViewById(R.id.button_send)
+        val sendButton:ImageButton = findViewById(R.id.button_send)
 
         sendButton.setOnClickListener {
             val message = SendMessageRequest(otherId, chatBox.text.toString())

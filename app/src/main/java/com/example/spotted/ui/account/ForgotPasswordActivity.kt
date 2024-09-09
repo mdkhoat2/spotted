@@ -6,10 +6,14 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.widget.AppCompatButton
+import com.example.spotted.R
 import com.example.spotted.backend.dataServices.AuthDataService
 import com.example.spotted.backend.dataServices.DataService
 import com.example.spotted.databinding.ActivityForgotPasswordBinding
+import com.example.spotted.util.LayoutUtil
 
 class ForgotPasswordActivity : AppCompatActivity() {
     private lateinit var binding: ActivityForgotPasswordBinding
@@ -25,6 +29,12 @@ class ForgotPasswordActivity : AppCompatActivity() {
         binding.activityForgotPasswordImageButtonBack.setOnClickListener{
             finish()
         }
+        val header : TextView = findViewById(R.id.activityForgotPassword_textView_header)
+        val resetButton : AppCompatButton = findViewById(R.id.btnResetPassword)
+
+        LayoutUtil.applyVariableFont(this,header,"'wght' 500, 'wdth' 150")
+        LayoutUtil.applyVariableFont(this,resetButton,"'wght' 500, 'wdth' 150")
+        LayoutUtil.setupUI(this,binding.root)
     }
 
     private fun emailFocusListener()

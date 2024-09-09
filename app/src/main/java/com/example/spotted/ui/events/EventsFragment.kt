@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.Spinner
 import android.widget.TextView
 import androidx.fragment.app.Fragment
@@ -53,13 +54,6 @@ class EventsFragment : Fragment() {
 
         setUpEvents(root)
 
-        //button go to contact list activity
-        val chatBtn: Button = root.findViewById(R.id.btn_Chat)
-        chatBtn.setOnClickListener {
-            val intent = Intent(requireActivity(), ContactListActivity::class.java)
-            startActivity(intent)
-        }
-
         //spinner filter
         val sports = resources.getStringArray(R.array.sports)
         val sportAdapter = ArrayAdapter(requireContext(),android.R.layout.simple_spinner_item,sports)
@@ -79,7 +73,7 @@ class EventsFragment : Fragment() {
 
 
         //button sort
-        val sortBtn: Button = root.findViewById(R.id.btn_sort)
+        val sortBtn: ImageButton = root.findViewById(R.id.btn_sort)
         sortBtn.setOnClickListener {
             when (sortUsing) {
                 0 -> {
@@ -95,6 +89,10 @@ class EventsFragment : Fragment() {
             }
             sortUsing = (sortUsing+1)%3
         }
+
+        val header : TextView = root.findViewById(R.id.fragmentEvents_header)
+        LayoutUtil.applyVariableFont(this,header,"'wght' 500, 'wdth' 150")
+
 
         return root
     }

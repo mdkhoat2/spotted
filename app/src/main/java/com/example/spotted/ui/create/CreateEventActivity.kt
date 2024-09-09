@@ -68,11 +68,9 @@ class CreateEventActivity : AppCompatActivity(), OnMapReadyCallback {
         setupInput(root)
 
         val header : TextView = binding.activityCreateEventHeaderTextView
-        val location : TextView = binding.activityCreateEventLocationTextView
         val proceed : AppCompatButton = binding.activityCreateEventFinishAppCompatButton
 
         LayoutUtil.applyVariableFont(this,header,"'wght' 500, 'wdth' 150")
-        LayoutUtil.applyVariableFont(this,location,"'wght' 500, 'wdth' 150")
         LayoutUtil.applyVariableFont(this,proceed,"'wght' 500, 'wdth' 150")
 
         val mapFragment = supportFragmentManager.findFragmentById(R.id.activityCreateEvent_mapFragment) as SupportMapFragment

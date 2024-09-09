@@ -13,7 +13,7 @@
     <string name="newPass">New password</string>
     <string name="confirmPass">Confirm new password</string>
     <string name="password">Password</string>
-    <string name="confirm">Confirmed Password</string>
+    <string name="confirm">Confirm Password</string>
     <string name="forgot">Forgot password</string>
     <string name="sign_in">Sign in</string>
     <string name="sign_up">Sign up</string>
@@ -35,7 +35,7 @@
     <string name="send_msg">Send message</string>
 
     <string-array name="sports">
-        <item>All</item>
+        <item>all</item>
         <item>badminton</item>
         <item>baseball</item>
         <item>basketball</item>
@@ -46,7 +46,7 @@
         <item>ping_pong</item>
         <item>tennis</item>
         <item>volleyball</item>
-        <item>Others</item>
+        <item>others</item>
     </string-array>
 
     <string-array name="owner">

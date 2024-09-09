@@ -77,6 +77,8 @@ class HomeFragment : Fragment() {
             startActivity(intent)
         }
 
+        LayoutUtil.setupUI(this,binding.root)
+
         return root
     }
 

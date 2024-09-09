@@ -19,10 +19,11 @@
             android:id="@+id/userName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="User Name"
+            android:text="Username"
             android:textSize="24sp"
             android:textColor="@color/blue_700"
             android:layout_margin="0dp"
+            android:fontFamily="@font/instance"
             android:gravity="center_horizontal"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -31,26 +32,26 @@
 
         <ImageView
             android:id="@+id/btn_back"
-            android:layout_width="@dimen/icon_size_medium"
-            android:layout_height="0dp"
-            android:src="@drawable/ic_back_black_24dp"
-            app:tint="@color/blue_700"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_back_blue"
+            app:layout_constraintBottom_toBottomOf="@+id/userName"
             app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/userName"
+            app:tint="@color/blue_700" />
 
         <ImageView
             android:id="@+id/btn_info"
-            android:layout_width="@dimen/icon_size_medium"
-            android:scaleType="fitCenter"
-            android:padding="2dp"
+            android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:src="@drawable/ic_info_black_24dp"
             android:background="@android:color/transparent"
-            app:tint="@color/blue_black"
+            android:padding="2dp"
+            android:src="@drawable/ic_info_black_24dp"
+            app:layout_constraintBottom_toBottomOf="@+id/userName"
             app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/userName" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -61,6 +62,8 @@
         app:layout_constraintTop_toBottomOf="@+id/user_info"
         app:layout_constraintBottom_toTopOf="@+id/layout_chatbox"
         android:padding="0dp"
+        android:fadingEdge="vertical"
+        android:requiresFadingEdge="vertical"
         android:scrollbars="vertical"/>
 
     <LinearLayout
@@ -79,26 +82,27 @@
             android:id="@+id/edit_text_message"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_margin="8dp"
             android:layout_weight="1"
+            android:background="@drawable/rounded_white"
+            android:fontFamily="@font/instance"
             android:hint="Type a message"
             android:inputType="textMultiLine"
             android:maxLines="4"
-            android:background="@drawable/rounded_white"
-            android:padding="16dp"
-            android:textSize="16sp"
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"
             android:textColor="@android:color/black"
-            android:layout_margin="8dp"/>
+            android:textSize="16sp" />
 
-        <Button
+        <ImageButton
             android:id="@+id/button_send"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Send"
-            android:textSize="16sp"
-            android:textColor="@android:color/white"
-            android:background="@drawable/rounded_blue_white"
-            android:padding="10dp"
-            android:layout_margin="0dp"/>
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/rounded_blue_dark"
+            android:src="@drawable/icon_send"
+            android:contentDescription="Send"/>
         </LinearLayout>
 
 

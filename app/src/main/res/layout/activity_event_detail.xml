@@ -9,6 +9,18 @@
     tools:context=".ui.event.EventDetailActivity">
 
 
+    <ImageView
+        android:id="@+id/activityEventDetail_admin_imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintBottom_toBottomOf="@+id/activityEventDetail_header_textView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/activityEventDetail_header_textView"
+        app:srcCompat="@drawable/icon_admin" />
+
+
+
     <TextView
         android:id="@+id/activityEventDetail_header_textView"
         android:layout_width="wrap_content"
@@ -35,16 +47,37 @@
         app:layout_constraintTop_toTopOf="@+id/activityEventDetail_header_textView"
         app:srcCompat="@drawable/icon_back_blue" />
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fadingEdge="vertical"
+        android:layout_marginTop="32dp"
+        android:requiresFadingEdge="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activityEventDetail_header_textView"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/activityEventDetail_main_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:paddingBottom="24dp"
+        app:layout_constraintTop_toBottomOf="@+id/activityEventDetail_header_textView">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/activityCreateEvent_name_layout"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="32dp"
         android:layout_marginEnd="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/activityEventDetail_header_textView">
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/text_view_content_name"
@@ -206,30 +239,16 @@
 
     </LinearLayout>
 
-
-    <TextView
-        android:id="@+id/activityCreateEvent_location_textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
-        android:text="Location"
-        android:textColor="@color/black"
-        android:fontFamily="@font/instance"
-        android:textSize="12sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/activityEventDetail_date_time_layout" />
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/activityEventDetail_location"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
-        app:layout_constraintTop_toBottomOf="@+id/activityCreateEvent_location_textView"
+        app:layout_constraintTop_toBottomOf="@+id/activityEventDetail_date_time_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="12dp"
         android:layout_marginEnd="24dp">
 
         <TextView
@@ -296,21 +315,22 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="12dp"
         android:layout_marginEnd="24dp" >
 
         <TextView
-            android:maxLines="1"
             android:id="@+id/text_view_content_description"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:background="@drawable/rounded_blue_300"
             android:fontFamily="@font/instance"
             android:textSize="14sp"
             android:gravity="center|start"
             android:paddingStart="48dp"
-            android:paddingTop="10dp"
-            android:text="Con cho lam on dung doi nua"
+            android:paddingEnd="48dp"
+            android:paddingTop="24dp"
+            android:paddingBottom="14dp"
+            android:text="Day la description sieu dai de test multiline cho description, day la description sieu dai."
             android:textColor="@color/blue_700"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -374,6 +394,7 @@
         android:layout_marginEnd="24dp"
         android:background="@drawable/rounded_blue_dark"
         android:elevation="0dp"
+        android:stateListAnimator="@null"
         android:fontFamily="@font/instance"
         android:gravity="center|start"
         android:paddingStart="48dp"
@@ -409,6 +430,7 @@
         android:gravity="center|start"
         android:paddingStart="48dp"
         android:text="Request to join"
+        android:stateListAnimator="@null"
         android:textAllCaps="false"
         android:textColor="@color/green_700"
         android:textSize="14sp"
@@ -428,15 +450,10 @@
         app:srcCompat="@drawable/icon_send_green" />
 
 
-    <ImageView
-        android:id="@+id/activityEventDetail_admin_imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        app:layout_constraintBottom_toBottomOf="@+id/activityEventDetail_header_textView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/activityEventDetail_header_textView"
-        app:srcCompat="@drawable/icon_admin" />
 
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
