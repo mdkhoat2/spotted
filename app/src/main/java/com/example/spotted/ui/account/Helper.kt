@@ -51,7 +51,7 @@ object Helper {
     }
     fun getAge(age: Int): String{
         if(age == 0)
-            return " "
+            return ""
         return age.toString()
     }
     fun getAgeInt(age: String): Int{

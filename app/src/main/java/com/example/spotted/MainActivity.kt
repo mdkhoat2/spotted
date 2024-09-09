@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
+import com.example.spotted.communication.live.NotificationLive
 import com.example.spotted.databinding.ActivityMainBinding
 import com.example.spotted.ui.create.CreateEventActivity
 
@@ -41,5 +42,18 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        if(!NotificationLive.isHasUpdateBadgeCallback()){
+            NotificationLive.setOnUpdateBadgeCallback {
+                val badge = navView.getOrCreateBadge(R.id.navigation_notification)
+                badge.number = NotificationLive.getNumberUnreadNotification()
+                badge.badgeTextColor = getColor(R.color.red_700)
+                badge.isVisible = true
+            }
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        NotificationLive.statusOutOfMainActivity()
     }
 }
