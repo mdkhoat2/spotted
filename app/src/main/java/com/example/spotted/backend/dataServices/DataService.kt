@@ -1,11 +1,11 @@
 package com.example.spotted.backend.dataServices
 
-import com.example.spotted.BuildConfig
 import com.example.spotted.backend.api.ApiClient
 import com.example.spotted.backend.api.ApiService
 import com.example.spotted.backend.dataModels.ErrorResponse
 import com.example.spotted.backend.dataModels.*
 import com.example.spotted.communication.live.MessageLive
+import com.example.spotted.communication.live.NotificationLive
 import com.google.gson.Gson
 import io.socket.client.Socket
 import okhttp3.ResponseBody
@@ -70,8 +70,7 @@ object DataService {
 
         // extract to Notification
         val notificationData = Gson().fromJson(data.toString(), NotificationItem::class.java)
-        // NotificationLive.onReceiveNotification(notificationData);
-        println("Notification received")
+         NotificationLive.onReceiveNotification(notificationData);
     }
 
     internal fun disconnect() {
