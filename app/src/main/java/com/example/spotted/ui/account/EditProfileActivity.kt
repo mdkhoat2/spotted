@@ -4,8 +4,10 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.provider.MediaStore
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatButton
 import androidx.core.net.toFile
 import androidx.core.net.toUri
 import androidx.core.view.ViewCompat
@@ -14,6 +16,7 @@ import com.example.spotted.R
 import com.example.spotted.backend.dataServices.AuthDataService
 import com.example.spotted.backend.dataServices.DataService
 import com.example.spotted.databinding.ActivityEditProfileBinding
+import com.example.spotted.util.LayoutUtil
 import com.example.spotted.util.SupportUtil
 import java.io.File
 
@@ -26,13 +29,7 @@ class EditProfileActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityEditProfileBinding.inflate(layoutInflater)
-        enableEdgeToEdge()
         setContentView(binding.root)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
         binding.activityEditProfileImageButtonBack.setOnClickListener {
             finish()
         }
@@ -44,6 +41,11 @@ class EditProfileActivity : AppCompatActivity() {
         binding.activityEditProfileImageViewChangeAvatar.setOnClickListener{
             pickImageGallery()
         }
+
+        val header : TextView = findViewById(R.id.activityEditProfile_textView_header)
+        val saveButton : AppCompatButton = findViewById(R.id.activityEditProfile_appCompatButton_SaveChanges)
+        LayoutUtil.applyVariableFont(this,header,"'wght' 500, 'wdth' 150")
+        LayoutUtil.applyVariableFont(this,saveButton,"'wght' 500, 'wdth' 150")
 
         setupProfile()
     }

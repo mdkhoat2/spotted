@@ -11,6 +11,7 @@ import com.example.spotted.backend.dataServices.AuthDataService
 import com.example.spotted.databinding.ActivityEditProfileBinding
 import com.example.spotted.databinding.ActivityProfileBinding
 import com.example.spotted.ui.account.Helper
+import com.example.spotted.util.LayoutUtil
 
 class ProfileActivity : AppCompatActivity() {
     private lateinit var binding: ActivityProfileBinding
@@ -18,13 +19,7 @@ class ProfileActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityProfileBinding.inflate(layoutInflater)
-        enableEdgeToEdge()
         setContentView(binding.root)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
 
         val userID = intent.getStringExtra("otherId")
 
@@ -37,6 +32,7 @@ class ProfileActivity : AppCompatActivity() {
         setupProfile(userID)
 
         hideButtonSend(isNeedSent)
+        LayoutUtil.setupUI(this,binding.root)
     }
 
     private fun hideButtonSend(isNeedSent: Boolean){

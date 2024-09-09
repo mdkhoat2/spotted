@@ -63,6 +63,83 @@ object LayoutUtil {
         }
     }
 
+    @SuppressLint("ClickableViewAccessibility")
+    fun setupUI(fragment: Fragment, rootView: View) {
+        if (rootView !is EditText) {
+            rootView.setOnTouchListener { v, event ->
+                if (event.action == MotionEvent.ACTION_UP || event.action == MotionEvent.ACTION_MOVE) {
+                    val view = fragment.requireActivity().currentFocus
+                    if (view is EditText) {
+                        val scrcoords = IntArray(2)
+                        view.getLocationOnScreen(scrcoords)
+                        val x = event.rawX + view.left - scrcoords[0]
+                        val y = event.rawY + view.top - scrcoords[1]
+                        if (x < view.left || x > view.right || y < view.top || y > view.bottom) {
+                            hideKeyboard(view)
+                            view.clearFocus()
+                        }
+                    }
+                }
+                if (v is Button || v is ImageButton) {
+                    if (event.action == MotionEvent.ACTION_DOWN || event.action == MotionEvent.ACTION_HOVER_ENTER) {
+                        v.alpha = 0.7f
+                    } else if (event.action == MotionEvent.ACTION_UP || event.action == MotionEvent.ACTION_HOVER_EXIT) {
+                        v.alpha = 1.0f
+                    }
+                }
+                false
+            }
+        }
+
+        // If a layout container, iterate over children and seed recursion.
+        if (rootView is ViewGroup) {
+            for (i in 0 until rootView.childCount) {
+                val innerView = rootView.getChildAt(i)
+                setupUI(fragment, innerView)
+            }
+        }
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    public fun setupUImanual(activity: Activity, rootView: View) {
+        if (rootView !is EditText) {
+            rootView.setOnTouchListener { v, event ->
+                if (event.action == MotionEvent.ACTION_UP || event.action == MotionEvent.ACTION_MOVE) {
+                    val view = activity.currentFocus
+                    if (view is EditText) {
+                        val scrcoords = IntArray(2)
+                        view.getLocationOnScreen(scrcoords)
+                        val x = event.rawX + view.left - scrcoords[0]
+                        val y = event.rawY + view.top - scrcoords[1]
+                        if (x < view.left || x > view.right || y < view.top || y > view.bottom) {
+                            hideKeyboard(view)
+                            view.clearFocus()
+                        }
+                    }
+                }
+
+                // Handling Button and ImageButton
+                if (v is Button || v is ImageButton) {
+                    if (event.action == MotionEvent.ACTION_DOWN || event.action == MotionEvent.ACTION_HOVER_ENTER) {
+                        v.alpha = 0.7f
+                    } else if (event.action == MotionEvent.ACTION_UP || event.action == MotionEvent.ACTION_HOVER_EXIT) {
+                        v.alpha = 1.0f
+                    }
+                }
+
+                // Handling TextView
+                if (v is TextView) {
+                    when (event.action) {
+                        MotionEvent.ACTION_DOWN -> v.alpha = 0.7f
+                        MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> v.alpha = 1.0f
+                    }
+                }
+
+                false
+            }
+        }
+    }
+
 
     public fun applyVariableFont(fragment: Fragment, view: View, variationSettings: String) {
         val typeface: Typeface? = ResourcesCompat.getFont(fragment.requireContext(), R.font.flex)

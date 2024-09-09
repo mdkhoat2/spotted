@@ -85,6 +85,9 @@ class HomeFragment : Fragment() {
             startActivity(intent)
         }
 
+
+        LayoutUtil.setupUI(this,binding.root)
+
         EventDataService.getJoinedEvents { joinedEvents ->
             if (joinedEvents != null) {
 
@@ -121,6 +124,7 @@ class HomeFragment : Fragment() {
                 }
             }
         }
+
 
 
 
