@@ -10,7 +10,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object ApiClient {
 
-    private const val BASE_URL = BuildConfig.API_BASE_URL
+    const val BASE_URL = BuildConfig.API_BASE_URL
 
     private val loggingInterceptor = HttpLoggingInterceptor().apply {
         level = HttpLoggingInterceptor.Level.BODY

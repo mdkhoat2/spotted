@@ -7,7 +7,7 @@
     android:layout_height="wrap_content">
 
     <TextView
-        android:id="@+id/notificationItem_rejected_textView"
+        android:id="@+id/notificationItem_create_event_textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/rounded_green_white"

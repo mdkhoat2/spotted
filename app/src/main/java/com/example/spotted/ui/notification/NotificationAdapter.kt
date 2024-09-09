@@ -31,9 +31,14 @@ class NotificationAdapter(
         fun bind(notification: NotificationItem) {
             messageTextView.text = notification.content
             itemView.setOnClickListener {
-                val intent = Intent(context, EventDetailActivity::class.java)
-                intent.putExtra("eventID", notification.eventID)
-                context.startActivity(intent)
+                EventDataService.getEventInfo(notification.eventID){
+                    if (it != null){
+                        val intent = Intent(context, EventDetailActivity::class.java)
+                        intent.putExtra("permission", "admin")
+                        EventDataService.setCurrentEvent(it)
+                        context.startActivity(intent)
+                    }
+                }
             }
         }
     }
@@ -47,7 +52,7 @@ class NotificationAdapter(
     }
 
     inner class RequestRejectedViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val messageTextView: TextView = itemView.findViewById(R.id.notificationItem_accepted_textView)
+        private val messageTextView: TextView = itemView.findViewById(R.id.notificationItem_rejected_textView)
 
         fun bind(notification: NotificationItem) {
             messageTextView.text = notification.content
@@ -55,10 +60,21 @@ class NotificationAdapter(
     }
 
     inner class CreateEventViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val messageTextView: TextView = itemView.findViewById(R.id.notificationItem_accepted_textView)
+        private val messageTextView: TextView = itemView.findViewById(R.id.notificationItem_create_event_textView)
 
         fun bind(notification: NotificationItem) {
             messageTextView.text = notification.content
+
+            itemView.setOnClickListener {
+                EventDataService.getEventInfo(notification.eventID){
+                    if (it != null){
+                        val intent = Intent(context, EventDetailActivity::class.java)
+                        intent.putExtra("permission", "admin")
+                        EventDataService.setCurrentEvent(it)
+                        context.startActivity(intent)
+                    }
+                }
+            }
         }
     }
 
@@ -76,12 +92,12 @@ class NotificationAdapter(
             }
             TYPE_REQUEST_REJECTED -> {
                 val view = LayoutInflater.from(parent.context)
-                    .inflate(R.layout.item_notification_request_accepted, parent, false)
+                    .inflate(R.layout.item_notification_request_rejected, parent, false)
                 RequestRejectedViewHolder(view)
             }
             TYPE_CREATE_EVENT -> {
                 val view = LayoutInflater.from(parent.context)
-                    .inflate(R.layout.item_notification_request_accepted, parent, false)
+                    .inflate(R.layout.item_notification_create_event, parent, false)
                 CreateEventViewHolder(view)
             }
             else -> throw IllegalArgumentException("Invalid view type")
@@ -97,6 +113,8 @@ class NotificationAdapter(
         when (holder) {
             is ApproveNewViewHolder -> holder.bind(notification)
             is RequestAcceptedViewHolder -> holder.bind(notification)
+            is RequestRejectedViewHolder -> holder.bind(notification)
+            is CreateEventViewHolder -> holder.bind(notification)
         }
     }
 

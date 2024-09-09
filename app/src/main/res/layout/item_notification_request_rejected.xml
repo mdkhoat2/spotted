@@ -7,7 +7,7 @@
     android:layout_height="wrap_content">
 
     <TextView
-        android:id="@+id/notificationItem_accepted_textView"
+        android:id="@+id/notificationItem_rejected_textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/rounded_yellow"
@@ -22,7 +22,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/notificationItem_accepted_icon_imageView"
+        android:id="@+id/notificationItem_rejected_icon_imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"

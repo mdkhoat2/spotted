@@ -1,11 +1,11 @@
 package com.example.spotted.backend.dataServices
 
-import com.example.spotted.BuildConfig
 import com.example.spotted.backend.api.ApiClient
 import com.example.spotted.backend.api.ApiService
 import com.example.spotted.backend.dataModels.ErrorResponse
 import com.example.spotted.backend.dataModels.*
 import com.example.spotted.communication.live.MessageLive
+import com.example.spotted.communication.live.NotificationLive
 import com.google.gson.Gson
 import io.socket.client.Socket
 import okhttp3.ResponseBody
@@ -42,10 +42,11 @@ object DataService {
 
     internal fun connect() {
         try {
-            mSocket = IO.socket(BuildConfig.API_BASE_URL)
+            mSocket = IO.socket(ApiClient.BASE_URL)
             mSocket.connect()
             mSocket.on(Socket.EVENT_CONNECT, onConnect)
             mSocket.on("receiveMessage", onReceiveMessage)
+            mSocket.on("receiveNotification", onRecieveNotification)
         } catch (e: URISyntaxException) {
             e.printStackTrace()
         }
@@ -62,6 +63,14 @@ object DataService {
         // extract to Message
         val messageData = Gson().fromJson(data.toString(), Message::class.java)
         MessageLive.onReceiveMessage(messageData);
+    }
+
+    private val onRecieveNotification = Emitter.Listener { args ->
+        val data = args[0] as JSONObject
+
+        // extract to Notification
+        val notificationData = Gson().fromJson(data.toString(), NotificationItem::class.java)
+         NotificationLive.onReceiveNotification(notificationData);
     }
 
     internal fun disconnect() {

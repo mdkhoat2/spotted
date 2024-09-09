@@ -52,12 +52,13 @@ class LoginActivity : AppCompatActivity() {
         val password = binding.passwordEditText.text.toString()
 
         AuthDataService.login(email, password) { response ->
-            progress.dismiss()
             if (response != null) {
                 Intent(this, MainActivity::class.java).also{
                     startActivity(it)
                 }
+                progress.dismiss()
             } else {
+                progress.dismiss()
                 Helper.createDialog(this, "Failed", DataService.getMsg()){}
             }
         }
