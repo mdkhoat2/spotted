@@ -99,4 +99,7 @@ interface ApiService {
 
     @GET("notifications/get/{timestamp}")
     fun getNotifications(@Path("timestamp") timestamp: String, @Header("Authorization") token: String): Call<List<NotificationItem>>
+
+    @POST("events/response/{id}")
+    fun respondToRequest(@Header("Authorization") token: String, @Path("id") id: String, @Body response: ResponseRequest): Call<ResultResponse>
 }
