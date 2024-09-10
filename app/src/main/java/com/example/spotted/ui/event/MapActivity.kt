@@ -228,11 +228,9 @@ class MapActivity: AppCompatActivity(), OnMapReadyCallback {
             val bitmapDescriptor = SupportUtil.bitmapDescriptorFromVector(this, icon)
 
             mMap.addMarker(MarkerOptions().position(latLng).title(event.title).icon(bitmapDescriptor))
-            // setup marker click listener
             mMap.setOnMarkerClickListener { marker ->
                 val event = eventListFiltered.find { it.title == marker.title }
                 if (event != null) {
-                    // show event details
                     val intent = Intent(this, EventDetailActivity::class.java)
 
                     EventDataService.getRole(event._id){
