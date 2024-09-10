@@ -45,8 +45,6 @@ class CreateEventActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var sportEditText: EditText
     private lateinit var dateEditText: EditText
     private lateinit var timeEditText: EditText
-    private lateinit var deadlineDateEditText: EditText
-    private lateinit var deadlineTimeEditText: EditText
 
     private lateinit var locationPos: LatLng
     private lateinit var locationAddress: String
@@ -162,13 +160,11 @@ class CreateEventActivity : AppCompatActivity(), OnMapReadyCallback {
         // Date EditText
         dateEditText = view.findViewById(R.id.activityCreateEvent_date_editText)
 
-        // Set an onClickListener for the drawable end
+        // Set an onClickListener for the whole EditText to show the DatePicker
         dateEditText.setOnTouchListener { v, event ->
             if (event.action == MotionEvent.ACTION_UP) {
-                if (event.rawX >= (dateEditText.right - dateEditText.compoundDrawables[2].bounds.width())) {
-                    SupportUtil.showDatePicker(dateEditText, this)
-                    return@setOnTouchListener true
-                }
+                SupportUtil.showDatePicker(dateEditText, this)
+                return@setOnTouchListener true
             }
             false
         }
