@@ -85,7 +85,7 @@ class MessagingActivity() : AppCompatActivity(){
         val sendButton:ImageButton = findViewById(R.id.button_send)
 
         sendButton.setOnClickListener {
-            val message = SendMessageRequest(otherId, chatBox.text.toString())
+            val message = SendMessageRequest(otherId, skimMessages(chatBox.text.toString()))
             MessageDataService.sendMessage(message) { message ->
                 if (message != null) {
                     messageList.add(message)
@@ -100,10 +100,7 @@ class MessagingActivity() : AppCompatActivity(){
             }
         }
 
-        //when click on the edit text, the keyboard will show up and Push the chat box up
 
-
-        //
         val userName:TextView = findViewById(R.id.userName)
         AuthDataService.getUser(otherId) { user ->
             if (user != null) {
@@ -137,5 +134,13 @@ class MessagingActivity() : AppCompatActivity(){
             intent.putExtra("otherId", userID)
             startActivity(intent)
         }
+    }
+
+    private fun skimMessages(s:String):String{
+        var i = 0
+        var j = s.length - 1
+        while (i < s.length && (s[i] == ' ' || s[i] == '\n')) i++
+        while (j >= 0 && (s[j] == ' ' || s[j] == '\n')) j--
+        return s.substring(i, j + 1)
     }
 }

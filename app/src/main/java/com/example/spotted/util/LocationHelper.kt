@@ -25,21 +25,13 @@ object LocationHelper {
 
     fun getCurrentLocation(activity: Activity, onSuccess: (Location?) -> Unit) {
         // Check if permission is granted
-        if (ActivityCompat.checkSelfPermission(
-                activity,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                activity,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
+        if (ActivityCompat.checkSelfPermission(activity,Manifest.permission.ACCESS_FINE_LOCATION)!= PackageManager.PERMISSION_GRANTED
+            && ActivityCompat.checkSelfPermission(activity,Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
         ) {
-            // Request the location permission
-            ActivityCompat.requestPermissions(
-                activity,
-                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                1
-            )
-            return
+            ActivityCompat.requestPermissions(activity,arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),1)
+            ActivityCompat.requestPermissions(activity,arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION),1)
+
+            return getCurrentLocation(activity, onSuccess)
         }
 
         // Fetch the last known location
@@ -47,14 +39,6 @@ object LocationHelper {
         locationTask.addOnSuccessListener { location ->
             onSuccess(location)
         }
-    }
-
-    fun getLocationFromStr(locationStr: String): Location {
-        val location = Location("")
-        val latLng = locationStr.split(",")
-        location.latitude = latLng[0].toDouble()
-        location.longitude = latLng[1].toDouble()
-        return location
     }
 
     // also initialize Places API
