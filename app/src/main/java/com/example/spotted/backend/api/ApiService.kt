@@ -1,13 +1,16 @@
 package com.example.spotted.backend.api
 
 import com.example.spotted.backend.dataModels.*
+import okhttp3.MultipartBody
 
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
+import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.PUT
+import retrofit2.http.Part
 import retrofit2.http.Path
 
 interface ApiService {
@@ -94,8 +97,9 @@ interface ApiService {
     fun inviteUserToEvent(@Header("Authorization") token: String, @Body invite: InviteRequest) : Call<Invitation>
 
     // Update avatar
+    @Multipart
     @PUT("auth/profile/avatar")
-    fun updateAvatar(@Header("Authorization") token: String, @Body avatar: AvatarUpdateRequest) : Call<AvatarUpdateResponse>
+    fun updateAvatar(@Header("Authorization") token: String, @Part avatar: MultipartBody.Part) : Call<AvatarUpdateResponse>
 
     @GET("notifications/get/{timestamp}")
     fun getNotifications(@Path("timestamp") timestamp: String, @Header("Authorization") token: String): Call<List<NotificationItem>>
