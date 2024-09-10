@@ -87,6 +87,7 @@ class EventsAdapter(private val events: List<Pair<Event,String>>) :
 
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
                 filteredEvents = results?.values as List<Pair<Event, String>>
+                println("Filtered events: $filteredEvents")
                 notifyDataSetChanged()
             }
         }

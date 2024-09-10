@@ -119,10 +119,11 @@ class EventsFragment : Fragment() {
                         eventList.add(b)
                     }
                 }
-                eventsAdapter.notifyDataSetChanged()
 
                 eventListCopy.clear()
                 eventListCopy.addAll(eventList)
+
+                eventsAdapter.filter.filter("")
             }
         }
     }
