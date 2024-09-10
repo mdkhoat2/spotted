@@ -19,6 +19,10 @@ import com.example.spotted.databinding.ActivityEditProfileBinding
 import com.example.spotted.util.LayoutUtil
 import com.example.spotted.util.SupportUtil
 import java.io.File
+import android.content.Context
+import android.net.Uri
+import java.io.FileOutputStream
+import java.io.InputStream
 
 class EditProfileActivity : AppCompatActivity() {
     private lateinit var binding: ActivityEditProfileBinding
@@ -97,13 +101,48 @@ class EditProfileActivity : AppCompatActivity() {
         startActivityForResult(intent, IMAGE_REQUEST_CODE)
     }
 
+    fun getFileFromUri(context: Context, uri: Uri): File? {
+        // Get the file name from the Uri
+        val fileName = uri.lastPathSegment?.split("/")?.lastOrNull()
+        fileName?.let {
+            // Create a temp file in the cache directory
+            val tempFile = File(context.cacheDir, fileName)
+
+            try {
+                // Open an input stream from the Uri
+                val inputStream: InputStream? = context.contentResolver.openInputStream(uri)
+                inputStream?.let { input ->
+                    // Write the input stream to the temp file
+                    val outputStream = FileOutputStream(tempFile)
+                    val buffer = ByteArray(1024)
+                    var length: Int
+                    while (input.read(buffer).also { length = it } > 0) {
+                        outputStream.write(buffer, 0, length)
+                    }
+
+                    outputStream.close()
+                    input.close()
+
+                    // Return the file
+                    return tempFile
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+
+        return null
+    }
+
     @SuppressLint("Recycle")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == IMAGE_REQUEST_CODE && resultCode == RESULT_OK) {
             data?.data?.let { uri ->
                 binding.activityEditProfileImageViewChangeAvatar.setImageURI(uri)
-                val file = File(uri.path!!)
+//                val file = File(uri.path!!)
+                val file = getFileFromUri(this, uri)
+                if (file != null)
                 AuthDataService.updateAvatar(file){
                     if(it != null){
                         Helper.createDialog(this, "Success", "Avatar has been updated"){}
