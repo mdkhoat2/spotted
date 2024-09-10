@@ -68,11 +68,9 @@ class CreateEventActivity : AppCompatActivity(), OnMapReadyCallback {
         setupInput(root)
 
         val header : TextView = binding.activityCreateEventHeaderTextView
-        val location : TextView = binding.activityCreateEventLocationTextView
         val proceed : AppCompatButton = binding.activityCreateEventFinishAppCompatButton
 
         LayoutUtil.applyVariableFont(this,header,"'wght' 500, 'wdth' 150")
-        LayoutUtil.applyVariableFont(this,location,"'wght' 500, 'wdth' 150")
         LayoutUtil.applyVariableFont(this,proceed,"'wght' 500, 'wdth' 150")
 
         val mapFragment = supportFragmentManager.findFragmentById(R.id.activityCreateEvent_mapFragment) as SupportMapFragment
@@ -112,8 +110,9 @@ class CreateEventActivity : AppCompatActivity(), OnMapReadyCallback {
             if (event != null) {
                 Toast.makeText(this, "Event created", Toast.LENGTH_SHORT).show()
                 println("Event created: $event")
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
+//                val intent = Intent(this, MainActivity::class.java)
+//                startActivity(intent)
+                finish()
             } else {
                 Toast.makeText(this, "Failed to create event", Toast.LENGTH_SHORT).show()
                 println("Failed to create event")

@@ -2,10 +2,14 @@ package com.example.spotted.ui.account
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatButton
+import com.example.spotted.R
 import com.example.spotted.backend.dataServices.AuthDataService
 import com.example.spotted.backend.dataServices.DataService
 import com.example.spotted.databinding.ActivitySignUpBinding
+import com.example.spotted.util.LayoutUtil
 
 class SignUpActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignUpBinding
@@ -21,6 +25,13 @@ class SignUpActivity : AppCompatActivity() {
         binding.activitySignUpImageButtonBack.setOnClickListener{
             finish()
         }
+
+        val header : TextView = findViewById(R.id.activitySignUp_textView_header)
+        val signUpButton : AppCompatButton = findViewById(R.id.btnSignUp)
+
+        LayoutUtil.applyVariableFont(this,header,"'wght' 500, 'wdth' 150")
+        LayoutUtil.applyVariableFont(this,signUpButton,"'wght' 500, 'wdth' 150")
+        LayoutUtil.setupUI(this,binding.root)
     }
 
     private fun emailFocusListener()

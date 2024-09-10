@@ -10,10 +10,14 @@
     <color name="green_300">#C0FFD3</color>
     <color name="red_700">#FE3F2A</color>
     <color name="red_300">#FFD9D4</color>
+    <color name="yellow_700">#897901</color>
+    <color name="yellow_500">#FEE216</color>
+    <color name="yellow_300">#FFF9D0</color>
 
 
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="grey">#66FFFFFF</color>
+    <color name="grey">#747474</color>
+    <color name="half_grey">#99FFFFFF</color>
 </resources>

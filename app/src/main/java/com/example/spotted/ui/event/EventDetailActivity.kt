@@ -206,6 +206,8 @@ class EventDetailActivity() : AppCompatActivity(), OnMapReadyCallback {
             participantsIcon.visibility = View.INVISIBLE
         }
 
+
+        LayoutUtil.setupUI(this,binding.root)
     }
 
     private fun LocationSetup() {
