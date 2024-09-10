@@ -63,7 +63,7 @@ class EventsFragment : Fragment() {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 val sport = sports[position]
                 println("Filter: "+sport)
-                if (sport == "All") eventsAdapter.filter.filter("")
+                if (sport == "all") eventsAdapter.filter.filter("")
 
                 else eventsAdapter.filter.filter(sport)
             }

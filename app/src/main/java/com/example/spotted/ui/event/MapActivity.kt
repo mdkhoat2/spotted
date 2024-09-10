@@ -211,7 +211,7 @@ class MapActivity: AppCompatActivity(), OnMapReadyCallback {
     private fun filterEvents(){
         eventListFiltered.clear()
         eventListFiltered.addAll(eventList.filter
-        { it.type == CurrentFilter || CurrentFilter == "All" })
+        { it.type == CurrentFilter || CurrentFilter == "all" })
 
         setUpMarker()
     }
