@@ -108,8 +108,9 @@ class CreateEventActivity : AppCompatActivity(), OnMapReadyCallback {
             if (event != null) {
                 Toast.makeText(this, "Event created", Toast.LENGTH_SHORT).show()
                 println("Event created: $event")
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
+//                val intent = Intent(this, MainActivity::class.java)
+//                startActivity(intent)
+                finish()
             } else {
                 Toast.makeText(this, "Failed to create event", Toast.LENGTH_SHORT).show()
                 println("Failed to create event")

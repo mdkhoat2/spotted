@@ -8,13 +8,16 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.spotted.R
 import com.example.spotted.backend.dataModels.NotificationItem
 import com.example.spotted.backend.dataServices.DataService
 import com.example.spotted.backend.dataServices.NotificationDataService
+import com.example.spotted.communication.live.NotificationLive
 import com.example.spotted.databinding.FragmentNotificationBinding
 import com.example.spotted.ui.account.Helper
 import com.example.spotted.util.LayoutUtil
 import com.example.spotted.util.SupportUtil
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import java.time.Instant
 
 class NotificationFragment : Fragment() {
@@ -56,14 +59,37 @@ class NotificationFragment : Fragment() {
         adapter = NotificationAdapter(requireContext(),notificationListItem)
         binding.fragmentNotificationRecyclerView.adapter = adapter
 
+        NotificationLive.setOnNotificationReceivedCallback { notification ->
+            requireActivity().runOnUiThread {
+                println("Hello notification")
+                notification.typeInt = SupportUtil.getNotificationType(notification.type)
+                notificationListItem.add(0, notification)
+                adapter.notifyItemInserted(0)
+                binding.fragmentNotificationRecyclerView.smoothScrollToPosition(0)
+            }
+        }
+
+        NotificationLive.statusEnterNotificationFragment()
+
+        hideBadge()
+
         val header : TextView = binding.fragmentNotificationHeader
         LayoutUtil.applyVariableFont(this, header, "'wght' 500, 'wdth' 150")
 
         return root
     }
 
+    private fun hideBadge(){
+        val badge = requireActivity().findViewById<BottomNavigationView>(R.id.nav_view).getBadge(R.id.navigation_notification)
+        if (badge != null) {
+            badge.clearNumber()
+            badge.isVisible = false
+        }
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        NotificationLive.statusOutOfNotificationFragment()
     }
 }

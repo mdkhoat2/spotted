@@ -26,7 +26,8 @@ class AccountFragment : Fragment() {
         val root: View = binding.root
 
         binding.btnLogout.setOnClickListener{
-            activity?.finish()
+            val intent = Intent(activity, LoginActivity::class.java)
+            startActivity(intent)
         }
 
         binding.btnChangePassword.setOnClickListener{
