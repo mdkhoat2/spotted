@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
 import androidx.lifecycle.ViewModelProvider
 import com.example.spotted.MainActivity
+import com.example.spotted.ParticipantActivity
 import com.example.spotted.R
 import com.example.spotted.backend.dataModels.Event
 import com.example.spotted.backend.dataServices.AuthDataService
@@ -144,6 +145,8 @@ class EventDetailActivity() : AppCompatActivity(), OnMapReadyCallback {
                     println(it)
                 }
             }
+            intent = Intent(this, ParticipantActivity::class.java)
+            startActivity(intent)
         }
 
         val request: AppCompatButton = binding.activityEventDetailRequestButtonAppCompatButton

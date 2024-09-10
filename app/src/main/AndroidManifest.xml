@@ -18,6 +18,10 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".ParticipantActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Spotted" />
+        <activity
             android:name=".ui.profile.ProfileActivity"
             android:exported="false" />
         <activity
@@ -49,9 +53,8 @@
         <activity android:name=".ui.chat.ContactListActivity" />
         <activity
             android:name=".ui.chat.MessagingActivity"
-            android:windowSoftInputMode="adjustPan"></activity>
-
-        <activity android:name=".ui.event.EventDetailActivity"/>
+            android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".ui.event.EventDetailActivity" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

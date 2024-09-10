@@ -2,6 +2,7 @@ package com.example.spotted.ui.profile
 
 import android.os.Bundle
 import android.view.View
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -33,6 +34,8 @@ class ProfileActivity : AppCompatActivity() {
 
         hideButtonSend(isNeedSent)
         LayoutUtil.setupUI(this,binding.root)
+        val header : TextView = findViewById(R.id.activityProfile_textView_header)
+        LayoutUtil.applyVariableFont(this,header,"'wght' 500, 'wdth' 150")
     }
 
     private fun hideButtonSend(isNeedSent: Boolean){

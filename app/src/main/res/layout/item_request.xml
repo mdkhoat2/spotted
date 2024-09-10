@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginVertical="4dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/requestItem_background_textView"
+        android:layout_width="match_parent"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_height="60dp"
+        android:drawableEnd="@drawable/icon_right_blue"
+        android:paddingStart="60dp"
+        android:paddingEnd="24dp"
+        android:text="Lam Thanh Duy"
+        android:fontFamily="@font/instance"
+        android:textColor="@color/blue_700"
+        android:textSize="16sp"
+        android:gravity="center_vertical"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="@drawable/rounded_blue_300"
+        android:maxEms="12"
+        android:ellipsize="end"
+        android:singleLine="true" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/requestItem_profile_imageView"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="32dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/profile"
+        app:layout_constraintBottom_toBottomOf="@+id/requestItem_background_textView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/requestItem_background_textView"
+        app:shapeAppearanceOverlay="@style/CircleImageView" />
+
+    <ImageButton
+        android:id="@+id/requestItem_delete_imageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="60dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/icon_delete"
+        app:layout_constraintBottom_toBottomOf="@+id/requestItem_background_textView"
+        app:layout_constraintEnd_toEndOf="@+id/requestItem_background_textView"
+        app:layout_constraintTop_toTopOf="@+id/requestItem_background_textView" />
+
+    <ImageButton
+        android:id="@+id/requestItem_approve_imageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/icon_approve"
+        app:layout_constraintBottom_toBottomOf="@+id/requestItem_background_textView"
+        app:layout_constraintEnd_toStartOf="@+id/requestItem_delete_imageButton"
+        app:layout_constraintTop_toTopOf="@+id/requestItem_background_textView" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
