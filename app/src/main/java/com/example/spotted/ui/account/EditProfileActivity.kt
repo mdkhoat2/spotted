@@ -21,6 +21,7 @@ import com.example.spotted.util.SupportUtil
 import java.io.File
 import android.content.Context
 import android.net.Uri
+import com.bumptech.glide.Glide
 import java.io.FileOutputStream
 import java.io.InputStream
 
@@ -45,6 +46,10 @@ class EditProfileActivity : AppCompatActivity() {
         binding.activityEditProfileImageViewChangeAvatar.setOnClickListener{
             pickImageGallery()
         }
+
+        setupAvatar()
+
+        println("After setupAvatar")
 
         val header : TextView = findViewById(R.id.activityEditProfile_textView_header)
         val saveButton : AppCompatButton = findViewById(R.id.activityEditProfile_appCompatButton_SaveChanges)
@@ -91,6 +96,17 @@ class EditProfileActivity : AppCompatActivity() {
             }
             else{
                 Helper.createDialog(this, "Failed", DataService.getMsg()){}
+            }
+        }
+    }
+
+    private fun setupAvatar(){
+        AuthDataService.getAvatar(DataService.getAuthProfile()!!._id){
+            if(it != null){
+                println(it.url)
+//                Glide.with(this)
+//                    .load(it.url)
+//                    .into(binding.activityEditProfileShapeableImageViewAvatar)
             }
         }
     }
