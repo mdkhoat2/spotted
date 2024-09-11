@@ -11,6 +11,10 @@ data class User(
     val age: Int
 )
 
+data class Avatar(
+    val url: String
+)
+
 data class ErrorResponse(
     val msg: String
 )

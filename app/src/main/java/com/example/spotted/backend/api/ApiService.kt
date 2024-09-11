@@ -101,6 +101,9 @@ interface ApiService {
     @PUT("auth/profile/avatar")
     fun updateAvatar(@Header("Authorization") token: String, @Part avatar: MultipartBody.Part) : Call<AvatarUpdateResponse>
 
+    @GET("auth/profile/avatar/{id}")
+    fun getAvatar(@Path("id") id: String) : Call<Avatar>
+
     @GET("notifications/get/{timestamp}")
     fun getNotifications(@Path("timestamp") timestamp: String, @Header("Authorization") token: String): Call<List<NotificationItem>>
 

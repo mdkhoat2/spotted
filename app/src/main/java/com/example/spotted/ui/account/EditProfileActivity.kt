@@ -139,7 +139,7 @@ class EditProfileActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == IMAGE_REQUEST_CODE && resultCode == RESULT_OK) {
             data?.data?.let { uri ->
-                binding.activityEditProfileImageViewChangeAvatar.setImageURI(uri)
+                binding.activityEditProfileShapeableImageViewAvatar.setImageURI(uri)
 //                val file = File(uri.path!!)
                 val file = getFileFromUri(this, uri)
                 if (file != null)
