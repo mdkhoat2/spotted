@@ -147,6 +147,25 @@ object AuthDataService {
         })
     }
 
+    fun getAvatar(userID: String, onResult: (Avatar?) -> Unit){
+        DataService.apiService.getAvatar(userID).enqueue(object : Callback<Avatar> {
+            override fun onResponse(call: Call<Avatar>, response: Response<Avatar>) {
+                if (response.isSuccessful) {
+                    onResult(response.body())
+                } else {
+                    DataService.extractMsg(response.errorBody())
+                    onResult(null)
+                }
+            }
+
+            override fun onFailure(call: Call<Avatar>, t: Throwable) {
+                DataService.msg = "Unknown error"
+                t.printStackTrace()
+                onResult(null)
+            }
+        })
+    }
+
     fun updateAvatar(avatar: File, onResult: (AvatarUpdateResponse?) -> Unit) {
         val requestBody = RequestBody.create("image/*".toMediaTypeOrNull(), avatar)
         val avatarPart = MultipartBody.Part.createFormData("avatar", avatar.name, requestBody)

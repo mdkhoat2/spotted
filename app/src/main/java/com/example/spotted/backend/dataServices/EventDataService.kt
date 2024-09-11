@@ -225,6 +225,24 @@ object EventDataService {
         }
     }
 
+    fun responseToRequest(requestID: String, action: String, onResult: (ResultResponse?) -> Unit) {
+        val response = ResponseRequest(action)
+        DataService.apiService.respondToRequest("Bearer ${DataService.authToken}", requestID, response).enqueue(object : Callback<ResultResponse> {
+            override fun onResponse(call: Call<ResultResponse>, response: Response<ResultResponse>) {
+                if (response.isSuccessful) {
+                    onResult(response.body())
+                } else {
+                    DataService.extractMsg(response.errorBody())
+                    onResult(null)
+                }
+            }
+
+            override fun onFailure(call: Call<ResultResponse>, t: Throwable) {
+                onResult(null)
+            }
+        })
+    }
+
 
     fun setCurrentEvent(event: Event){
         currentEvent = event

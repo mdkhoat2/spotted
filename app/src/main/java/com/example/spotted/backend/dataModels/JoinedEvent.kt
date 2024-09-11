@@ -13,5 +13,10 @@ data class JoinedEvent(
     val event: Event,
     val admin: Admin
 )
-
+data class ResponseRequest(
+    val action: String
+)
+data class ResultResponse(
+    val msg: String
+)
 
