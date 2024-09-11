@@ -80,3 +80,4 @@ object DataService {
         mSocket.off("receiveMessage", onReceiveMessage)
         mSocket.off("receiveNotification", onRecieveNotification)
     }
+}
