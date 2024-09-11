@@ -29,6 +29,7 @@ class RequestAdapter(
                 if (position != RecyclerView.NO_POSITION) {
                     val intent = Intent(itemView.context, ProfileActivity::class.java)
                     intent.putExtra("otherId", requests[position].first.user._id)
+                    intent.putExtra("isNeedSent", true)
                     itemView.context.startActivity(intent)
                 }
             }

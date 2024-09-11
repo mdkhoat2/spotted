@@ -1,17 +1,15 @@
 package com.example.spotted.ui.profile
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.example.spotted.R
 import com.example.spotted.backend.dataServices.AuthDataService
-import com.example.spotted.databinding.ActivityEditProfileBinding
 import com.example.spotted.databinding.ActivityProfileBinding
 import com.example.spotted.ui.account.Helper
+import com.example.spotted.ui.chat.MessagingActivity
 import com.example.spotted.util.LayoutUtil
 
 class ProfileActivity : AppCompatActivity() {
@@ -32,13 +30,21 @@ class ProfileActivity : AppCompatActivity() {
 
         setupProfile(userID)
 
-        hideButtonSend(isNeedSent)
+        setupButtonSend(isNeedSent, userID!!)
+
         LayoutUtil.setupUI(this,binding.root)
         val header : TextView = findViewById(R.id.activityProfile_textView_header)
         LayoutUtil.applyVariableFont(this,header,"'wght' 500, 'wdth' 150")
     }
 
-    private fun hideButtonSend(isNeedSent: Boolean){
+    private fun setupButtonSend(isNeedSent: Boolean, userID: String){
+
+        binding.activityProfileAppCompatButtonSend.setOnClickListener {
+            val intent = Intent(this, MessagingActivity::class.java)
+            intent.putExtra("otherId", userID)
+            startActivity(intent)
+        }
+
         if(isNeedSent){
             binding.activityProfileAppCompatButtonSend.visibility = View.VISIBLE
         }
