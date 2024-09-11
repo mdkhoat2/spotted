@@ -132,7 +132,7 @@ object AuthDataService {
         })
     }
 
-    private fun updateAvatar(avatar: AvatarUpdateRequest, onResult: (AvatarUpdateResponse?) -> Unit) {
+    private fun updateAvatar(avatar: MultipartBody.Part, onResult: (AvatarUpdateResponse?) -> Unit) {
         DataService.apiService.updateAvatar("Bearer ${DataService.authToken}", avatar).enqueue(object : Callback<AvatarUpdateResponse> {
             override fun onResponse(call: Call<AvatarUpdateResponse>, response: Response<AvatarUpdateResponse>) {
                 DataService.extractMsg(response.errorBody())
@@ -141,6 +141,7 @@ object AuthDataService {
 
             override fun onFailure(call: Call<AvatarUpdateResponse>, t: Throwable) {
                 DataService.msg = "Unknown error"
+                t.printStackTrace()
                 onResult(null)
             }
         })
@@ -150,6 +151,6 @@ object AuthDataService {
         val requestBody = RequestBody.create("image/*".toMediaTypeOrNull(), avatar)
         val avatarPart = MultipartBody.Part.createFormData("avatar", avatar.name, requestBody)
         val request = AvatarUpdateRequest(avatarPart)
-        updateAvatar(request, onResult)
+        updateAvatar(avatarPart, onResult)
     }
 }
