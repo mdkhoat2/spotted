@@ -12,10 +12,15 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.spotted.backend.dataModels.User
+import com.example.spotted.backend.dataServices.EventDataService
 import com.example.spotted.databinding.ActivityParticipantBinding
 import com.example.spotted.util.LayoutUtil
 
 class ParticipantActivity : AppCompatActivity() {
+
+    private lateinit var participants: MutableList<Participant>
+    private lateinit var requests: MutableList<Pair<Participant,String>>
 
     private lateinit var binding: ActivityParticipantBinding
 
@@ -33,34 +38,33 @@ class ParticipantActivity : AppCompatActivity() {
         LayoutUtil.applyVariableFont(this,header,"'wght' 500, 'wdth' 150")
 
 
-        val participants = listOf(
-            Participant("Nguyen Van A", R.drawable.profile),
-            Participant("Nguyen Van B", R.drawable.profile),
-            Participant("Nguyen Van C", R.drawable.profile),
-            Participant("Nguyen Van D", R.drawable.profile),
-            Participant("Nguyen Van E", R.drawable.profile),
-            Participant("Nguyen Van F", R.drawable.profile),
-            Participant("Nguyen Van G", R.drawable.profile),
-            Participant("Nguyen Van H", R.drawable.profile),
-            Participant("Nguyen Van I", R.drawable.profile),
-            Participant("Nguyen Van J", R.drawable.profile)
-        )
+        participants = mutableListOf()
+        requests = mutableListOf()
 
         val participant_recyclerView = findViewById<RecyclerView>(R.id.activityParticipant_participants_recyclerView)
         participant_recyclerView.layoutManager = LinearLayoutManager(this)
-        participant_recyclerView.adapter = ParticipantAdapter(participants)
-
-        val requests = listOf(
-            Participant("Nguyen Van K", R.drawable.profile),
-            Participant("Nguyen Van L", R.drawable.profile),
-            Participant("Nguyen Van M", R.drawable.profile),
-            Participant("Nguyen Van N", R.drawable.profile),
-            Participant("Nguyen Van O", R.drawable.profile)
-        )
 
         val request_recyclerView = findViewById<RecyclerView>(R.id.activityParticipant_request_recyclerView)
         request_recyclerView.layoutManager = LinearLayoutManager(this)
-        request_recyclerView.adapter = RequestAdapter(requests)
+
+
+        EventDataService.getParticipants(EventDataService.getCurrentEvent()!!._id) {
+            if (it != null) {
+                participants = it.map { user -> Participant(user, R.drawable.profile)}.toMutableList()
+                participant_recyclerView.adapter = ParticipantAdapter(participants)
+            }
+        }
+
+        EventDataService.getRequests(EventDataService.getCurrentEvent()!!._id) {
+            if (it != null) {
+                for (request in it) {
+                    requests.add(Participant(request.users[0], R.drawable.profile) to request.request._id)
+                }
+
+                request_recyclerView.adapter = RequestAdapter(requests)
+                println(it)
+            }
+        }
     }
 
 }

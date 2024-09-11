@@ -1,3 +1,4 @@
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -8,31 +9,41 @@ import android.widget.ImageButton
 import android.widget.TextView
 import com.example.spotted.Participant
 import com.example.spotted.R
+import com.example.spotted.backend.dataModels.Event
+import com.example.spotted.backend.dataServices.EventDataService
+import com.example.spotted.ui.profile.ProfileActivity
 
 class RequestAdapter(
-    private val requests: List<Participant>
+    private var requests: List<Pair<Participant,String>>
 ) : RecyclerView.Adapter<RequestAdapter.RequestViewHolder>() {
 
     inner class RequestViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val nameTextView: TextView = itemView.findViewById(R.id.requestItem_background_textView)
         val profileImageView: ShapeableImageView = itemView.findViewById(R.id.requestItem_profile_imageView)
-        val approveButton: ImageButton = itemView.findViewById(R.id.requestItem_approve_imageButton)
-        val deleteButton: ImageButton = itemView.findViewById(R.id.requestItem_delete_imageButton)
+        private val approveButton: ImageButton = itemView.findViewById(R.id.requestItem_approve_imageButton)
+        private val deleteButton: ImageButton = itemView.findViewById(R.id.requestItem_delete_imageButton)
 
         init {
             itemView.setOnClickListener {
                 val position = adapterPosition
                 if (position != RecyclerView.NO_POSITION) {
-                    // start profile activity here
-                    Log.d("ParticipantAdapter", "Clicked on request" + position)
+                    val intent = Intent(itemView.context, ProfileActivity::class.java)
+                    intent.putExtra("otherId", requests[position].first.user._id)
+                    itemView.context.startActivity(intent)
                 }
             }
+
             // Approve button listener
             approveButton.setOnClickListener {
                 val position = adapterPosition
                 if (position != RecyclerView.NO_POSITION) {
-                    // approve function
-                    Log.d("ParticipantAdapter", "Approve request" + position)
+                    Log.d("RequestAdapter", "Approve button clicked")
+                    EventDataService.responseToRequest(requests[position].second, "accept") {
+                        if (it != null) {
+                            requests.toMutableList().removeAt(position)
+                            notifyItemRemoved(position)
+                        }
+                    }
                 }
             }
 
@@ -40,8 +51,13 @@ class RequestAdapter(
             deleteButton.setOnClickListener {
                 val position = adapterPosition
                 if (position != RecyclerView.NO_POSITION) {
-                    // delete function
-                    Log.d("ParticipantAdapter", "Delete request" + position)
+                    Log.d("RequestAdapter", "Delete button clicked")
+                    EventDataService.responseToRequest(requests[position].second, "reject") {
+                        if (it != null) {
+                            requests.toMutableList().removeAt(position)
+                            notifyItemRemoved(position)
+                        }
+                    }
                 }
             }
         }
@@ -54,8 +70,8 @@ class RequestAdapter(
     }
 
     override fun onBindViewHolder(holder: RequestViewHolder, position: Int) {
-        val participant = requests[position]
-        holder.nameTextView.text = participant.name
+        val participant = requests[position].first
+        holder.nameTextView.text = participant.user.name
         holder.profileImageView.setImageResource(participant.profileImageResId)
     }
 

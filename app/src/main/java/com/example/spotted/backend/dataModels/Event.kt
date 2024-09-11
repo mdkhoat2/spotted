@@ -25,6 +25,19 @@ data class GetEventsRequest(
     val distance: Double
 )
 
+data class RequestToJoin(
+    val request: RequestID,
+    val users:List<User>
+)
+
+data class RequestID(
+    val _id: String,
+    val eventID: String,
+    val status: String
+)
+
+
+
 //    "description": "Badminton 3",
 //    "start": "2024-08-30T00:00:00.000Z",
 //    "duration": 60,
