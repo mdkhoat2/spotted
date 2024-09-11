@@ -1,5 +1,6 @@
 package com.example.spotted.ui.event
 
+import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
@@ -30,6 +31,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.libraries.places.api.model.TypeFilter
 import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest
 import com.google.android.libraries.places.api.net.PlacesClient
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 
 class MapActivity: AppCompatActivity(), OnMapReadyCallback {
@@ -71,11 +73,6 @@ class MapActivity: AppCompatActivity(), OnMapReadyCallback {
             finish()
         }
 
-        binding.addButton.setOnClickListener{
-            val intent = Intent(this, CreateEventActivity::class.java)
-            startActivity(intent)
-        }
-
         binding.centerButton.setOnClickListener {
             val newCamPos = CameraPosition(
                 DeviceLocation,15f,0f,0f
@@ -83,18 +80,10 @@ class MapActivity: AppCompatActivity(), OnMapReadyCallback {
             mMap.animateCamera(CameraUpdateFactory.newCameraPosition(newCamPos))
         }
 
-        val sports = resources.getStringArray(R.array.sports)
-        val sportAdapter = ArrayAdapter(this,android.R.layout.simple_spinner_item,sports)
-        sportAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-
-        binding.spinnerSport.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                CurrentFilter = sports[position]
-                filterEvents()
-            }
-            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        binding.filterButton.setOnClickListener() {
+            showSportSelectionDialog()
         }
-        binding.spinnerSport.adapter=sportAdapter
+
     }
 
     private fun setUpPlaces() {
@@ -247,5 +236,32 @@ class MapActivity: AppCompatActivity(), OnMapReadyCallback {
                 true
             }
         }
+    }
+
+    private fun showSportSelectionDialog() {
+        val sportsArray = resources.getStringArray(R.array.sports)
+
+        var selectedSportIndex: Int = if (CurrentFilter.equals("all", ignoreCase = true)) {
+            0
+        } else {
+            sportsArray.indexOf(CurrentFilter)
+        }
+
+        MaterialAlertDialogBuilder(this)
+            .setTitle("Select a sport")
+            .setSingleChoiceItems(sportsArray, selectedSportIndex) { _, which ->
+                selectedSportIndex = which
+            }
+            .setNegativeButton("Cancel") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .setPositiveButton("OK") { dialog, _ ->
+                if (selectedSportIndex != -1) {
+                    CurrentFilter = sportsArray[selectedSportIndex]
+                    filterEvents()
+                }
+                dialog.dismiss()
+            }
+            .show()
     }
 }

@@ -21,29 +21,6 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/card_view_filter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:background="@drawable/rounded_transparent"
-        android:clipToPadding="true"
-        app:layout_constraintEnd_toStartOf="@+id/btn_sort"
-        app:layout_constraintTop_toBottomOf="@+id/fragmentEvents_header">
-
-        <Spinner
-            android:id="@+id/spinner_sport"
-            android:layout_width="100dp"
-            android:layout_height="40dp"
-
-            android:text="Filter"
-            android:textColor="@color/blue_700"
-            app:layout_constraintEnd_toStartOf="@+id/btn_sort"
-            app:layout_constraintTop_toBottomOf="@+id/fragmentEvents_header" />
-    </androidx.cardview.widget.CardView>
-
-
     <ImageButton
         android:id="@+id/btn_sort"
         android:layout_width="40dp"
@@ -58,6 +35,26 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fragmentEvents_header" />
 
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_filter"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/rounded_blue_white"
+        android:drawableEnd="@drawable/icon_filter"
+        android:elevation="0dp"
+        android:stateListAnimator="@null"
+        android:paddingEnd="12dp"
+        android:paddingStart="8dp"
+        android:text="Filter"
+        android:gravity="center"
+        android:textAllCaps="false"
+        android:fontFamily="@font/instance"
+        android:textColor="@color/blue_700"
+        app:layout_constraintEnd_toStartOf="@+id/btn_sort"
+        app:layout_constraintTop_toBottomOf="@+id/fragmentEvents_header" />
+
 
     <!-- RecyclerView for Event List -->
     <androidx.recyclerview.widget.RecyclerView
@@ -65,10 +62,9 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="16dp"
-        android:paddingHorizontal="24dp"
         android:fadingEdge="vertical"
         android:requiresFadingEdge="vertical"
-        app:layout_constraintTop_toBottomOf="@id/card_view_filter"
+        app:layout_constraintTop_toBottomOf="@id/btn_filter"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>

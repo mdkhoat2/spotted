@@ -14,6 +14,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:scaleX="10"
+        android:elevation="0dp"
+        android:src="@drawable/background_reversed_overlay"
+        android:layout_marginTop="-4dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <!-- Search Bar and Buttons Container -->
     <LinearLayout
         android:id="@+id/searchBarContainer"
@@ -29,8 +39,8 @@
         <!-- Back Button -->
         <ImageButton
             android:id="@+id/backButton"
-            android:layout_width="@dimen/button_height"
-            android:layout_height="@dimen/button_height"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:layout_margin="8dp"
             android:background="@drawable/rounded_white"
             android:contentDescription="Back"
@@ -40,41 +50,35 @@
         <AutoCompleteTextView
             android:id="@+id/searchBar"
             android:layout_width="0dp"
-            android:layout_height="@dimen/button_height"
+            android:layout_height="48dp"
             android:layout_weight="1"
             android:layout_marginVertical="@dimen/margin_small"
             android:hint="Search here"
             android:background="@drawable/rounded_white"
-            android:paddingHorizontal="@dimen/padding_medium"
+            android:fontFamily="@font/instance"
+            android:textColor="@color/black"
+            android:paddingHorizontal="20dp"
             android:drawablePadding="10dp"
             android:inputType="text" />
+
         <ImageButton
-            android:id="@+id/addButton"
-            android:layout_width="@dimen/button_height"
-            android:layout_height="@dimen/button_height"
+            android:id="@+id/filterButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:layout_margin="8dp"
-            android:src="@drawable/ic_add_black_24dp"
-            android:background="@drawable/rounded_white" />
+            android:background="@drawable/rounded_white"
+            android:contentDescription="Filter"
+            android:src="@drawable/ic_filter_black_24dp"/>
+
+
     </LinearLayout>
-
-
-    <Spinner
-        android:id="@+id/spinnerSport"
-        android:paddingStart="8dp"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/button_height"
-        android:layout_weight="1"
-        android:layout_marginStart="8dp"
-        android:background="@drawable/bg_spinner"
-        app:layout_constraintTop_toBottomOf="@+id/searchBarContainer"
-        app:layout_constraintStart_toStartOf="parent"/>
 
     <ImageButton
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:id="@+id/centerButton"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_margin="16dp"
         android:src="@drawable/ic_recenter_black_24dp"
         android:background="@drawable/rounded_white" />

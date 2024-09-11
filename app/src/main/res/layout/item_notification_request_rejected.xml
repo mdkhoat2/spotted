@@ -26,9 +26,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        app:layout_constraintBottom_toBottomOf="@+id/notificationItem_accepted_textView"
-        app:layout_constraintStart_toStartOf="@+id/notificationItem_accepted_textView"
-        app:layout_constraintTop_toTopOf="@+id/notificationItem_accepted_textView"
+        app:layout_constraintBottom_toBottomOf="@+id/notificationItem_rejected_textView"
+        app:layout_constraintStart_toStartOf="@+id/notificationItem_rejected_textView"
+        app:layout_constraintTop_toTopOf="@+id/notificationItem_rejected_textView"
         app:srcCompat="@drawable/icon_warning" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
