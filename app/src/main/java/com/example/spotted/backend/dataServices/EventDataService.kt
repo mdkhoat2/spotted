@@ -3,6 +3,9 @@ import com.example.spotted.backend.dataModels.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import retrofit2.http.GET
+import retrofit2.http.Header
+import retrofit2.http.Path
 
 object EventDataService {
 
@@ -211,6 +214,25 @@ object EventDataService {
             }
 
             override fun onFailure(call: Call<Event>, t: Throwable) {
+                onResult(null)
+            }
+        })
+    }
+
+
+
+    fun getRequests(eventId: String, onResult: (List<RequestToJoin>?) -> Unit) {
+        DataService.apiService.getRequests(eventId, "Bearer ${DataService.authToken}").enqueue(object : Callback<List<RequestToJoin>> {
+            override fun onResponse(call: Call<List<RequestToJoin>>, response: Response<List<RequestToJoin>>) {
+                if (response.isSuccessful) {
+                    onResult(response.body())
+                } else {
+                    DataService.extractMsg(response.errorBody())
+                    onResult(null)
+                }
+            }
+
+            override fun onFailure(call: Call<List<RequestToJoin>>, t: Throwable) {
                 onResult(null)
             }
         })

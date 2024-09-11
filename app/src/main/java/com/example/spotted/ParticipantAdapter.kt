@@ -1,4 +1,5 @@
 package com.example.spotted
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -6,6 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.imageview.ShapeableImageView
 import android.widget.TextView
+import com.example.spotted.ui.profile.ProfileActivity
 
 class ParticipantAdapter(
     private val participants: List<Participant>
@@ -19,8 +21,9 @@ class ParticipantAdapter(
             itemView.setOnClickListener {
                 val position = adapterPosition
                 if (position != RecyclerView.NO_POSITION) {
-                    // start profile activity here
-                    Log.d("ParticipantAdapter", "Clicked on participant" + position)
+                    val intent = Intent(itemView.context, ProfileActivity::class.java)
+                    intent.putExtra("otherId", participants[position].user._id)
+                    itemView.context.startActivity(intent)
                 }
             }
         }
@@ -34,7 +37,7 @@ class ParticipantAdapter(
 
     override fun onBindViewHolder(holder: ParticipantViewHolder, position: Int) {
         val participant = participants[position]
-        holder.nameTextView.text = participant.name
+        holder.nameTextView.text = participant.user.name
     }
 
     override fun getItemCount() = participants.size
