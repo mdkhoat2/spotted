@@ -139,12 +139,6 @@ class EventDetailActivity() : AppCompatActivity(), OnMapReadyCallback {
 
         val participants: AppCompatButton = binding.activityEventDetailViewParticipantButtonAppCompatButton
         participants.setOnClickListener {
-            //open the participants list - CALL API
-            EventDataService.getParticipants(EventDataService.getCurrentEvent()!!._id) {
-                if (it != null) {
-                    println(it)
-                }
-            }
             intent = Intent(this, ParticipantActivity::class.java)
             startActivity(intent)
         }

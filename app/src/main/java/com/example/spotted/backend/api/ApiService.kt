@@ -96,6 +96,10 @@ interface ApiService {
     @POST("events/invite")
     fun inviteUserToEvent(@Header("Authorization") token: String, @Body invite: InviteRequest) : Call<Invitation>
 
+    // get Requests for an event
+    @GET("events/get-requests/{id}")
+    fun getRequests(@Path("id") id: String, @Header("Authorization") token: String): Call<List<RequestToJoin>>
+
     // Update avatar
     @Multipart
     @PUT("auth/profile/avatar")
