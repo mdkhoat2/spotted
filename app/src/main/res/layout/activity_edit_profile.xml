@@ -54,9 +54,6 @@
         app:layout_constraintEnd_toEndOf="@id/activityEditProfile_shapeableImageView_avatar"
         app:layout_constraintStart_toStartOf="@+id/activityEditProfile_shapeableImageView_avatar"
         app:layout_constraintTop_toTopOf="@+id/activityEditProfile_shapeableImageView_avatar" />
-
-
-
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/containerName"
         style="@style/OutlinedRoundedBox"

@@ -70,12 +70,14 @@ object DataService {
 
         // extract to Notification
         val notificationData = Gson().fromJson(data.toString(), NotificationItem::class.java)
-         NotificationLive.onReceiveNotification(notificationData);
+        NotificationLive.onReceiveNotification(notificationData);
     }
 
     internal fun disconnect() {
+        mSocket.emit("unregister", authProfile?._id)
         mSocket.disconnect()
         mSocket.off(Socket.EVENT_CONNECT, onConnect)
         mSocket.off("receiveMessage", onReceiveMessage)
+        mSocket.off("receiveNotification", onRecieveNotification)
     }
 }

@@ -1,6 +1,7 @@
 package com.example.spotted
 
 import RequestAdapter
+import RequestListener
 import android.os.Bundle
 import android.widget.ImageButton
 import android.widget.TextView
@@ -17,12 +18,15 @@ import com.example.spotted.backend.dataServices.EventDataService
 import com.example.spotted.databinding.ActivityParticipantBinding
 import com.example.spotted.util.LayoutUtil
 
-class ParticipantActivity : AppCompatActivity() {
+class ParticipantActivity : AppCompatActivity(), RequestListener {
 
     private lateinit var participants: MutableList<Participant>
     private lateinit var requests: MutableList<Pair<Participant,String>>
 
     private lateinit var binding: ActivityParticipantBinding
+
+    lateinit var participantAdapter: ParticipantAdapter
+    lateinit var requestAdapter: RequestAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,6 +45,9 @@ class ParticipantActivity : AppCompatActivity() {
         participants = mutableListOf()
         requests = mutableListOf()
 
+        participantAdapter = ParticipantAdapter(participants)
+        requestAdapter = RequestAdapter(requests, this)
+
         val participant_recyclerView = findViewById<RecyclerView>(R.id.activityParticipant_participants_recyclerView)
         participant_recyclerView.layoutManager = LinearLayoutManager(this)
 
@@ -50,8 +57,11 @@ class ParticipantActivity : AppCompatActivity() {
 
         EventDataService.getParticipants(EventDataService.getCurrentEvent()!!._id) {
             if (it != null) {
-                participants = it.map { user -> Participant(user, R.drawable.profile)}.toMutableList()
-                participant_recyclerView.adapter = ParticipantAdapter(participants)
+                for (participant in it) {
+                    participants.add(Participant(participant, R.drawable.profile))
+                }
+
+                participant_recyclerView.adapter = participantAdapter
             }
         }
 
@@ -61,10 +71,21 @@ class ParticipantActivity : AppCompatActivity() {
                     requests.add(Participant(request.users[0], R.drawable.profile) to request.request._id)
                 }
 
-                request_recyclerView.adapter = RequestAdapter(requests)
-                println(it)
+                request_recyclerView.adapter = requestAdapter
             }
         }
     }
 
+    override fun onRequestApproved(position : Int) {
+        val participant = requests[position].first
+        participants.add(participant)
+        participantAdapter.notifyItemInserted(participants.size - 1)
+        requests.removeAt(position)
+        requestAdapter.notifyItemRemoved(position)
+    }
+
+    override fun onRequestRejected(position : Int) {
+        requests.removeAt(position)
+        requestAdapter.notifyItemRemoved(position)
+    }
 }

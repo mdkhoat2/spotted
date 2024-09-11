@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import com.example.spotted.communication.live.NotificationLive
 import com.example.spotted.databinding.FragmentAccountBinding
 import com.example.spotted.util.LayoutUtil
 
@@ -27,7 +28,9 @@ class AccountFragment : Fragment() {
         _binding = FragmentAccountBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+
         binding.fragmentAccountAppCompatButtonLogOut.setOnClickListener{
+            NotificationLive.resetNotification()
             val intent = Intent(activity, LoginActivity::class.java)
             startActivity(intent)
         }

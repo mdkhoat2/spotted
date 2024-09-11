@@ -167,7 +167,7 @@ object AuthDataService {
     }
 
     fun updateAvatar(avatar: File, onResult: (AvatarUpdateResponse?) -> Unit) {
-        val requestBody = RequestBody.create("image/*".toMediaTypeOrNull(), avatar)
+        val requestBody = RequestBody.create("image/jpeg".toMediaTypeOrNull(), avatar)
         val avatarPart = MultipartBody.Part.createFormData("avatar", avatar.name, requestBody)
         val request = AvatarUpdateRequest(avatarPart)
         updateAvatar(avatarPart, onResult)

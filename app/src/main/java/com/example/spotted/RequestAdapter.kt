@@ -12,9 +12,12 @@ import com.example.spotted.R
 import com.example.spotted.backend.dataModels.Event
 import com.example.spotted.backend.dataServices.EventDataService
 import com.example.spotted.ui.profile.ProfileActivity
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 
 class RequestAdapter(
-    private var requests: List<Pair<Participant,String>>
+    private var requests: MutableList<Pair<Participant,String>>,
+    private val listener: RequestListener
 ) : RecyclerView.Adapter<RequestAdapter.RequestViewHolder>() {
 
     inner class RequestViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -29,19 +32,19 @@ class RequestAdapter(
                 if (position != RecyclerView.NO_POSITION) {
                     val intent = Intent(itemView.context, ProfileActivity::class.java)
                     intent.putExtra("otherId", requests[position].first.user._id)
+                    intent.putExtra("isNeedSent", true)
                     itemView.context.startActivity(intent)
                 }
             }
 
             // Approve button listener
+
             approveButton.setOnClickListener {
                 val position = adapterPosition
                 if (position != RecyclerView.NO_POSITION) {
-                    Log.d("RequestAdapter", "Approve button clicked")
                     EventDataService.responseToRequest(requests[position].second, "accept") {
                         if (it != null) {
-                            requests.toMutableList().removeAt(position)
-                            notifyItemRemoved(position)
+                            listener.onRequestApproved(position)
                         }
                     }
                 }
@@ -51,11 +54,9 @@ class RequestAdapter(
             deleteButton.setOnClickListener {
                 val position = adapterPosition
                 if (position != RecyclerView.NO_POSITION) {
-                    Log.d("RequestAdapter", "Delete button clicked")
                     EventDataService.responseToRequest(requests[position].second, "reject") {
                         if (it != null) {
-                            requests.toMutableList().removeAt(position)
-                            notifyItemRemoved(position)
+                            listener.onRequestRejected(position)
                         }
                     }
                 }
@@ -72,8 +73,18 @@ class RequestAdapter(
     override fun onBindViewHolder(holder: RequestViewHolder, position: Int) {
         val participant = requests[position].first
         holder.nameTextView.text = participant.user.name
-        holder.profileImageView.setImageResource(participant.profileImageResId)
+        if (participant.user.avatarUrl != null) {
+            Glide.with(holder.profileImageView.context)
+                .load(participant.user.avatarUrl)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
+                .into(holder.profileImageView)
+        }
     }
 
     override fun getItemCount() = requests.size
+}
+interface RequestListener {
+    fun onRequestApproved(position : Int)
+    fun onRequestRejected(position : Int)
 }

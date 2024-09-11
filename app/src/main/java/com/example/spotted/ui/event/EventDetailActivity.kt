@@ -26,6 +26,7 @@ import com.example.spotted.databinding.ActivityCreateEventBinding
 import com.example.spotted.databinding.ActivityEventDetailBinding
 import com.example.spotted.ui.chat.MessagingActivity
 import com.example.spotted.ui.create.CreateEventViewModel
+import com.example.spotted.ui.profile.ProfileActivity
 import com.example.spotted.util.LayoutUtil
 import com.example.spotted.util.LocationHelper
 import com.example.spotted.util.SupportUtil
@@ -126,8 +127,9 @@ class EventDetailActivity() : AppCompatActivity(), OnMapReadyCallback {
 
                 manager.setOnClickListener {itt->
                     if (itt != null) {
-                         val intent = Intent(this, MessagingActivity::class.java)
+                         val intent = Intent(this, ProfileActivity::class.java)
                          intent.putExtra("otherId", it[0].userID)
+                         intent.putExtra("isNeedSent", true)
                          startActivity(intent)
                     }
                 }
@@ -145,15 +147,15 @@ class EventDetailActivity() : AppCompatActivity(), OnMapReadyCallback {
 
         val request: AppCompatButton = binding.activityEventDetailRequestButtonAppCompatButton
         request.setOnClickListener {
+            request.isClickable = false
             EventDataService.requestJoinEvent(EventDataService.getCurrentEvent()!!._id,
                 DataService.getAuthProfile()?._id ?: ""
             ) {
                 if (it != null) {
-                    println(it)
                     Toast.makeText(this, "Request sent", Toast.LENGTH_SHORT).show()
-                } else
-                    println("Request failed")
+                } else {
                     Toast.makeText(this, "Request failed", Toast.LENGTH_SHORT).show()
+                }
             }
         }
 

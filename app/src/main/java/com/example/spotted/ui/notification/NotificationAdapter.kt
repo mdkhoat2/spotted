@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.spotted.ParticipantActivity
 import com.example.spotted.R
 import com.example.spotted.backend.dataModels.NotificationItem
 import com.example.spotted.backend.dataServices.DataService
@@ -19,6 +20,7 @@ class NotificationAdapter(
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
+        const val NONE = 0
         const val TYPE_APPROVE_NEW = 1
         const val TYPE_REQUEST_ACCEPTED = 2
         const val TYPE_CREATE_EVENT = 3
@@ -33,8 +35,7 @@ class NotificationAdapter(
             itemView.setOnClickListener {
                 EventDataService.getEventInfo(notification.eventID){
                     if (it != null){
-                        val intent = Intent(context, EventDetailActivity::class.java)
-                        intent.putExtra("permission", "admin")
+                        val intent = Intent(context, ParticipantActivity::class.java)
                         EventDataService.setCurrentEvent(it)
                         context.startActivity(intent)
                     }
@@ -59,25 +60,6 @@ class NotificationAdapter(
         }
     }
 
-    inner class CreateEventViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val messageTextView: TextView = itemView.findViewById(R.id.notificationItem_create_event_textView)
-
-        fun bind(notification: NotificationItem) {
-            messageTextView.text = notification.content
-
-            itemView.setOnClickListener {
-                EventDataService.getEventInfo(notification.eventID){
-                    if (it != null){
-                        val intent = Intent(context, EventDetailActivity::class.java)
-                        intent.putExtra("permission", "admin")
-                        EventDataService.setCurrentEvent(it)
-                        context.startActivity(intent)
-                    }
-                }
-            }
-        }
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             TYPE_APPROVE_NEW -> {
@@ -95,11 +77,6 @@ class NotificationAdapter(
                     .inflate(R.layout.item_notification_request_rejected, parent, false)
                 RequestRejectedViewHolder(view)
             }
-            TYPE_CREATE_EVENT -> {
-                val view = LayoutInflater.from(parent.context)
-                    .inflate(R.layout.item_notification_create_event, parent, false)
-                CreateEventViewHolder(view)
-            }
             else -> throw IllegalArgumentException("Invalid view type")
         }
     }
@@ -114,7 +91,6 @@ class NotificationAdapter(
             is ApproveNewViewHolder -> holder.bind(notification)
             is RequestAcceptedViewHolder -> holder.bind(notification)
             is RequestRejectedViewHolder -> holder.bind(notification)
-            is CreateEventViewHolder -> holder.bind(notification)
         }
     }
 

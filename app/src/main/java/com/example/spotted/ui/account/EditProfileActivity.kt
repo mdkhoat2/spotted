@@ -22,6 +22,7 @@ import java.io.File
 import android.content.Context
 import android.net.Uri
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import java.io.FileOutputStream
 import java.io.InputStream
 
@@ -104,9 +105,11 @@ class EditProfileActivity : AppCompatActivity() {
         AuthDataService.getAvatar(DataService.getAuthProfile()!!._id){
             if(it != null){
                 println(it.url)
-//                Glide.with(this)
-//                    .load(it.url)
-//                    .into(binding.activityEditProfileShapeableImageViewAvatar)
+                Glide.with(this)
+                    .load(it.url)
+                    .skipMemoryCache(true)    // Skip memory cache
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)  // Skip disk cache
+                    .into(binding.activityEditProfileShapeableImageViewAvatar)
             }
         }
     }
