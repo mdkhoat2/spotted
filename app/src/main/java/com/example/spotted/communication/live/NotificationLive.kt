@@ -3,6 +3,7 @@ package com.example.spotted.communication.live
 import NotificationAdapter
 import com.example.spotted.backend.dataModels.Message
 import com.example.spotted.backend.dataModels.NotificationItem
+import com.example.spotted.backend.dataServices.DataService
 import com.example.spotted.util.SupportUtil
 
 object NotificationLive {
@@ -73,5 +74,6 @@ object NotificationLive {
         status = OUT_OF_MAIN_ACTIVITY
         setOnUpdateBadgeCallback {}
         setOnNotificationReceivedCallback {}
+        DataService.disconnect()
     }
 }
