@@ -5,12 +5,16 @@ import android.os.Bundle
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.spotted.R
 import com.example.spotted.backend.dataServices.AuthDataService
+import com.example.spotted.backend.dataServices.DataService
 import com.example.spotted.databinding.ActivityProfileBinding
 import com.example.spotted.ui.account.Helper
 import com.example.spotted.ui.chat.MessagingActivity
 import com.example.spotted.util.LayoutUtil
+import com.example.spotted.util.SupportUtil
 
 class ProfileActivity : AppCompatActivity() {
     private lateinit var binding: ActivityProfileBinding
@@ -54,6 +58,7 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     private fun setupProfile(userID: String?){
+        val dialog = SupportUtil.createProgressDialog(this)
         AuthDataService.getUser(userID!!) { user ->
             if (user != null) {
                 binding.nameTextViewContent.text = user.name
@@ -61,10 +66,16 @@ class ProfileActivity : AppCompatActivity() {
                 binding.phoneTextViewContent.text = user.phone
                 binding.ageTextViewContent.text = Helper.getAge(user.age)
                 binding.bioTextViewContent.text = user.description
+                Glide.with(this)
+                    .load(user.avatarUrl)
+                    .skipMemoryCache(true)    // Skip memory cache
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)  // Skip disk cache
+                    .into(binding.activityProfileShapeableImageViewAvatar)
             }
             else{
                 Helper.createDialog(this, "Error", "User not found"){}
             }
+            dialog.dismiss()
         }
     }
 }

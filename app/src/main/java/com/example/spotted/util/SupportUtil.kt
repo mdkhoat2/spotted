@@ -198,9 +198,8 @@ object SupportUtil {
         return when(type){
             "Request Received" -> NotificationAdapter.TYPE_APPROVE_NEW
             "Request Accepted" -> NotificationAdapter.TYPE_REQUEST_ACCEPTED
-            "Event Created" -> NotificationAdapter.TYPE_CREATE_EVENT
             "Request Rejected" -> NotificationAdapter.TYPE_REQUEST_REJECTED
-            else -> NotificationAdapter.TYPE_REQUEST_ACCEPTED
+            else -> NotificationAdapter.NONE
         }
     }
 }

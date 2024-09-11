@@ -1,7 +1,9 @@
 package com.example.spotted.communication.live
 
+import NotificationAdapter
 import com.example.spotted.backend.dataModels.Message
 import com.example.spotted.backend.dataModels.NotificationItem
+import com.example.spotted.util.SupportUtil
 
 object NotificationLive {
     private var onNotificationReceivedCallback: ((NotificationItem) -> Unit)? = null
@@ -32,6 +34,8 @@ object NotificationLive {
     }
 
     fun onReceiveNotification(notification: NotificationItem) {
+        if (SupportUtil.getNotificationType(notification.type) == NotificationAdapter.NONE)
+            return
         println("Status " + status.toString())
         when(status){
             ENTER_NOTIFICATION_FRAGMENT -> {
@@ -64,4 +68,10 @@ object NotificationLive {
         status = OUT_OF_MAIN_ACTIVITY
     }
 
+    fun resetNotification(){
+        numberUnreadNotification = 0
+        status = OUT_OF_MAIN_ACTIVITY
+        setOnUpdateBadgeCallback {}
+        setOnNotificationReceivedCallback {}
+    }
 }
