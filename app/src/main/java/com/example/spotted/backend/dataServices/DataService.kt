@@ -74,8 +74,9 @@ object DataService {
     }
 
     internal fun disconnect() {
+        mSocket.emit("unregister", authProfile?._id)
         mSocket.disconnect()
         mSocket.off(Socket.EVENT_CONNECT, onConnect)
         mSocket.off("receiveMessage", onReceiveMessage)
+        mSocket.off("receiveNotification", onRecieveNotification)
     }
-}
