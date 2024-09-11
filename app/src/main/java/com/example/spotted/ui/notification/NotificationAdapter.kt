@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.spotted.ParticipantActivity
 import com.example.spotted.R
 import com.example.spotted.backend.dataModels.NotificationItem
 import com.example.spotted.backend.dataServices.DataService
@@ -34,8 +35,7 @@ class NotificationAdapter(
             itemView.setOnClickListener {
                 EventDataService.getEventInfo(notification.eventID){
                     if (it != null){
-                        val intent = Intent(context, EventDetailActivity::class.java)
-                        intent.putExtra("permission", "admin")
+                        val intent = Intent(context, ParticipantActivity::class.java)
                         EventDataService.setCurrentEvent(it)
                         context.startActivity(intent)
                     }
