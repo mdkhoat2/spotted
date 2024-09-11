@@ -10,7 +10,7 @@ import android.widget.TextView
 import com.example.spotted.ui.profile.ProfileActivity
 
 class ParticipantAdapter(
-    private val participants: List<Participant>
+    private val participants: MutableList<Participant>
 ) : RecyclerView.Adapter<ParticipantAdapter.ParticipantViewHolder>() {
 
     inner class ParticipantViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
