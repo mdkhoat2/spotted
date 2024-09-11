@@ -177,8 +177,12 @@ class MapActivity: AppCompatActivity(), OnMapReadyCallback {
 
         LocationHelper.getCurrentLocation(this) { location ->
             if (location != null) {
-                //CurrentLocation = LatLng(location.latitude, location.longitude)
-                CurrentLocation = LatLng(10.8231, 106.6297)
+                CurrentLocation = LatLng(location.latitude, location.longitude)
+                // if out side of vietnam set to default location
+                if (CurrentLocation.latitude < 8.0 || CurrentLocation.latitude > 24.0
+                    || CurrentLocation.longitude < 102.0 || CurrentLocation.longitude > 110.0) {
+                    CurrentLocation = LatLng(10.8231, 106.6297)
+                }
                 DeviceLocation = CurrentLocation
                 binding.centerButton.callOnClick()
                 getEvents()

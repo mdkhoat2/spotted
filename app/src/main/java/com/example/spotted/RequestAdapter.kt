@@ -12,6 +12,8 @@ import com.example.spotted.R
 import com.example.spotted.backend.dataModels.Event
 import com.example.spotted.backend.dataServices.EventDataService
 import com.example.spotted.ui.profile.ProfileActivity
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 
 class RequestAdapter(
     private var requests: MutableList<Pair<Participant,String>>,
@@ -71,7 +73,13 @@ class RequestAdapter(
     override fun onBindViewHolder(holder: RequestViewHolder, position: Int) {
         val participant = requests[position].first
         holder.nameTextView.text = participant.user.name
-        holder.profileImageView.setImageResource(participant.profileImageResId)
+        if (participant.user.avatarUrl != null) {
+            Glide.with(holder.profileImageView.context)
+                .load(participant.user.avatarUrl)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
+                .into(holder.profileImageView)
+        }
     }
 
     override fun getItemCount() = requests.size

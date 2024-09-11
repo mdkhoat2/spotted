@@ -76,8 +76,6 @@ class ParticipantActivity : AppCompatActivity(), RequestListener {
         }
     }
 
-    // listener for the addParticipant function in RequestAdapter
-
     override fun onRequestApproved(position : Int) {
         val participant = requests[position].first
         participants.add(participant)
@@ -90,6 +88,4 @@ class ParticipantActivity : AppCompatActivity(), RequestListener {
         requests.removeAt(position)
         requestAdapter.notifyItemRemoved(position)
     }
-
-
 }

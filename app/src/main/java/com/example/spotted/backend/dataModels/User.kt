@@ -8,7 +8,8 @@ data class User(
     val description: String,
     val interests: String,
     val isVerified: Boolean,
-    val age: Int
+    val age: Int,
+    val avatarUrl: String
 )
 
 data class Avatar(
