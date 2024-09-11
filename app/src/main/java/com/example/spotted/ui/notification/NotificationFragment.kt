@@ -47,6 +47,8 @@ class NotificationFragment : Fragment() {
                 notificationListItem.clear()
                 for (item in it){
                     item.typeInt = SupportUtil.getNotificationType(item.type)
+                    if (item.typeInt == NotificationAdapter.NONE)
+                        continue
                     notificationListItem.add(item)
                 }
                 adapter.notifyDataSetChanged()
@@ -61,7 +63,6 @@ class NotificationFragment : Fragment() {
 
         NotificationLive.setOnNotificationReceivedCallback { notification ->
             requireActivity().runOnUiThread {
-                println("Hello notification")
                 notification.typeInt = SupportUtil.getNotificationType(notification.type)
                 notificationListItem.add(0, notification)
                 adapter.notifyItemInserted(0)
