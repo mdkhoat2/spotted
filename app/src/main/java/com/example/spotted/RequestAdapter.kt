@@ -14,7 +14,8 @@ import com.example.spotted.backend.dataServices.EventDataService
 import com.example.spotted.ui.profile.ProfileActivity
 
 class RequestAdapter(
-    private var requests: List<Pair<Participant,String>>
+    private var requests: MutableList<Pair<Participant,String>>,
+    private val listener: RequestListener
 ) : RecyclerView.Adapter<RequestAdapter.RequestViewHolder>() {
 
     inner class RequestViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -34,14 +35,13 @@ class RequestAdapter(
             }
 
             // Approve button listener
+
             approveButton.setOnClickListener {
                 val position = adapterPosition
                 if (position != RecyclerView.NO_POSITION) {
-                    Log.d("RequestAdapter", "Approve button clicked")
                     EventDataService.responseToRequest(requests[position].second, "accept") {
                         if (it != null) {
-                            requests.toMutableList().removeAt(position)
-                            notifyItemRemoved(position)
+                            listener.onRequestApproved(position)
                         }
                     }
                 }
@@ -51,11 +51,9 @@ class RequestAdapter(
             deleteButton.setOnClickListener {
                 val position = adapterPosition
                 if (position != RecyclerView.NO_POSITION) {
-                    Log.d("RequestAdapter", "Delete button clicked")
                     EventDataService.responseToRequest(requests[position].second, "reject") {
                         if (it != null) {
-                            requests.toMutableList().removeAt(position)
-                            notifyItemRemoved(position)
+                            listener.onRequestRejected(position)
                         }
                     }
                 }
@@ -76,4 +74,8 @@ class RequestAdapter(
     }
 
     override fun getItemCount() = requests.size
+}
+interface RequestListener {
+    fun onRequestApproved(position : Int)
+    fun onRequestRejected(position : Int)
 }

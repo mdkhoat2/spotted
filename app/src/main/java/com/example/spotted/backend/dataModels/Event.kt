@@ -35,16 +35,3 @@ data class RequestID(
     val eventID: String,
     val status: String
 )
-
-
-
-//    "description": "Badminton 3",
-//    "start": "2024-08-30T00:00:00.000Z",
-//    "duration": 60,
-//    // hanoi location: 21.028511, 105.804817
-//    "latitude": 21.028511,
-//    "longitude": 105.804817,
-//    "type": "Sport",
-//    "joinMode": "Everyone",
-//    "maxParticipants": "10",
-//    "deadline": "2024-08-31T00:00:00.000Z"

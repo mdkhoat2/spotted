@@ -145,15 +145,15 @@ class EventDetailActivity() : AppCompatActivity(), OnMapReadyCallback {
 
         val request: AppCompatButton = binding.activityEventDetailRequestButtonAppCompatButton
         request.setOnClickListener {
+            request.isClickable = false
             EventDataService.requestJoinEvent(EventDataService.getCurrentEvent()!!._id,
                 DataService.getAuthProfile()?._id ?: ""
             ) {
                 if (it != null) {
-                    println(it)
                     Toast.makeText(this, "Request sent", Toast.LENGTH_SHORT).show()
-                } else
-                    println("Request failed")
+                } else {
                     Toast.makeText(this, "Request failed", Toast.LENGTH_SHORT).show()
+                }
             }
         }
 
