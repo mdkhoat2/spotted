@@ -78,6 +78,9 @@ class ParticipantActivity : AppCompatActivity(), RequestListener {
 
     override fun onRequestApproved(position : Int) {
         val participant = requests[position].first
+
+        if (participants.contains(participant)) return
+
         participants.add(participant)
         participantAdapter.notifyItemInserted(participants.size - 1)
         requests.removeAt(position)

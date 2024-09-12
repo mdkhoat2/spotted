@@ -50,7 +50,7 @@ class MapActivity: AppCompatActivity(), OnMapReadyCallback {
     private var CurrentLocation: LatLng = LatLng(0.0, 0.0)
     private var DeviceLocation: LatLng = LatLng(0.0, 0.0)
 
-    private var CurrentFilter = "All"
+    private var CurrentFilter = "all"
 
     private lateinit var progress: ProgressDialog
 
@@ -83,7 +83,6 @@ class MapActivity: AppCompatActivity(), OnMapReadyCallback {
         binding.filterButton.setOnClickListener() {
             showSportSelectionDialog()
         }
-
     }
 
     private fun setUpPlaces() {
