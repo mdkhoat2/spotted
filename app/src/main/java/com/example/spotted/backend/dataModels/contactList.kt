@@ -13,6 +13,8 @@ import com.example.spotted.R
 import com.example.spotted.backend.dataServices.DataService
 import com.example.spotted.util.SupportUtil
 import java.sql.Timestamp
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 
 data class Contact(
     val id: String,
@@ -72,6 +74,13 @@ class ContactListWithChatAdapter(
         // Bind the data to the views
         val contact = contacts[position]
         holder.bind(contact, onItemClick)
+        if (contact.profileImageUrl != null) {
+            Glide.with(holder.profileImageView.context)
+                .load(contact.profileImageUrl)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
+                .into(holder.profileImageView)
+        }
     }
 
     override fun getItemCount(): Int {
