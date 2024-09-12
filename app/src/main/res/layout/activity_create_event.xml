@@ -87,6 +87,8 @@
                 android:hint="Sport"
                 app:boxStrokeColor="@color/blue_700"
                 app:boxStrokeWidth="1dp"
+                android:clickable="false"
+                android:focusable="false"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/activityCreateEvent_name_textInputLayout">
@@ -96,7 +98,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/instance"
-                    android:inputType="textAutoCorrect"
+                    android:inputType="none"
+                    android:clickable="false"
+                    android:focusable="false"
                     android:paddingStart="24dp"
                     android:paddingEnd="24dp" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -161,17 +165,26 @@
 
             </LinearLayout>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="48dp"
+                android:layout_marginTop="12dp"
+                android:fontFamily="@font/instance"
+                android:text="Location"
+                android:textColor="@color/grey"/>
+
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/activityCreateEvent_locationCardView"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_marginStart="24dp"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="4dp"
                 android:layout_marginEnd="24dp"
                 app:cardCornerRadius="32dp"
                 app:cardElevation="0dp"
-                android:background="@drawable/rounded_transparent"
+                android:background="@drawable/rounded_white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/activityCreateEvent_date_time_linearLayout">
@@ -180,7 +193,7 @@
                     android:id="@+id/activityCreateEvent_autocomplete_fragment"
                     android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="60dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/activityCreateEvent_location_textView" />

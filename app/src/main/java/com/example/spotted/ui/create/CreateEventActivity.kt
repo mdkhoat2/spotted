@@ -6,6 +6,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MotionEvent
 import android.view.View
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TextView
@@ -33,6 +35,9 @@ import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.api.model.TypeFilter
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.textfield.MaterialAutoCompleteTextView
+import com.google.android.material.textfield.TextInputEditText
 import java.sql.Timestamp
 
 class CreateEventActivity : AppCompatActivity(), OnMapReadyCallback {
@@ -50,6 +55,7 @@ class CreateEventActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var locationAddress: String
 
     private lateinit var progress: ProgressDialog
+    private var CurrentChoice = "badminton"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -85,6 +91,22 @@ class CreateEventActivity : AppCompatActivity(), OnMapReadyCallback {
             createTheEvent()
         }
 
+        // Inside your onCreate or onViewCreated method
+        val sportEditText = findViewById<TextInputEditText>(R.id.activityCreateEvent_sport_editText)
+
+        // Set OnClickListener to trigger the dialog when the view is clicked
+        sportEditText.setOnClickListener {
+            showSportSelectionDialog()
+        }
+
+        // Set OnFocusChangeListener to trigger the dialog when the view gains focus
+        sportEditText.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                showSportSelectionDialog()
+            }
+        }
+
+        LayoutUtil.setupUI(this,binding.root)
     }
 
     private fun createTheEvent() {
@@ -195,5 +217,32 @@ class CreateEventActivity : AppCompatActivity(), OnMapReadyCallback {
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 15f))
             }
         }
+    }
+
+    private fun showSportSelectionDialog() {
+        val sportsArray = resources.getStringArray(R.array.sport)
+
+        var selectedSportIndex: Int = if (CurrentChoice.equals("badminton", ignoreCase = true)) {
+            0
+        } else {
+            sportsArray.indexOf(CurrentChoice)
+        }
+
+        MaterialAlertDialogBuilder(this)
+            .setTitle("Select a sport")
+            .setSingleChoiceItems(sportsArray, selectedSportIndex) { _, which ->
+                selectedSportIndex = which
+            }
+            .setNegativeButton("Cancel") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .setPositiveButton("OK") { dialog, _ ->
+                if (selectedSportIndex != -1) {
+                    CurrentChoice = sportsArray[selectedSportIndex]
+                    binding.activityCreateEventSportEditText.setText(CurrentChoice)
+                }
+                dialog.dismiss()
+            }
+            .show()
     }
 }
