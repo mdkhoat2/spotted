@@ -42,33 +42,31 @@ class NotificationFragment : Fragment() {
         val progressDialog = SupportUtil.createProgressDialog(requireContext())
 
         NotificationDataService.getNotifications(Instant.now().toString()){
-            if (it != null){
+            if (it != null) {
                 println(Instant.now().toString() + " " + DataService.authToken)
                 notificationListItem.clear()
-                for (item in it){
+                for (item in it) {
                     item.typeInt = SupportUtil.getNotificationType(item.type)
                     if (item.typeInt == NotificationAdapter.NONE)
                         continue
                     notificationListItem.add(item)
                 }
                 adapter.notifyDataSetChanged()
-                progressDialog.dismiss()
-            }else{
-                progressDialog.dismiss()
             }
+            progressDialog.dismiss()
         }
 
         adapter = NotificationAdapter(requireContext(),notificationListItem)
         binding.fragmentNotificationRecyclerView.adapter = adapter
 
-        NotificationLive.setOnNotificationReceivedCallback { notification ->
-            requireActivity().runOnUiThread {
-                notification.typeInt = SupportUtil.getNotificationType(notification.type)
-                notificationListItem.add(0, notification)
-                adapter.notifyItemInserted(0)
-                binding.fragmentNotificationRecyclerView.smoothScrollToPosition(0)
-            }
-        }
+//        NotificationLive.setOnNotificationReceivedCallback { notification ->
+//            requireActivity().runOnUiThread {
+//                notification.typeInt = SupportUtil.getNotificationType(notification.type)
+//                notificationListItem.add(0, notification)
+//                adapter.notifyItemInserted(0)
+//                binding.fragmentNotificationRecyclerView.smoothScrollToPosition(0)
+//            }
+//        }
 
         NotificationLive.statusEnterNotificationFragment()
 
@@ -81,10 +79,13 @@ class NotificationFragment : Fragment() {
     }
 
     private fun hideBadge(){
-        val badge = requireActivity().findViewById<BottomNavigationView>(R.id.nav_view).getBadge(R.id.navigation_notification)
-        if (badge != null) {
-            badge.clearNumber()
-            badge.isVisible = false
+        val view = requireActivity().findViewById<BottomNavigationView>(R.id.nav_view)
+        if (view != null) {
+            val badge = view.getBadge(R.id.navigation_notification)
+            if (badge != null) {
+                badge.clearNumber()
+                badge.isVisible = false
+            }
         }
     }
 
