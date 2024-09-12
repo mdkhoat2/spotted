@@ -221,9 +221,9 @@ class MapActivity: AppCompatActivity(), OnMapReadyCallback {
 
             mMap.addMarker(MarkerOptions().position(latLng).title(event.title).icon(bitmapDescriptor))
             mMap.setOnMarkerClickListener { marker ->
-                val dialog = SupportUtil.createProgressDialog(this)
                 val event = eventListFiltered.find { it.title == marker.title }
                 if (event != null) {
+                    val dialog = SupportUtil.createProgressDialog(this)
                     val intent = Intent(this, EventDetailActivity::class.java)
 
                     EventDataService.getRole(event._id){
@@ -232,7 +232,6 @@ class MapActivity: AppCompatActivity(), OnMapReadyCallback {
                         } else {
                             intent.putExtra("permission", "none")
                         }
-
                         EventDataService.setCurrentEvent(event)
                         startActivity(intent)
                         dialog.dismiss()
