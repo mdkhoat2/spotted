@@ -155,15 +155,13 @@ class EventDetailActivity() : AppCompatActivity(), OnMapReadyCallback {
             ) {
                 dialog.dismiss()
                 if (it != null) {
-                    val snackbar = Snackbar.make(binding.root, "Request sent", Snackbar.LENGTH_LONG).setAction("OK"){
+                    SupportUtil.createSnackBar(binding.root, "Request sent"){
                         finish()
                     }
-                    snackbar.show()
                 } else {
-                    val snackbar = Snackbar.make(binding.root, "Request failed", Snackbar.LENGTH_LONG).setAction("OK"){
+                    SupportUtil.createSnackBar(binding.root, "Request failed"){
                         finish()
                     }
-                    snackbar.show()
                 }
             }
         }
