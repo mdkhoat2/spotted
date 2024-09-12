@@ -5,9 +5,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.spotted.communication.live.NotificationLive
 import com.example.spotted.databinding.FragmentAccountBinding
+import com.example.spotted.util.LayoutUtil
 
 class AccountFragment : Fragment() {
 
@@ -26,21 +28,25 @@ class AccountFragment : Fragment() {
         _binding = FragmentAccountBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        binding.btnLogout.setOnClickListener{
+
+        binding.fragmentAccountAppCompatButtonLogOut.setOnClickListener{
             NotificationLive.resetNotification()
             val intent = Intent(activity, LoginActivity::class.java)
             startActivity(intent)
         }
 
-        binding.btnChangePassword.setOnClickListener{
+        binding.fragmentAccountAppCompatButtonChangePassword.setOnClickListener{
             val intent = Intent(activity, ChangePasswordActivity::class.java)
             startActivity(intent)
         }
 
-        binding.btnPersonalProfile.setOnClickListener{
+        binding.fragmentAccountAppCompatButtonEditProfile.setOnClickListener{
             val intent = Intent(activity, EditProfileActivity::class.java)
             startActivity(intent)
         }
+
+        val header : TextView = binding.fragmentAccountTextViewHeader
+        LayoutUtil.applyVariableFont(this, header, "'wght' 500, 'wdth' 150")
 
         return root
     }

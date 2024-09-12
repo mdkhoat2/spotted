@@ -11,6 +11,7 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.Spinner
 import android.widget.TextView
+import androidx.appcompat.widget.AppCompatButton
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,6 +23,7 @@ import com.example.spotted.backend.dataServices.EventDataService
 import com.example.spotted.databinding.FragmentEventsBinding
 import com.example.spotted.ui.chat.ContactListActivity
 import com.example.spotted.util.LayoutUtil
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import java.sql.Timestamp
 
 class EventsFragment : Fragment() {
@@ -35,6 +37,7 @@ class EventsFragment : Fragment() {
     private var eventList = mutableListOf<Pair<Event,String>>()
     private var eventListCopy = mutableListOf<Pair<Event,String>>()
     private var sortUsing: Int = 0
+    private var CurrentFilter = "all"
 
     // EventAdapter is a class that extends RecyclerView.Adapter
     private lateinit var eventsAdapter: EventsAdapter
@@ -54,22 +57,10 @@ class EventsFragment : Fragment() {
 
         setUpEvents(root)
 
-        //spinner filter
-        val sports = resources.getStringArray(R.array.sports)
-        val sportAdapter = ArrayAdapter(requireContext(),android.R.layout.simple_spinner_item,sports)
-        sportAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-
-        binding.spinnerSport.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                val sport = sports[position]
-                println("Filter: "+sport)
-                if (sport == "all") eventsAdapter.filter.filter("")
-
-                else eventsAdapter.filter.filter(sport)
-            }
-            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        val filterBtn: AppCompatButton = root.findViewById(R.id.btn_filter)
+        filterBtn.setOnClickListener {
+            showSportSelectionDialog()
         }
-        binding.spinnerSport.adapter=sportAdapter
 
 
         //button sort
@@ -126,6 +117,34 @@ class EventsFragment : Fragment() {
                 eventsAdapter.filter.filter("")
             }
         }
+    }
+
+    private fun showSportSelectionDialog() {
+        val sportsArray = resources.getStringArray(R.array.sports)
+
+        var selectedSportIndex: Int = if (CurrentFilter.equals("all", ignoreCase = true)) {
+            0
+        } else {
+            sportsArray.indexOf(CurrentFilter)
+        }
+
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle("Select a sport")
+            .setSingleChoiceItems(sportsArray, selectedSportIndex) { _, which ->
+                selectedSportIndex = which
+            }
+            .setNegativeButton("Cancel") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .setPositiveButton("OK") { dialog, _ ->
+                if (selectedSportIndex != -1) {
+                    CurrentFilter = sportsArray[selectedSportIndex]
+                    if (CurrentFilter == "all") eventsAdapter.filter.filter("")
+                    else eventsAdapter.filter.filter(CurrentFilter)
+                }
+                dialog.dismiss()
+            }
+            .show()
     }
 
     override fun onDestroyView() {
