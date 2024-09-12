@@ -7,11 +7,13 @@ import android.app.TimePickerDialog
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.view.View
 import android.widget.EditText
 import androidx.core.content.ContextCompat
 import com.example.spotted.R
 import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
+import com.google.android.material.snackbar.Snackbar
 import java.io.File
 import java.io.InputStream
 import java.sql.Timestamp
@@ -201,5 +203,12 @@ object SupportUtil {
             "Request Rejected" -> NotificationAdapter.TYPE_REQUEST_REJECTED
             else -> NotificationAdapter.NONE
         }
+    }
+
+    fun createSnackBar(view: View, message: String, listener: () -> Unit){
+        val snackbar = Snackbar.make(view, message, Snackbar.LENGTH_LONG).setAction("OK"){
+            listener()
+        }
+        snackbar.show()
     }
 }

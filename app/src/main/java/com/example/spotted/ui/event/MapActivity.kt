@@ -193,11 +193,11 @@ class MapActivity: AppCompatActivity(), OnMapReadyCallback {
         EventDataService.getEvents(
             GetEventsRequest(CurrentLocation.latitude, CurrentLocation.longitude,300000.0)) {
             events ->
-                progress.dismiss()
                 if (events != null) {
                     eventList.addAll(events)
                     filterEvents()
                 }
+                progress.dismiss()
         }
     }
     private fun filterEvents(){
@@ -221,6 +221,7 @@ class MapActivity: AppCompatActivity(), OnMapReadyCallback {
 
             mMap.addMarker(MarkerOptions().position(latLng).title(event.title).icon(bitmapDescriptor))
             mMap.setOnMarkerClickListener { marker ->
+                val dialog = SupportUtil.createProgressDialog(this)
                 val event = eventListFiltered.find { it.title == marker.title }
                 if (event != null) {
                     val intent = Intent(this, EventDetailActivity::class.java)
@@ -234,6 +235,7 @@ class MapActivity: AppCompatActivity(), OnMapReadyCallback {
 
                         EventDataService.setCurrentEvent(event)
                         startActivity(intent)
+                        dialog.dismiss()
                     }
                 }
                 true

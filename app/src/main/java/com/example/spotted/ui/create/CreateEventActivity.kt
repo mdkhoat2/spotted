@@ -18,6 +18,7 @@ import com.example.spotted.R
 import com.example.spotted.backend.dataModels.Event
 import com.example.spotted.backend.dataServices.EventDataService
 import com.example.spotted.databinding.ActivityCreateEventBinding
+import com.example.spotted.ui.account.Helper
 import com.example.spotted.ui.event.MapActivity
 import com.example.spotted.util.LayoutUtil
 import com.example.spotted.util.LocationHelper
@@ -33,6 +34,7 @@ import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.api.model.TypeFilter
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
+import com.google.android.material.snackbar.Snackbar
 import java.sql.Timestamp
 
 class CreateEventActivity : AppCompatActivity(), OnMapReadyCallback {
@@ -90,7 +92,7 @@ class CreateEventActivity : AppCompatActivity(), OnMapReadyCallback {
     private fun createTheEvent() {
         //check if all fields are filled and valid
         if (nameEditText.text.isEmpty() || sportEditText.text.isEmpty() || dateEditText.text.isEmpty() || timeEditText.text.isEmpty() ) {
-            Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show()
+            Helper.createDialog(this, "Error", "Please fill in all fields"){}
             return
         }
 
@@ -106,14 +108,13 @@ class CreateEventActivity : AppCompatActivity(), OnMapReadyCallback {
 
         EventDataService.createEvent(event) { event ->
             if (event != null) {
-                Toast.makeText(this, "Event created", Toast.LENGTH_SHORT).show()
-                println("Event created: $event")
-//                val intent = Intent(this, MainActivity::class.java)
-//                startActivity(intent)
-                finish()
+                SupportUtil.createSnackBar(binding.root, "Event created successfully"){
+                    finish()
+                }
             } else {
-                Toast.makeText(this, "Failed to create event", Toast.LENGTH_SHORT).show()
-                println("Failed to create event")
+                SupportUtil.createSnackBar(binding.root, "Failed to create event"){
+                    finish()
+                }
             }
         }
     }
@@ -151,6 +152,11 @@ class CreateEventActivity : AppCompatActivity(), OnMapReadyCallback {
         super.onDestroy()
     }
 
+    private fun hideKeyBoard(){
+        Helper.hideKeyboard(this, nameEditText)
+        Helper.hideKeyboard(this, descriptionEditText)
+    }
+
     @SuppressLint("ClickableViewAccessibility")
     private fun setupInput(view: View) {
         nameEditText = view.findViewById(R.id.activityCreateEvent_name_editText)
@@ -162,6 +168,7 @@ class CreateEventActivity : AppCompatActivity(), OnMapReadyCallback {
 
         // Set an onClickListener for the whole EditText to show the DatePicker
         dateEditText.setOnTouchListener { v, event ->
+            hideKeyBoard()
             if (event.action == MotionEvent.ACTION_UP) {
                 SupportUtil.showDatePicker(dateEditText, this)
                 return@setOnTouchListener true
@@ -172,6 +179,7 @@ class CreateEventActivity : AppCompatActivity(), OnMapReadyCallback {
         timeEditText = view.findViewById(R.id.activityCreateEvent_time_editText)
 
         timeEditText.setOnTouchListener { v, event ->
+            hideKeyBoard()
             if (event.action == MotionEvent.ACTION_UP) {
                 if (event.rawX >= (timeEditText.right - timeEditText.compoundDrawables[2].bounds.width())) {
                     SupportUtil.showTimePicker(timeEditText, this)
