@@ -18,8 +18,11 @@ import com.example.spotted.backend.dataServices.AuthDataService
 import com.example.spotted.backend.dataServices.MessageDataService
 import com.example.spotted.communication.adapters.ChatAdapter
 import com.example.spotted.communication.live.MessageLive
+import com.example.spotted.databinding.ActivityContactListBinding
 import com.example.spotted.ui.profile.ProfileActivity
 import com.example.spotted.util.LayoutUtil
+import com.example.spotted.util.SupportUtil
+import com.google.android.material.snackbar.Snackbar
 
 class MessagingActivity() : AppCompatActivity(){
 
@@ -33,6 +36,7 @@ class MessagingActivity() : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat)
 
+        val dialog = SupportUtil.createProgressDialog(this)
 
         otherId = intent.getStringExtra("otherId")?: ""
 
@@ -50,8 +54,13 @@ class MessagingActivity() : AppCompatActivity(){
                 chatAdapter.notifyDataSetChanged()
                 println("Messages: $messageList")
                 recyclerView.scrollToPosition(messageList.size - 1)
-            }   else
-                Toast.makeText(this, "Failed to load messages", Toast.LENGTH_SHORT).show()
+            }   else {
+                val snackbar = Snackbar.make(findViewById(R.id.layout_activity_message), "Failed to load messages", Snackbar.LENGTH_LONG).setAction("OK"){
+                    finish()
+                }
+                snackbar.show()
+            }
+            dialog.dismiss()
         }
 
         chatAdapter = ChatAdapter(messageList)

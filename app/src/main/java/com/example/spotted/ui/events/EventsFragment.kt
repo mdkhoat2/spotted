@@ -23,6 +23,7 @@ import com.example.spotted.backend.dataServices.EventDataService
 import com.example.spotted.databinding.FragmentEventsBinding
 import com.example.spotted.ui.chat.ContactListActivity
 import com.example.spotted.util.LayoutUtil
+import com.example.spotted.util.SupportUtil
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import java.sql.Timestamp
 
@@ -95,6 +96,7 @@ class EventsFragment : Fragment() {
         eventsAdapter = EventsAdapter(eventList)
         recyclerView.adapter = eventsAdapter
 
+        val dialog = SupportUtil.createProgressDialog(requireContext())
         EventDataService.getJoinedEvents { joinedEvents ->
             if (joinedEvents != null) {
 
@@ -116,6 +118,7 @@ class EventsFragment : Fragment() {
 
                 eventsAdapter.filter.filter("")
             }
+            dialog.dismiss()
         }
     }
 

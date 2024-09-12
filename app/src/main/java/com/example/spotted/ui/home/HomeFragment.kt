@@ -81,8 +81,10 @@ class HomeFragment : Fragment() {
 
         val messageBtn: Button = root.findViewById(R.id.fragmentHome_button_messages)
         messageBtn.setOnClickListener{
+            val dialog = SupportUtil.createProgressDialog(requireActivity())
             val intent = Intent(activity,ContactListActivity::class.java)
             startActivity(intent)
+            dialog.dismiss()
         }
 
 

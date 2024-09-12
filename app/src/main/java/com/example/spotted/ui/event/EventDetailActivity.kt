@@ -41,6 +41,7 @@ import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.api.model.TypeFilter
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
+import com.google.android.material.snackbar.Snackbar
 import java.sql.Timestamp
 import java.util.Locale
 
@@ -148,13 +149,19 @@ class EventDetailActivity() : AppCompatActivity(), OnMapReadyCallback {
         val request: AppCompatButton = binding.activityEventDetailRequestButtonAppCompatButton
         request.setOnClickListener {
             request.isClickable = false
+            val dialog = SupportUtil.createProgressDialog(this)
             EventDataService.requestJoinEvent(EventDataService.getCurrentEvent()!!._id,
                 DataService.getAuthProfile()?._id ?: ""
             ) {
+                dialog.dismiss()
                 if (it != null) {
-                    Toast.makeText(this, "Request sent", Toast.LENGTH_SHORT).show()
+                    SupportUtil.createSnackBar(binding.root, "Request sent"){
+                        finish()
+                    }
                 } else {
-                    Toast.makeText(this, "Request failed", Toast.LENGTH_SHORT).show()
+                    SupportUtil.createSnackBar(binding.root, "Request failed"){
+                        finish()
+                    }
                 }
             }
         }

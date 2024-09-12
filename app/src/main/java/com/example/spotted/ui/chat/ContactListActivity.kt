@@ -16,6 +16,7 @@ import com.example.spotted.communication.adapters.MessageAdapter
 import com.example.spotted.communication.live.MessageLive
 import com.example.spotted.databinding.ActivityContactListBinding
 import com.example.spotted.util.LayoutUtil
+import com.example.spotted.util.SupportUtil
 
 class ContactListActivity : AppCompatActivity() {
 
@@ -34,6 +35,8 @@ class ContactListActivity : AppCompatActivity() {
             finish()
         }
 
+        val dialog = SupportUtil.createProgressDialog(this)
+
         val header : TextView = findViewById(R.id.activityContactList_textView_header)
         LayoutUtil.applyVariableFont(this,header,"'wght' 500, 'wdth' 150")
 
@@ -51,7 +54,6 @@ class ContactListActivity : AppCompatActivity() {
 
         MessageDataService.getLastMessages { response ->
                     if (response!=null){
-                        // sort the messages by time
                         response.sortedBy { it.sentAt }
 
                         for (message in response){
@@ -62,23 +64,20 @@ class ContactListActivity : AppCompatActivity() {
                             AuthDataService.getUser(messageAdapter.getOtherUserId()) { user ->
                                 if (user != null) {
                                     contacts+=(Contact(user._id, user.name, message.content,
-                                        message.sentAt, null,messageAdapter.isRead()))
+                                        message.sentAt, user.avatarUrl,messageAdapter.isRead()))
 
                                     runOnUiThread {
                                         contactAdapter.notifyItemInserted(contacts.size - 1)
                                     }
                                 }
                             }
-
                         }
-
                     }
+                    dialog.dismiss()
                 }
 
         MessageLive.setOnMessageReceivedCallback { message ->
             runOnUiThread {
-                // Check if the contact is already in the list find position and move it to the top
-
                 var contact = contacts.find { it.id == message.sender || it.id == message.receiver }
                 val position = contacts.indexOf(contact)
 
