@@ -9,6 +9,7 @@
     <string name="change_pass">Change password</string>
     <string name="logout">Log out</string>
     <string name="email">Email</string>
+    <string name="user_name">Username</string>
     <string name="oldPass">Old password</string>
     <string name="newPass">New password</string>
     <string name="confirmPass">Confirm new password</string>

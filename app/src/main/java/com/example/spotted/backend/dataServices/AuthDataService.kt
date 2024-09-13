@@ -35,8 +35,8 @@ object AuthDataService {
         })
     }
 
-    fun signUp(email: String, password: String, onResult: (SignUpResponse?) -> Unit) {
-        val request = SignUpRequest(email, password)
+    fun signUp(email: String, password: String, name: String, onResult: (SignUpResponse?) -> Unit) {
+        val request = SignUpRequest(email, password, name)
         DataService.apiService.signUp(request).enqueue(object : Callback<SignUpResponse> {
             override fun onResponse(call: Call<SignUpResponse>, response: Response<SignUpResponse>) {
                 DataService.extractMsg(response.errorBody())

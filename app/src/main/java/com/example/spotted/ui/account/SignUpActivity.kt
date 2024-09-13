@@ -10,6 +10,7 @@ import com.example.spotted.backend.dataServices.AuthDataService
 import com.example.spotted.backend.dataServices.DataService
 import com.example.spotted.databinding.ActivitySignUpBinding
 import com.example.spotted.util.LayoutUtil
+import com.example.spotted.util.SupportUtil
 
 class SignUpActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignUpBinding
@@ -47,18 +48,32 @@ class SignUpActivity : AppCompatActivity() {
         Helper.hideKeyboard(this, binding.passwordConfirmEditText)
         Helper.hideKeyboard(this, binding.emailEditText)
         Helper.hideKeyboard(this, binding.passwordEditText)
+        Helper.hideKeyboard(this, binding.usernameEditText)
     }
 
     private fun setupSignUp(){
         val password = binding.passwordEditText.text.toString()
         val confirmPassword = binding.passwordConfirmEditText.text.toString()
         val email = binding.emailEditText.text.toString()
+        val username = binding.usernameEditText.text.toString()
         if (Helper.passMatch(password, confirmPassword) != null)
         {
-            Helper.createDialog(this, "Error", "Password and confirm password do not match"){}
+            Helper.createDialog(this, "Failed", "Password and confirm password do not match"){}
             return
         }
-        AuthDataService.signUp(email, password) { response ->
+        if (Helper.validEmail(email) != null)
+        {
+            Helper.createDialog(this, "Failed", "Invalid email"){}
+            return
+        }
+        if (username.trim().isEmpty())
+        {
+            Helper.createDialog(this, "Failed", "Invalid username"){}
+            return
+        }
+        val dialog = SupportUtil.createProgressDialog(this)
+        AuthDataService.signUp(email, password, username) { response ->
+            dialog.dismiss()
             if(response != null){
                 Helper.createDialog(this, "Success", "Congratulations! Please check your mail and log in to new account"){
                         finish()
