@@ -46,12 +46,4 @@
             android:text="Last message" />
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/contact_read"
-        android:src="@drawable/ic_circle_black_24dp"
-        app:tint="@color/blue_700"
-        android:layout_width="14dp"
-        android:visibility="invisible"
-        android:layout_height="match_parent"/>
-
 </LinearLayout>

@@ -55,12 +55,6 @@ class ContactListWithChatAdapter(
 
 
             itemView.setOnClickListener { onItemClick(contact) }
-
-            if (!contact.isRead) {
-                lastMessageTextView.setTextColor(Color.parseColor("#000000"))
-                val contacts_read = itemView.findViewById(R.id.contact_read) as ImageView
-                contacts_read.visibility = View.VISIBLE
-            }
         }
     }
 
