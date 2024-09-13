@@ -24,6 +24,7 @@ import com.example.spotted.ui.event.MapActivity
 import com.example.spotted.util.LayoutUtil
 import com.example.spotted.util.SupportUtil
 import java.security.Permission
+import java.sql.Timestamp
 
 class HomeFragment : Fragment() {
 
@@ -94,11 +95,17 @@ class HomeFragment : Fragment() {
             if (joinedEvents != null) {
 
                 var nearestEvent: JoinedEvent? = null
+                val currentTime = Timestamp(System.currentTimeMillis())
+
                 for (a in joinedEvents) {
+                    if (a.event.start < currentTime) {
+                        continue
+                    }
+
                     if (nearestEvent == null) {
                         nearestEvent = a
                     } else {
-                        if (a.event.start < nearestEvent.event.start) {
+                        if (a.event.start < nearestEvent!!.event.start) {
                             nearestEvent = a
                         }
                     }
