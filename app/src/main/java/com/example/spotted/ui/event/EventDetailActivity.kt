@@ -1,49 +1,31 @@
 package com.example.spotted.ui.event
 
-import android.annotation.SuppressLint
 import android.app.ProgressDialog
 import android.content.Intent
-import android.location.Geocoder
 import android.os.Bundle
-import android.view.MotionEvent
 import android.view.View
-import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
-import androidx.lifecycle.ViewModelProvider
-import com.example.spotted.MainActivity
 import com.example.spotted.ParticipantActivity
 import com.example.spotted.R
-import com.example.spotted.backend.dataModels.Event
 import com.example.spotted.backend.dataServices.AuthDataService
 import com.example.spotted.backend.dataServices.DataService
 import com.example.spotted.backend.dataServices.EventDataService
-import com.example.spotted.databinding.ActivityCreateEventBinding
 import com.example.spotted.databinding.ActivityEventDetailBinding
-import com.example.spotted.ui.chat.MessagingActivity
-import com.example.spotted.ui.create.CreateEventViewModel
+import com.example.spotted.ui.account.Helper
 import com.example.spotted.ui.profile.ProfileActivity
 import com.example.spotted.util.LayoutUtil
 import com.example.spotted.util.LocationHelper
 import com.example.spotted.util.SupportUtil
-import com.google.android.gms.common.api.Status
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import com.google.android.libraries.places.api.model.Place
-import com.google.android.libraries.places.api.model.TypeFilter
-import com.google.android.libraries.places.widget.AutocompleteSupportFragment
-import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
-import com.google.android.material.snackbar.Snackbar
-import java.sql.Timestamp
-import java.util.Locale
 
 class EventDetailActivity() : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var binding: ActivityEventDetailBinding
@@ -159,9 +141,7 @@ class EventDetailActivity() : AppCompatActivity(), OnMapReadyCallback {
                         finish()
                     }
                 } else {
-                    SupportUtil.createSnackBar(binding.root, "Request failed"){
-                        finish()
-                    }
+                    Helper.createDialog(this, "Failed", DataService.getMsg()){}
                 }
             }
         }
