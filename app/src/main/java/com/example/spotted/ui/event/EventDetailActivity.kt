@@ -120,8 +120,6 @@ class EventDetailActivity() : AppCompatActivity(), OnMapReadyCallback {
 
         }
 
-
-
         val participants: AppCompatButton = binding.activityEventDetailViewParticipantButtonAppCompatButton
         participants.setOnClickListener {
             intent = Intent(this, ParticipantActivity::class.java)

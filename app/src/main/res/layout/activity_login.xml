@@ -45,7 +45,6 @@
             android:inputType="textEmailAddress"
             android:paddingStart="24dp"
             android:paddingEnd="24dp"
-            android:text="quangvng49@gmail.com"
             android:textColor="@color/white" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -77,7 +76,6 @@
             android:textColor="@color/white"
             android:paddingStart="24dp"
             android:paddingEnd="24dp"
-            android:text="654321"
             android:hint="@string/password"/>
     </com.google.android.material.textfield.TextInputLayout>
 
